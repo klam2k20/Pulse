@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes, Outlet, useNavigate } from "react-router-dom";
 import "./App.scss";
+import Header from "./components/Header";
 import { useUser } from "./context/UserProvider";
 import { Home, Login, Profile, Register } from "./pages";
 
