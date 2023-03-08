@@ -10,7 +10,7 @@ function Login() {
     <div className='app__login__wrapper'>
       <div className='app__login'>
         <div className='app__login__left'>
-          <h2>Pulse</h2>
+          <h1>Pulse</h1>
           <p>
             Welcome back to Pulse, your go-to destination for social connection. We're thrilled to
             see you again! Simply enter your login credentials to dive right back into the action.
