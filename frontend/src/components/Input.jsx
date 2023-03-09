@@ -6,8 +6,8 @@ function Input({ type, placeholder, state, setState, className }) {
   const [isLabelVisible, setIsLabelVisible] = useState(false);
 
   const variants = {
-    visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, scale: 1, y: 0, display: "block" },
+    hidden: { opacity: 0, scale: 0, y: 10, display: "none", onanimationend: { display: "none" } },
   };
   return (
     <div
@@ -15,8 +15,8 @@ function Input({ type, placeholder, state, setState, className }) {
       style={isLabelVisible ? { padding: "0.5rem 1rem" } : { padding: "1rem" }}>
       <motion.span
         variants={variants}
-        animate={isLabelVisible ? "visible" : "hidden"}
-        style={isLabelVisible ? { display: "block" } : { display: "none" }}>
+        initial='hidden'
+        animate={isLabelVisible ? "visible" : "hidden"}>
         {type}
       </motion.span>
       <input
