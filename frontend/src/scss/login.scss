@@ -1,21 +1,10 @@
 @use "../scss/" as *;
 
-.app__login__wrapper {
-  @include flex(center, center);
-  height: 100%;
-  padding: 1rem;
-}
-
 .app__login {
   @include flex(stretch, center);
-  border-radius: 1rem;
-  border: 1px solid lightgray;
+  padding: 1rem;
   overflow: hidden;
-
-  @media screen and (max-width: 480px) {
-    border: none;
-    height: 100%;
-  }
+  height: 100%;
 }
 
 .app__login__left {
@@ -54,7 +43,6 @@
       border: none;
     }
   }
-
   span {
     color: gray;
   }
@@ -66,9 +54,12 @@
 
 .app__login__right {
   @include flex(center, center);
-  flex: 1;
+  flex: 2;
   min-width: 50%;
   background: linear-gradient(rgba(80, 129, 204, 1), rgba(213, 42, 116, 1));
+  overflow: hidden;
+  border-top-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
   img {
     object-fit: cover;
     max-width: 100%;
