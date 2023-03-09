@@ -1,4 +1,5 @@
 @use "../scss/" as *;
+
 .app__input {
   @include flex(flex-start, center);
   flex-direction: column;
