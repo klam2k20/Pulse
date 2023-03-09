@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "../components/Input";
 import { Link } from "react-router-dom";
 import "../scss/login.scss";
+import Logo from "../components/Logo";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -10,23 +11,24 @@ function Login() {
     <div className='app__login__wrapper'>
       <div className='app__login'>
         <div className='app__login__left'>
-          <h1>Pulse</h1>
-          <p>
-            Welcome back to Pulse, your go-to destination for social connection. We're thrilled to
-            see you again! Simply enter your login credentials to dive right back into the action.
-            With Pulse, you'll be able to keep up with the latest from your favorite communities,
-            engage with your friends, and explore new topics that pique your interest. We can't wait
-            to see what you'll discover next!
-          </p>
+          <div>
+            <Logo />
+            <span>Pulse</span>
+          </div>
+          <form>
+            <h1>Hello Again!</h1>
+            <span>Welcome back! Please enter your credentials.</span>
+            <Input type='email' placeholder='Email' state={email} setState={setEmail} />
+            <Input type='password' placeholder='Password' state={password} setState={setPassword} />
+            <button>Login</button>
+          </form>
           <span>
             Don't have an account? <Link to='/register'>Sign Up</Link>
           </span>
         </div>
-        <form className='app__login__right'>
-          <Input type='email' placeholder='Email' state={email} setState={setEmail} />
-          <input type='password' placeholder='Password' />
-          <button>Login</button>
-        </form>
+        <div className='app__login__right'>
+          <img src='../../public/heart.png' />
+        </div>
       </div>
     </div>
   );

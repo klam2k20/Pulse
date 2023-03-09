@@ -1,0 +1,30 @@
+.ekg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ekg {
+  width: 100px;
+}
+
+.ekg-line {
+  fill: none;
+  stroke: #da2c74;
+  stroke-width: 2;
+  stroke-linecap: round;
+  // animation-name: pulse;
+  // animation-duration: 3s;
+  // animation-iteration-count: infinite;
+  // animation-timing-function: linear;
+}
+
+// @keyframes pulse {
+//   0% {
+//     stroke-dasharray: 0 500;
+//   }
+//   100% {
+//     stroke-dasharray: 500 0;
+//   }
+// }
