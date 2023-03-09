@@ -67,10 +67,11 @@
 .app__login__right {
   @include flex(center, center);
   flex: 1;
-  max-width: 50%;
+  min-width: 50%;
   background: linear-gradient(rgba(80, 129, 204, 1), rgba(213, 42, 116, 1));
   img {
-    object-fit: contain;
+    object-fit: cover;
+    max-width: 100%;
   }
 
   @media screen and (max-width: 480px) {
