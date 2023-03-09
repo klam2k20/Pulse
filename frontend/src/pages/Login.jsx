@@ -11,15 +11,29 @@ function Login() {
     <div className='app__login__wrapper'>
       <div className='app__login'>
         <div className='app__login__left'>
-          <div>
+          <div className='app__login__logo'>
             <Logo />
             <span>Pulse</span>
           </div>
           <form>
             <h1>Hello Again!</h1>
             <span>Welcome back! Please enter your credentials.</span>
-            <Input type='email' placeholder='Email' state={email} setState={setEmail} />
-            <Input type='password' placeholder='Password' state={password} setState={setPassword} />
+            <div className='app__login__form__inputs'>
+              <Input
+                type='email'
+                placeholder='Email'
+                state={email}
+                setState={setEmail}
+                className='top'
+              />
+              <Input
+                type='password'
+                placeholder='Password'
+                state={password}
+                setState={setPassword}
+                className='bottom'
+              />
+            </div>
             <button>Login</button>
           </form>
           <span>
@@ -27,7 +41,7 @@ function Login() {
           </span>
         </div>
         <div className='app__login__right'>
-          <img src='../../public/heart.png' />
+          <img src='/heart.png' />
         </div>
       </div>
     </div>

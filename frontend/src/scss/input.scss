@@ -1,0 +1,32 @@
+@use "../scss/" as *;
+.app__input {
+  @include flex(flex-start, center);
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  border: 1px solid gray;
+
+  span {
+    display: none;
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    color: gray;
+  }
+}
+
+.top {
+  border-bottom: none;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+
+.bottom {
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
