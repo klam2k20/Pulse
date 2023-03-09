@@ -17,7 +17,7 @@ function Input({ type, placeholder, state, setState, className }) {
         variants={variants}
         initial='hidden'
         animate={isLabelVisible ? "visible" : "hidden"}>
-        {type}
+        {placeholder}
       </motion.span>
       <input
         type={type}

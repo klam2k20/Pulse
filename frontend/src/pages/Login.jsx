@@ -7,6 +7,7 @@ import Logo from "../components/Logo";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   return (
     <div className='app__login'>
       <div className='app__login__left'>
@@ -16,7 +17,7 @@ function Login() {
         </div>
         <form>
           <h1>Hello Again!</h1>
-          <span>Welcome back! Please enter your credentials.</span>
+          <span>Welcome back!</span>
           <div className='app__login__form__inputs'>
             <Input
               type='email'
