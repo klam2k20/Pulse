@@ -13,7 +13,7 @@ function Login() {
         <div className='app__login__left'>
           <div className='app__login__logo'>
             <Logo />
-            <span>Pulse</span>
+            <span>PULSE</span>
           </div>
           <form>
             <h1>Hello Again!</h1>
