@@ -1,14 +1,35 @@
 import { useState } from "react";
 import { Input } from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../scss/register.scss";
 import Logo from "../components/Logo";
+import { registerUser } from "../lib/apiRequests";
+import { toast } from "react-hot-toast";
+import { useUser } from "../context/UserProvider";
 
 function Register() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await registerUser(name, username, email, password);
+      setUser(data);
+      navigate("/");
+      toast.success(`Welcome ${username}`);
+    } catch (err) {
+      console.log(`Register User: ${err}`);
+      if (err.response.status === 409)
+        toast.error(err.response.data.message, {
+          position: "bottom-right",
+        });
+    }
+  };
 
   return (
     <div className='app__register'>
@@ -29,7 +50,7 @@ function Register() {
           <Logo />
           <span>PULSE</span>
         </div>
-        <form>
+        <form onSubmit={submitForm}>
           <h1>Welcome to Pulse</h1>
           <span>The social media app that connects you to the world around you!</span>
           <div className='app__register__form__inputs'>
@@ -67,7 +88,11 @@ function Register() {
               />
             </div>
           </div>
-          <button>Sign Up</button>
+          {!name || !username || !email || !password ? (
+            <button disabled>Sign Up</button>
+          ) : (
+            <button>Sign Up</button>
+          )}
         </form>
         <span>
           Already have an account? <Link to='/login'>Login</Link>
