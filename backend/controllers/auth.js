@@ -46,8 +46,6 @@ const loginUser = async (req, res) => {
       type === "email"
         ? await User.findOne({ email: login })
         : await User.findOne({ username: login });
-    console.log(user);
-    if (!user) return res.status(404).json({ message: "User account not found" });
     if (user && (await user.validatePassword(password))) {
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: 300 });
       return res.cookie("token", token).json({
