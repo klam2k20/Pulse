@@ -34,7 +34,34 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  res.send("Login User");
+  const { login, password } = req.body;
+
+  const emailRegex = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$");
+  const type = emailRegex.test(login) ? "email" : "username";
+  if (!login || !password)
+    return res.status(400).json({ message: `Missing a required field: ${type} or password` });
+
+  try {
+    const user =
+      type === "email"
+        ? await User.findOne({ email: login })
+        : await User.findOne({ username: login });
+    console.log(user);
+    if (!user) return res.status(404).json({ message: "User account not found" });
+    if (user && (await user.validatePassword(password))) {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: 300 });
+      return res.cookie("token", token).json({
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        token: token,
+      });
+    }
+    return res.status(401).json({ message: `Invalid ${type} or password` });
+  } catch (err) {
+    console.log(`Login User: ${err}`);
+    return res.status(500).json({ message: `Database Error: ${err}` });
+  }
 };
 
 module.exports = { registerUser, loginUser };
