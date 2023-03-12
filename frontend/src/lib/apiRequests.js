@@ -7,8 +7,12 @@ const registerUser = (name, username, email, password) => {
   return axios.post("/api/auth/register", { name, username, email, password });
 };
 
+const loginUser = (login, password) => {
+  return axios.post("/api/auth/login", { login, password });
+};
+
 const getUser = () => {
   return axios.get("/api/user");
 };
 
-export { registerUser, getUser };
+export { registerUser, loginUser, getUser };

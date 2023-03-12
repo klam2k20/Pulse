@@ -1,12 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../scss/login.scss";
 import Logo from "../components/Logo";
+import { loginUser } from "../lib/apiRequests";
+import { useUser } from "../context/UserProvider";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await loginUser(email, password);
+      setUser(data);
+      navigate("/");
+      toast.success(`Welcome back, ${data.username}`);
+    } catch (err) {
+      console.log(`Login User: ${err}`);
+      if (err.response.status === 401)
+        toast.error(err.response.data.message, {
+          position: "bottom-left",
+        });
+    }
+  };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await axios.get("/api/user");
+      setUser(data);
+      navigate("/");
+      toast.success(`Welcome back, ${data.username}`);
+    };
+
+    getUser().catch((err) => {
+      console.log(`Get User Profile: ${err}`);
+    });
+  }, []);
 
   return (
     <div className='app__login'>
@@ -15,7 +50,7 @@ function Login() {
           <Logo />
           <span>PULSE</span>
         </div>
-        <form>
+        <form onSubmit={submitForm}>
           <h1>Hello Again!</h1>
           <span>Welcome back!</span>
           <div className='app__login__form__inputs'>
@@ -34,7 +69,7 @@ function Login() {
               className='bottom'
             />
           </div>
-          <button>Login</button>
+          {!email || !password ? <button disabled>Login</button> : <button>Login</button>}
         </form>
         <span>
           Don't have an account? <Link to='/register'>Sign Up</Link>
