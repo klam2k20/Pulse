@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import { useUser } from "./context/UserProvider";
 import { Home, Login, Profile, Register } from "./pages";
 import { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 function App() {
   return (
@@ -23,11 +24,19 @@ function App() {
 }
 
 function Layout() {
-  const { user } = useUser();
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) return navigate("/login");
+    const getUser = async () => {
+      const { data } = await axios.get("/api/user");
+      setUser(data);
+    };
+
+    getUser().catch((err) => {
+      console.log(`Get User Profile: ${err}`);
+      navigate("/login");
+    });
   }, []);
 
   return (

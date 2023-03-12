@@ -21,7 +21,7 @@ function Register() {
       const { data } = await registerUser(name, username, email, password);
       setUser(data);
       navigate("/");
-      toast.success(`Welcome ${username}`);
+      toast.success(`Welcome ${data.username}`);
     } catch (err) {
       console.log(`Register User: ${err}`);
       if (err.response.status === 409)
