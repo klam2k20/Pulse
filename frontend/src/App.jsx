@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Route, Routes, Outlet, useNavigate } from "react-router-dom";
 import "./App.scss";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import { useUser } from "./context/UserProvider";
-import { Home, Login, Profile, Register } from "./pages";
+import { Home, Login, Profile, Register, Explore } from "./pages";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/explore' element={<Explore />} />
         </Route>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
@@ -40,8 +41,8 @@ function Layout() {
   }, []);
 
   return (
-    <div>
-      <Header />
+    <div className='layout'>
+      <Navbar />
       <Outlet />
     </div>
   );
