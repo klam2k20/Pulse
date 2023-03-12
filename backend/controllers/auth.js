@@ -50,8 +50,10 @@ const loginUser = async (req, res) => {
         ? await User.findOne({ email: login })
         : await User.findOne({ username: login });
     if (user && (await user.validatePassword(password))) {
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: 300 });
-      return res.cookie("token", token).json({
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        expiresIn: SECONDS_IN_DAY,
+      });
+      return res.cookie("token", token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
         name: user.name,
         username: user.username,
         email: user.email,
