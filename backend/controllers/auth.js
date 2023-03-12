@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+const SECONDS_IN_DAY = 86400;
 const registerUser = async (req, res) => {
   const { name, username, email, password } = req.body;
 
@@ -20,8 +21,10 @@ const registerUser = async (req, res) => {
       email,
       password,
     });
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: 300 });
-    return res.cookie("token", token, { maxAge: 300000 }).json({
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: SECONDS_IN_DAY,
+    });
+    return res.cookie("token", token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
       name: user.name,
       username: user.username,
       email: user.email,
