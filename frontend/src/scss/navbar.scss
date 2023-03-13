@@ -11,6 +11,11 @@ nav {
   @include flex(center, flex-start);
   gap: 0.5rem;
   padding: 1.5rem 0.75rem;
+
+  .ekg-line {
+    fill: black;
+    stroke: black;
+  }
 }
 
 .app__navbar__actions {

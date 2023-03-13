@@ -9,10 +9,8 @@ import {
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeIconSolid,
-  MagnifyingGlassIcon as MagnifyingGlassIconSolid,
   MapIcon as MapIconSolid,
   HeartIcon as HeartIconSolid,
-  Bars3Icon as Bars3IconSolid,
 } from "@heroicons/react/24/solid";
 import "../scss/navbar.scss";
 import Logo from "./Logo";
@@ -33,7 +31,7 @@ function Navbar() {
       {user && (
         <nav>
           <div className='app__navbar__logo'>
-            <Logo className='app__navbar__logo__icon' />
+            <Logo />
             <h1 className='app__navbar__label'>PULSE</h1>
           </div>
           <div className='app__navbar__actions'>
