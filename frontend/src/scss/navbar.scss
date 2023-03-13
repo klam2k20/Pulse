@@ -3,8 +3,19 @@
 nav {
   @include flex(flex-start, space-between);
   flex-direction: column;
-  padding: 1rem;
   border-right: 1px solid rgb(219, 219, 219);
+  width: 335px;
+  padding: 1rem;
+  @media screen and (max-width: 1440px) {
+    width: 245px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 72px;
+    flex-direction: row;
+    @include flex(center, space-between);
+    width: 100%;
+    border-right: none;
+  }
 }
 
 .app__navbar__logo {
@@ -13,6 +24,15 @@ nav {
   padding: 1.5rem 0.75rem;
   text-decoration: none;
   color: black;
+
+  @media screen and (max-width: 768px) {
+    padding: 0rem;
+
+    .ekg {
+      width: 36px;
+    }
+  }
+
   .ekg-line {
     fill: black;
     stroke: black;
@@ -20,6 +40,10 @@ nav {
 
   h1 {
     pointer-events: none;
+    font-family: $font-family-heading;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -29,8 +53,20 @@ nav {
   flex: 1;
   width: 100%;
   gap: 0.25rem;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: row;
+    @include flex(center, center);
+    gap: 1rem;
+  }
+  @media screen and (max-width: 480px) {
+    gap: 0.25rem;
+  }
 }
 
 .app__navbar__footer {
   width: 100%;
+  @media screen and (max-width: 768px) {
+    width: fit-content;
+  }
 }

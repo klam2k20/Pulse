@@ -1,5 +1,7 @@
 @use "./scss/" as *;
 
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Julee&family=Mate+SC&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -16,4 +18,9 @@ body,
   display: flex;
   @include flex(stretch, space-between);
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column-reverse;
+    @include flex(center, space-between);
+  }
 }

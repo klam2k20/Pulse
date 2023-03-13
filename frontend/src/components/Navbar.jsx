@@ -82,7 +82,12 @@ function Navbar() {
               handleClick={handleClick}
               icon={<img className='app__navbar__item__img' src={user.pfp} alt='user profile' />}
               selectedIcon={
-                <img className='app__navbar__item__img' src={user.pfp} alt='user profile' />
+                <img
+                  className='app__navbar__item__img'
+                  style={{ border: "1px solid black" }}
+                  src={user.pfp}
+                  alt='user profile'
+                />
               }
               selected={selected}
               page='/profile'

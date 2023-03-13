@@ -4,6 +4,10 @@ button {
   background-color: transparent;
   border: none;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: fit-content;
+  }
 }
 
 .app__navbar__item {
@@ -35,5 +39,12 @@ button {
     color: black;
     font-size: 1rem;
     pointer-events: none;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0.25rem;
   }
 }
