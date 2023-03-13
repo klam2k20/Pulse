@@ -17,6 +17,7 @@ import "../scss/navbar.scss";
 import Logo from "./Logo";
 import { useUser } from "../context/UserProvider";
 import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const { user } = useUser();
@@ -31,10 +32,10 @@ function Navbar() {
     <>
       {user && (
         <nav>
-          <div className='app__navbar__logo'>
+          <Link to='/' className='app__navbar__logo'>
             <Logo />
             <h1 className='app__navbar__label'>PULSE</h1>
-          </div>
+          </Link>
 
           <div className='app__navbar__actions'>
             <NavbarLinkItem
