@@ -17,6 +17,10 @@ nav {
     fill: black;
     stroke: black;
   }
+
+  h1 {
+    pointer-events: none;
+  }
 }
 
 .app__navbar__actions {

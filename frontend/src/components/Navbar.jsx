@@ -32,10 +32,12 @@ function Navbar() {
     <>
       {user && (
         <nav>
-          <Link to='/' className='app__navbar__logo'>
-            <Logo />
-            <h1 className='app__navbar__label'>PULSE</h1>
-          </Link>
+          <button onClick={handleClick}>
+            <Link to='/' className='app__navbar__logo' name='Home'>
+              <Logo />
+              <h1 className='app__navbar__label'>PULSE</h1>
+            </Link>
+          </button>
 
           <div className='app__navbar__actions'>
             <NavbarLinkItem
