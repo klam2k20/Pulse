@@ -1,5 +1,7 @@
+import "../scss/home.scss";
+
 function Home() {
-  return <div>Home Page</div>;
+  return <div className='app__home__wrapper'>Home Page</div>;
 }
 
 export default Home;

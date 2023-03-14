@@ -1,0 +1,6 @@
+@use "./index.scss" as *;
+
+.app__explore__wrapper {
+  width: 100%;
+  @include flex(center, center);
+}
