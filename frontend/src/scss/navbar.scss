@@ -6,6 +6,10 @@ nav {
   border-right: 1px solid rgb(219, 219, 219);
   width: 367px;
   padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   @media screen and (max-width: 1024px) {
     width: 277px;
   }
@@ -19,6 +23,10 @@ nav {
     width: 100%;
     border-right: none;
     border-top: 1px solid rgb(219, 219, 219);
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: auto;
   }
 }
 

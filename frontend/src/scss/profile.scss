@@ -2,14 +2,14 @@
 
 .app__profile__wrapper {
   width: 100%;
-  @include flex(center, center);
+  height: 100%;
+  padding: 2rem 1rem;
+  @include flex(flex-start, center);
 }
 
 .app__profile {
   @include flex(center, flex-start);
   flex-direction: column;
-  height: 100%;
-  padding: 2rem 1rem;
   width: 70%;
   gap: 2rem;
 

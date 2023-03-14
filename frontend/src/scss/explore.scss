@@ -2,5 +2,7 @@
 
 .app__explore__wrapper {
   width: 100%;
-  @include flex(center, center);
+  height: 100%;
+  padding: 2rem 1rem;
+  @include flex(flex-start, center);
 }
