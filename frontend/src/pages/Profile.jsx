@@ -43,7 +43,32 @@ function Profile() {
               </span>
               <span>Just going with the flow atm</span>
             </div>
-            <div className='app__profile__main'>GRID POSTS</div>
+            <div className='app__profile__main'>
+              <img src='../../public/pic1.jpeg' />
+              <img src='../../public/pic2.jpeg' />
+              <img src='../../public/pic3.jpeg' />
+              <img src='../../public/pic4.jpeg' />
+              <img src='../../public/pic5.jpeg' />
+              <img src='../../public/pic6.jpeg' />
+              <img src='../../public/pic7.jpeg' />
+              <img src='../../public/pic8.jpeg' />
+              <img src='../../public/pic1.jpeg' />
+              <img src='../../public/pic2.jpeg' />
+              <img src='../../public/pic3.jpeg' />
+              <img src='../../public/pic4.jpeg' />
+              <img src='../../public/pic5.jpeg' />
+              <img src='../../public/pic6.jpeg' />
+              <img src='../../public/pic7.jpeg' />
+              <img src='../../public/pic8.jpeg' />
+              <img src='../../public/pic1.jpeg' />
+              <img src='../../public/pic2.jpeg' />
+              <img src='../../public/pic3.jpeg' />
+              <img src='../../public/pic4.jpeg' />
+              <img src='../../public/pic5.jpeg' />
+              <img src='../../public/pic6.jpeg' />
+              <img src='../../public/pic7.jpeg' />
+              <img src='../../public/pic8.jpeg' />
+            </div>
           </main>
         </section>
       )}

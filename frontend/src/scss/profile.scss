@@ -5,6 +5,16 @@
   height: 100%;
   padding: 2rem 1rem;
   @include flex(flex-start, center);
+  margin-left: 367px;
+  @media screen and (max-width: 1024px) {
+    margin-left: 277px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 72px;
+  }
+  @media screen and (max-width: 480px) {
+    margin-left: 0;
+  }
 }
 
 .app__profile {
@@ -131,4 +141,17 @@
   padding-top: 1rem;
   width: 100%;
   border-top: 1px solid rgb(219, 219, 219);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+
+  @media screen and (max-width: 480px) {
+    gap: 0.25rem;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
 }
