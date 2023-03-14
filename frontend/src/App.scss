@@ -15,11 +15,10 @@ body,
 }
 
 .layout {
-  display: flex;
-  @include flex(stretch, space-between);
+  @include flex(stretch, center);
   height: 100%;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 480px) {
     flex-direction: column-reverse;
     @include flex(center, space-between);
   }

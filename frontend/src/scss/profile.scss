@@ -1,0 +1,134 @@
+@use "./index.scss" as *;
+
+.app__profile__wrapper {
+  width: 100%;
+  @include flex(center, center);
+}
+
+.app__profile {
+  @include flex(center, flex-start);
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem 1rem;
+  width: 70%;
+  gap: 2rem;
+
+  @media screen and (max-width: 1024px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 480px) {
+    @include flex(flex-start, center);
+    gap: 1rem;
+    width: 100%;
+  }
+}
+
+.app__profile__header {
+  @include flex(center, space-between);
+  width: 100%;
+
+  @media screen and (max-width: 735px) {
+    gap: 1rem;
+  }
+
+  &__img {
+    flex: 1;
+    @include flex(center, center);
+
+    @media screen and (max-width: 735px) {
+      flex: 0;
+      @include flex(center, flex-start);
+    }
+
+    img {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 50%;
+
+      @media screen and (max-width: 735px) {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+  }
+
+  &__bio {
+    flex: 2;
+    flex-direction: column;
+    @include flex(flex-start, center);
+    gap: 1rem;
+
+    &__heading {
+      width: 100%;
+      @include flex(center, flex-start);
+      gap: 1rem;
+      span {
+        font-size: 1.25rem;
+      }
+
+      button {
+        background-color: #efefef;
+        padding: 0.5rem 1rem;
+        width: fit-content;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        cursor: pointer;
+
+        @media screen and (max-width: 735px) {
+          width: 60%;
+        }
+      }
+
+      @media screen and (max-width: 735px) {
+        flex-direction: column;
+        @include flex(flex-start, flex-start);
+      }
+    }
+
+    &__stats {
+      @include flex(center, flex-start);
+      gap: 2rem;
+
+      span {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+      }
+
+      @media screen and (max-width: 735px) {
+        display: none;
+      }
+    }
+
+    &__main {
+      flex-direction: column;
+      @include flex(flex-start, center);
+      span {
+        line-height: 1.25rem;
+      }
+      @media screen and (max-width: 735px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.app__profile__header__bio__main_mobile {
+  width: 100%;
+  display: none;
+  @media screen and (max-width: 735px) {
+    flex-direction: column;
+    @include flex(flex-start, flex-start);
+    span {
+      line-height: 1.25rem;
+    }
+  }
+}
+
+.app__profile__main {
+  width: 100%;
+  border-top: 1px solid rgb(219, 219, 219);
+}

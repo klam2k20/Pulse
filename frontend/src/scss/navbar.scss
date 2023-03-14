@@ -4,13 +4,16 @@ nav {
   @include flex(flex-start, space-between);
   flex-direction: column;
   border-right: 1px solid rgb(219, 219, 219);
-  width: 335px;
+  width: 367px;
   padding: 1rem;
-  @media screen and (max-width: 1440px) {
-    width: 245px;
+  @media screen and (max-width: 1024px) {
+    width: 277px;
   }
   @media screen and (max-width: 768px) {
     width: 72px;
+  }
+
+  @media screen and (max-width: 480px) {
     flex-direction: row;
     @include flex(center, space-between);
     width: 100%;
@@ -27,6 +30,14 @@ nav {
   color: black;
 
   @media screen and (max-width: 768px) {
+    padding: 1.5rem 0rem;
+
+    .ekg {
+      width: 36px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
     padding: 0rem;
 
     .ekg {
@@ -55,12 +66,13 @@ nav {
   width: 100%;
   gap: 0.25rem;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
+    width: fit-content;
+  }
+
+  @media screen and (max-width: 480px) {
     flex-direction: row;
     @include flex(center, center);
-    gap: 1rem;
-  }
-  @media screen and (max-width: 480px) {
     gap: 0.25rem;
   }
 }
