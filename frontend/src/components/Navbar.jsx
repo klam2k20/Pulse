@@ -4,14 +4,15 @@ import {
   MagnifyingGlassIcon,
   MapIcon,
   HeartIcon,
-  MoonIcon,
-  ArrowLeftOnRectangleIcon,
+  Bars3Icon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeIconSolid,
   MapIcon as MapIconSolid,
   HeartIcon as HeartIconSolid,
   MoonIcon as MoonIconSolid,
+  PlusCircleIcon as PlusCircleIconSolid,
 } from "@heroicons/react/24/solid";
 import "../scss/navbar.scss";
 import Logo from "./Logo";
@@ -71,10 +72,10 @@ function Navbar() {
               selected={selected}
             />
             <NavbarButtonItem
-              name={"Dark Mode"}
+              name={"Create"}
               handleClick={handleClick}
-              icon={<MoonIcon />}
-              selectedIcon={<MoonIconSolid />}
+              icon={<PlusCircleIcon />}
+              selectedIcon={<PlusCircleIconSolid />}
               selected={selected}
             />
             <NavbarLinkItem
@@ -84,7 +85,7 @@ function Navbar() {
               selectedIcon={
                 <img
                   className='app__navbar__item__img'
-                  style={{ border: "1px solid black" }}
+                  style={{ border: "2px solid black" }}
                   src={user.pfp}
                   alt='user profile'
                 />
@@ -96,10 +97,10 @@ function Navbar() {
 
           <div className='app__navbar__footer'>
             <NavbarButtonItem
-              name={"Logout"}
+              name={"More"}
               handleClick={handleClick}
-              icon={<ArrowLeftOnRectangleIcon />}
-              selectedIcon={<ArrowLeftOnRectangleIcon style={{ strokeWidth: "2.5" }} />}
+              icon={<Bars3Icon />}
+              selectedIcon={<Bars3Icon style={{ strokeWidth: "2.5" }} />}
               selected={selected}
             />
           </div>
