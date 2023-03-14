@@ -39,6 +39,7 @@ button {
     color: black;
     font-size: 1rem;
     pointer-events: none;
+    text-transform: capitalize;
     @media screen and (max-width: 768px) {
       display: none;
     }

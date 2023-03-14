@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   HomeIcon,
   MagnifyingGlassIcon,
@@ -11,7 +11,6 @@ import {
   HomeIcon as HomeIconSolid,
   MapIcon as MapIconSolid,
   HeartIcon as HeartIconSolid,
-  MoonIcon as MoonIconSolid,
   PlusCircleIcon as PlusCircleIconSolid,
 } from "@heroicons/react/24/solid";
 import "../scss/navbar.scss";
@@ -22,12 +21,19 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const { user } = useUser();
-  const [selected, setSelected] = useState("Home");
+  const [selected, setSelected] = useState("home");
 
   const handleClick = (e) => {
     e.preventDefault();
     setSelected(e.target.name);
   };
+
+  useEffect(() => {
+    const url = window.location.href;
+    const route = url.split("/")[3];
+    if (!route) setSelected("home");
+    else setSelected(route);
+  }, []);
 
   return (
     <>
@@ -42,7 +48,7 @@ function Navbar() {
 
           <div className='app__navbar__actions'>
             <NavbarLinkItem
-              name={"Home"}
+              name={"home"}
               handleClick={handleClick}
               icon={<HomeIcon />}
               selectedIcon={<HomeIconSolid />}
@@ -50,14 +56,14 @@ function Navbar() {
               page='/'
             />
             <NavbarButtonItem
-              name={"Search"}
+              name={"search"}
               handleClick={handleClick}
               icon={<MagnifyingGlassIcon />}
               selectedIcon={<MagnifyingGlassIcon style={{ strokeWidth: "2.5" }} />}
               selected={selected}
             />
             <NavbarLinkItem
-              name={"Explore"}
+              name={"explore"}
               handleClick={handleClick}
               icon={<MapIcon />}
               selectedIcon={<MapIconSolid />}
@@ -65,21 +71,21 @@ function Navbar() {
               page='/explore'
             />
             <NavbarButtonItem
-              name={"Notifications"}
+              name={"notifications"}
               handleClick={handleClick}
               icon={<HeartIcon />}
               selectedIcon={<HeartIconSolid />}
               selected={selected}
             />
             <NavbarButtonItem
-              name={"Create"}
+              name={"create"}
               handleClick={handleClick}
               icon={<PlusCircleIcon />}
               selectedIcon={<PlusCircleIconSolid />}
               selected={selected}
             />
             <NavbarLinkItem
-              name={"Profile"}
+              name={"profile"}
               handleClick={handleClick}
               icon={<img className='app__navbar__item__img' src={user.pfp} alt='user profile' />}
               selectedIcon={
@@ -97,7 +103,7 @@ function Navbar() {
 
           <div className='app__navbar__footer'>
             <NavbarButtonItem
-              name={"More"}
+              name={"more"}
               handleClick={handleClick}
               icon={<Bars3Icon />}
               selectedIcon={<Bars3Icon style={{ strokeWidth: "2.5" }} />}

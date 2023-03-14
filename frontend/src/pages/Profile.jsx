@@ -12,6 +12,7 @@ function Profile() {
               <div className='app__profile__header__img'>
                 <img src={user.pfp} alt='user profile' />
               </div>
+
               <div className='app__profile__header__bio'>
                 <div className='app__profile__header__bio__heading'>
                   <span>{user.username}</span>
@@ -28,7 +29,6 @@ function Profile() {
                     <b>528</b> following
                   </span>
                 </div>
-
                 <div className='app__profile__header__bio__main'>
                   <span>
                     <b>{user.name}</b>
@@ -37,11 +37,26 @@ function Profile() {
                 </div>
               </div>
             </header>
-            <div className='app__profile__header__bio__main_mobile'>
+
+            <div className='app__profile__header__bio__main__mobile'>
               <span>
                 <b>{user.name}</b>
               </span>
               <span>Just going with the flow atm</span>
+            </div>
+            <div className='app__profile__header__bio__stats__mobile'>
+              <span>
+                <b>4</b> <br />
+                posts
+              </span>
+              <span>
+                <b>436</b> <br />
+                followers
+              </span>
+              <span>
+                <b>528</b> <br />
+                following
+              </span>
             </div>
             <div className='app__profile__main'>
               <img src='../../public/pic1.jpeg' />
@@ -67,7 +82,6 @@ function Profile() {
               <img src='../../public/pic5.jpeg' />
               <img src='../../public/pic6.jpeg' />
               <img src='../../public/pic7.jpeg' />
-              <img src='../../public/pic8.jpeg' />
             </div>
           </main>
         </section>
