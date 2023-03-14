@@ -17,13 +17,12 @@
     width: 80%;
   }
   @media screen and (max-width: 768px) {
-    width: 90%;
+    width: 100%;
   }
 
   @media screen and (max-width: 480px) {
     @include flex(flex-start, center);
     gap: 1rem;
-    width: 100%;
   }
 }
 
@@ -129,6 +128,7 @@
 }
 
 .app__profile__main {
+  padding-top: 1rem;
   width: 100%;
   border-top: 1px solid rgb(219, 219, 219);
 }
