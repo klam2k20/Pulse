@@ -1,69 +1,86 @@
 import "../scss/profile.scss";
 import { useUser } from "../context/UserProvider";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { getFollowers, getPosts, getUser } from "../lib/apiRequests";
 
 function Profile() {
-  const [profile, setProfile] = useState({});
   const { user } = useUser();
 
-  useEffect(() => {
-    const url = window.location.href;
-    const username = url.split("/")[4];
-    if (username === user?.username) setProfile(user);
-  }, []);
+  const username = window.location.href.split("/")[4];
+
+  const {
+    data: profileData,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+  } = useQuery(["profile"], () => getUser(username).then((res) => res.data));
+  const {
+    data: postData,
+    isLoading: isPostLoading,
+    isError: isPostError,
+  } = useQuery(["posts"], async () => await getPosts(username).then((res) => res.data));
+  const {
+    data: followerData,
+    isLoading: isFollowerLoading,
+    isError: isFollwoerError,
+  } = useQuery(["followers"], async () => await getFollowers(username).then((res) => res.data));
+
+  if (isProfileLoading || isPostLoading || isFollowerLoading) return <span>"Loading..."</span>;
+  if (isProfileError || isPostError || isFollwoerError) return <span>"Error..."</span>;
 
   return (
     <>
-      {user && (
+      {user && profileData && postData && followerData && (
         <section className='app__profile__wrapper'>
           <main className='app__profile'>
             <header className='app__profile__header'>
               <div className='app__profile__header__img'>
-                <img src={profile.pfp} alt='user profile' />
+                <img src={profileData.pfp} alt='user profile' />
               </div>
 
               <div className='app__profile__header__bio'>
                 <div className='app__profile__header__bio__heading'>
-                  <span>{profile.username}</span>
-                  <button>{profile.username === user.username ? "Edit Profile" : "Follow"}</button>
+                  <span>{profileData.username}</span>
+                  <button>
+                    {profileData.username === user.username ? "Edit Profile" : "Follow"}
+                  </button>
                 </div>
                 <div className='app__profile__header__bio__stats'>
                   <span>
-                    <b>4</b> posts
+                    <b>{postData.length}</b> posts
                   </span>
                   <span>
-                    <b>436</b> followers
+                    <b>{followerData.followers.length}</b> followers
                   </span>
                   <span>
-                    <b>528</b> following
+                    <b>{followerData.following.length}</b> following
                   </span>
                 </div>
                 <div className='app__profile__header__bio__main'>
                   <span>
-                    <b>{profile.name}</b>
+                    <b>{profileData.name}</b>
                   </span>
-                  <span>{profile.bio}</span>
+                  <span>{profileData.bio}</span>
                 </div>
               </div>
             </header>
 
             <div className='app__profile__header__bio__main__mobile'>
               <span>
-                <b>{profile.name}</b>
+                <b>{profileData.name}</b>
               </span>
-              <span>{profile.bio}</span>
+              <span>{profileData.bio}</span>
             </div>
             <div className='app__profile__header__bio__stats__mobile'>
               <span>
-                <b>4</b> <br />
+                <b>{postData.length}</b> <br />
                 posts
               </span>
               <span>
-                <b>436</b> <br />
+                <b>{followerData.followers.length}</b> <br />
                 followers
               </span>
               <span>
-                <b>528</b> <br />
+                <b>{followerData.following.length}</b> <br />
                 following
               </span>
             </div>

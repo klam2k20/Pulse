@@ -11,8 +11,16 @@ const loginUser = (login, password) => {
   return axios.post("/api/auth/login", { login, password });
 };
 
-const getUser = () => {
-  return axios.get("/api/user");
+const getUser = (username) => {
+  return axios.get(`/api/user/${username}`);
 };
 
-export { registerUser, loginUser, getUser };
+const getPosts = (username) => {
+  return axios.get(`/api/post/${username}`);
+};
+
+const getFollowers = (username) => {
+  return axios.get(`/api/follower/${username}`);
+};
+
+export { registerUser, loginUser, getUser, getPosts, getFollowers };
