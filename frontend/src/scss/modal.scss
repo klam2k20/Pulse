@@ -5,6 +5,7 @@
   margin: auto;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  width: min(450px, 90%);
 }
 
 #modal::backdrop {
@@ -20,6 +21,10 @@
   &__header {
     margin: auto;
     font-weight: bold;
+  }
+
+  &__main {
+    width: 100%;
   }
 
   &__footer {
