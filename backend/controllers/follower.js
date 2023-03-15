@@ -10,7 +10,8 @@ const getFollowers = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ message: "Username Not Found" });
     const followers = await Follower.find({ followed: user._id });
-    return res.json(followers);
+    const following = await Follower.find({ follower: user._id });
+    return res.json({ followers, following });
   } catch (err) {
     console.log(`Get Followers: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
