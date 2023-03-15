@@ -6,33 +6,45 @@ import {
   HeartIcon,
   Bars3Icon,
   PlusCircleIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeIconSolid,
   MapIcon as MapIconSolid,
   HeartIcon as HeartIconSolid,
   PlusCircleIcon as PlusCircleIconSolid,
+  UserCircleIcon as UserCircleIconSolid,
 } from "@heroicons/react/24/solid";
 import "../scss/navbar.scss";
 import Logo from "./Logo";
 import { useUser } from "../context/UserProvider";
 import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+const DEFAULT_PFP =
+  "https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png";
 
 function Navbar() {
   const { user } = useUser();
   const [selected, setSelected] = useState("home");
+  const navigate = useNavigate();
 
   const handleClick = (e) => {
     e.preventDefault();
     setSelected(e.target.name);
+    if (e.target.name === "profile") {
+      navigate(`/profile/${user.username}`);
+    }
   };
 
   useEffect(() => {
     const url = window.location.href;
     const route = url.split("/")[3];
     if (!route) setSelected("home");
-    else setSelected(route);
+    else if (route === "profile") {
+      if (url.split("/")[4] === user?.username) setSelected("profile");
+      else setSelected();
+    } else setSelected(route);
   }, []);
 
   return (
@@ -87,14 +99,24 @@ function Navbar() {
             <NavbarLinkItem
               name={"profile"}
               handleClick={handleClick}
-              icon={<img className='app__navbar__item__img' src={user.pfp} alt='user profile' />}
+              icon={
+                user.pfp !== DEFAULT_PFP ? (
+                  <img className='app__navbar__item__img' src={user.pfp} alt='user profile' />
+                ) : (
+                  <UserCircleIcon />
+                )
+              }
               selectedIcon={
-                <img
-                  className='app__navbar__item__img'
-                  style={{ border: "2px solid black" }}
-                  src={user.pfp}
-                  alt='user profile'
-                />
+                user.pfp !== DEFAULT_PFP ? (
+                  <img
+                    className='app__navbar__item__img'
+                    style={{ border: "2px solid black" }}
+                    src={user.pfp}
+                    alt='user profile'
+                  />
+                ) : (
+                  <UserCircleIconSolid />
+                )
               }
               selected={selected}
               page='/profile'

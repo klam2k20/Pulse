@@ -1,8 +1,17 @@
 import "../scss/profile.scss";
 import { useUser } from "../context/UserProvider";
+import { useEffect, useState } from "react";
 
 function Profile() {
+  const [profile, setProfile] = useState({});
   const { user } = useUser();
+
+  useEffect(() => {
+    const url = window.location.href;
+    const username = url.split("/")[4];
+    if (username === user?.username) setProfile(user);
+  }, []);
+
   return (
     <>
       {user && (
@@ -10,13 +19,13 @@ function Profile() {
           <main className='app__profile'>
             <header className='app__profile__header'>
               <div className='app__profile__header__img'>
-                <img src={user.pfp} alt='user profile' />
+                <img src={profile.pfp} alt='user profile' />
               </div>
 
               <div className='app__profile__header__bio'>
                 <div className='app__profile__header__bio__heading'>
-                  <span>{user.username}</span>
-                  <button>Edit Profile</button>
+                  <span>{profile.username}</span>
+                  <button>{profile.username === user.username ? "Edit Profile" : "Follow"}</button>
                 </div>
                 <div className='app__profile__header__bio__stats'>
                   <span>
@@ -31,18 +40,18 @@ function Profile() {
                 </div>
                 <div className='app__profile__header__bio__main'>
                   <span>
-                    <b>{user.name}</b>
+                    <b>{profile.name}</b>
                   </span>
-                  <span>Just going with the flow atm</span>
+                  <span>{profile.bio}</span>
                 </div>
               </div>
             </header>
 
             <div className='app__profile__header__bio__main__mobile'>
               <span>
-                <b>{user.name}</b>
+                <b>{profile.name}</b>
               </span>
-              <span>Just going with the flow atm</span>
+              <span>{profile.bio}</span>
             </div>
             <div className='app__profile__header__bio__stats__mobile'>
               <span>
