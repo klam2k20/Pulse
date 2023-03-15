@@ -2,11 +2,18 @@ import "../scss/profile.scss";
 import { useUser } from "../context/UserProvider";
 import { useQuery } from "react-query";
 import { getFollowers, getPosts, getUser } from "../lib/apiRequests";
+import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
 
 function Profile() {
   const { user } = useUser();
-
   const username = window.location.href.split("/")[4];
+
+  const editProfile = (e) => {
+    console.log("Edit profile");
+    e.preventDefault();
+    const modal = document.getElementById("modal");
+    modal.showModal();
+  };
 
   const {
     data: profileData,
@@ -24,6 +31,7 @@ function Profile() {
     isError: isFollwoerError,
   } = useQuery(["followers"], async () => await getFollowers(username).then((res) => res.data));
 
+  // Add loading and error pages
   if (isProfileLoading || isPostLoading || isFollowerLoading) return <span>"Loading..."</span>;
   if (isProfileError || isPostError || isFollwoerError) return <span>"Error..."</span>;
 
@@ -40,9 +48,11 @@ function Profile() {
               <div className='app__profile__header__bio'>
                 <div className='app__profile__header__bio__heading'>
                   <span>{profileData.username}</span>
-                  <button>
-                    {profileData.username === user.username ? "Edit Profile" : "Follow"}
-                  </button>
+                  {profileData.username === user.username ? (
+                    <button onClick={editProfile}>Edit Profile</button>
+                  ) : (
+                    <button>Follow</button>
+                  )}
                 </div>
                 <div className='app__profile__header__bio__stats'>
                   <span>
@@ -110,6 +120,8 @@ function Profile() {
               <img src='../../public/pic7.jpeg' />
             </div>
           </main>
+
+          <UpdateProfileModal />
         </section>
       )}
     </>

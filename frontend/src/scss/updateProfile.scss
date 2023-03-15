@@ -1,0 +1,62 @@
+@use "../scss/index.scss" as *;
+
+form {
+  @include flex(flex-start, center);
+  flex-direction: column;
+}
+
+.update__profile__img {
+  @include flex(center, center);
+  gap: 1rem;
+  border-top: 1px solid rgb(219, 219, 219);
+  border-bottom: 1px solid rgb(219, 219, 219);
+  padding: 0.5rem 0;
+
+  img {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+  }
+
+  div {
+    @include flex(flex-start, center);
+    flex-direction: column;
+
+    span {
+      @include flex(center, center);
+      gap: 0.25rem;
+      svg {
+        height: 24px;
+        width: 24px;
+      }
+    }
+  }
+}
+
+.update__profile__main {
+  @include flex(flex-start, center);
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 1px solid rgb(219, 219, 219);
+  padding: 0.5rem 0;
+
+  div {
+    @include flex(flex-start, space-between);
+    width: 100%;
+
+    input,
+    select,
+    textarea {
+      width: 12rem;
+      border: 0px;
+      outline: none;
+      border-bottom: 1px solid rgb(219, 219, 219);
+      padding: 0.5rem 0;
+    }
+
+    textarea {
+      border-bottom: 0px;
+      resize: none;
+    }
+  }
+}

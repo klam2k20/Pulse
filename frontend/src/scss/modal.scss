@@ -1,0 +1,30 @@
+@use "../scss/index.scss" as *;
+
+#modal {
+  border: none;
+  margin: auto;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+#modal::backdrop {
+  background: black;
+  opacity: 0.4;
+}
+
+.modal__content {
+  @include flex(flex-start, center);
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__header {
+    margin: auto;
+    font-weight: bold;
+  }
+
+  &__footer {
+    @include flex(center, space-around);
+    width: 100%;
+    gap: 0.5rem;
+  }
+}

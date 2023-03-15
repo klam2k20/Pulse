@@ -23,3 +23,21 @@ body,
     @include flex(center, space-between);
   }
 }
+
+.primary__btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: rgb(213, 42, 116);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.secondary__btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid gray;
+  cursor: pointer;
+}
