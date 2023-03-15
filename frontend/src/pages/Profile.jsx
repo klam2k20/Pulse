@@ -9,7 +9,6 @@ function Profile() {
   const username = window.location.href.split("/")[4];
 
   const editProfile = (e) => {
-    console.log("Edit profile");
     e.preventDefault();
     const modal = document.getElementById("modal");
     modal.showModal();

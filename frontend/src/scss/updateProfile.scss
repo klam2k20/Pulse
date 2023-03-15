@@ -23,10 +23,16 @@ form {
   div {
     @include flex(flex-start, center);
     flex-direction: column;
+    gap: 0.5rem;
 
+    .update__profile__upload__img,
     span {
       @include flex(center, center);
       gap: 0.5rem;
+      cursor: pointer;
+      input {
+        display: none;
+      }
       svg {
         height: 24px;
         width: 24px;
