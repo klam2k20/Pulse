@@ -1,4 +1,5 @@
 require("dotenv").config();
+const uploadRouter = require("./routes/upload");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
@@ -14,10 +15,12 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors({ credentials: true, origin: process.env.CLIENT }));
 app.use(cookieParser());
+app.use("/upload", uploadRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/follower", followerRouter);
+
 dbConnection
   .then((db) => {
     if (!db) return process.exit(1);
