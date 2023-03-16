@@ -40,6 +40,7 @@ function UpdateProfileModal() {
     e.preventDefault();
     const modal = document.getElementById("modal");
     modal.close();
+    setSelectedFile(undefined);
     setProfile({
       name: user.name,
       username: user.username,
