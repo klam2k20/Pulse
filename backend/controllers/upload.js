@@ -11,10 +11,10 @@ const uploadPhoto = (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No File Uploaded" });
   const { originalname, buffer } = req.file;
 
-  /** Create file inside GCS bucket */
-  const blob = bucket.file(originalname);
+  /** Create a binary file inside GCS bucket */
+  const blob = bucket.file(`${req.user._id}-${originalname}-${Date.now()}`);
 
-  /** Create a write stream */
+  /** Create a write stream. Resumable should be set to false for uploads less than 5MB */
   const blobStream = blob.createWriteStream({
     resumable: false,
     metadata: {
@@ -22,12 +22,13 @@ const uploadPhoto = (req, res) => {
     },
   });
 
+  /** Once write stream is done return the public url */
   blobStream.on("finish", () => {
     const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-    console.log(publicUrl);
     res.status(200).send(publicUrl);
   });
 
+  /** Before closing the stream write the buffer */
   blobStream.end(buffer);
 };
 
