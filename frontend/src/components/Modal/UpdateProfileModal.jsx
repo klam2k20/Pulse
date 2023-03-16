@@ -36,6 +36,7 @@ function UpdateProfileModal() {
   const handlePhotoPreview = (e) => {
     if (!e.target.files || e.target.files.length === 0) setSelectedFile(undefined);
     else {
+      /** Check photo size is <5MB */
       if (e.target.files[0].size > maxImgSize) {
         toast.error("File Size Limited Exceeded. Please Select a File Smaller than 5MB");
         return;
@@ -44,8 +45,32 @@ function UpdateProfileModal() {
     }
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
+
+    /** Compress image before uploading */
+    const image = new Image();
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onload = (event) => {
+      image.src = event.target.result;
+      image.onload = () => {
+        context.drawImage(image, 0, 0, image.width, image.height);
+        canvas.toBlob(
+          (blob) => {
+            const compressedFile = new File([blob], selectedFile.name, {
+              type: selectedFile.type,
+            });
+            console.log(compressedFile);
+            // Upload the compressed file to a server or display it in the UI
+          },
+          selectedFile.type,
+          0.7
+        ); // 60% quality
+      };
+    };
   };
 
   const handleCancel = (e) => {
