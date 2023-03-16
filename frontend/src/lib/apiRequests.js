@@ -23,4 +23,10 @@ const getFollowers = (username) => {
   return axios.get(`/api/follower/${username}`);
 };
 
-export { registerUser, loginUser, getUser, getPosts, getFollowers };
+const uploadPhoto = (photo) => {
+  const formData = new FormData();
+  formData.append("photo", photo);
+  return axios.post("/upload", formData, { headers: { "Content-Type": "multipart/form-data" } });
+};
+
+export { registerUser, loginUser, getUser, getPosts, getFollowers, uploadPhoto };

@@ -4,6 +4,7 @@ import "../../scss/updateProfile.scss";
 import { useUser } from "../../context/UserProvider";
 import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-hot-toast";
+import { uploadPhoto } from "../../lib/apiRequests";
 
 const maxImgSize = 5 * 1024 * 1024;
 
@@ -48,29 +49,7 @@ function UpdateProfileModal() {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    /** Compress image before uploading */
-    const image = new Image();
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedFile);
-    reader.onload = (event) => {
-      image.src = event.target.result;
-      image.onload = () => {
-        context.drawImage(image, 0, 0, image.width, image.height);
-        canvas.toBlob(
-          (blob) => {
-            const compressedFile = new File([blob], selectedFile.name, {
-              type: selectedFile.type,
-            });
-            console.log(compressedFile);
-            // Upload the compressed file to a server or display it in the UI
-          },
-          selectedFile.type,
-          0.7
-        ); // 60% quality
-      };
-    };
+    const { data } = await uploadPhoto(selectedFile);
   };
 
   const handleCancel = (e) => {
@@ -88,7 +67,6 @@ function UpdateProfileModal() {
 
   /**
    * Submit update form:
-   * compress image
    * send request to api to upload image and update profile
    */
 
