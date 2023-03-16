@@ -3,10 +3,12 @@ import Modal from "./modal";
 import "../../scss/updateProfile.scss";
 import { useUser } from "../../context/UserProvider";
 import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-hot-toast";
+
+const maxImgSize = 5 * 1024 * 1024;
 
 function UpdateProfileModal() {
   const { user } = useUser();
-
   const [selectedFile, setSelectedFile] = useState();
   const [photoPreview, setPhotoPreview] = useState(user.pfp);
   const [profile, setProfile] = useState({
@@ -33,7 +35,17 @@ function UpdateProfileModal() {
 
   const handlePhotoPreview = (e) => {
     if (!e.target.files || e.target.files.length === 0) setSelectedFile(undefined);
-    else setSelectedFile(e.target.files[0]);
+    else {
+      if (e.target.files[0].size > maxImgSize) {
+        toast.error("File Size Limited Exceeded. Please Select a File Smaller than 5MB");
+        return;
+      }
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
   };
 
   const handleCancel = (e) => {
@@ -51,7 +63,6 @@ function UpdateProfileModal() {
 
   /**
    * Submit update form:
-   * check image size
    * compress image
    * send request to api to upload image and update profile
    */
@@ -113,7 +124,9 @@ function UpdateProfileModal() {
               </div>
             </main>
             <footer className='update__profile__footer'>
-              <button className='primary__btn'>Update</button>
+              <button className='primary__btn' onClick={handleUpdate}>
+                Update
+              </button>
               <button className='secondary__btn' onClick={handleCancel}>
                 Cancel
               </button>
