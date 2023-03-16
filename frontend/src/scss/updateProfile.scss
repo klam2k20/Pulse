@@ -68,3 +68,9 @@ form {
     }
   }
 }
+
+.update__profile__footer {
+  @include flex(center, space-around);
+  width: 100%;
+  gap: 0.5rem;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./modal";
 import "../../scss/updateProfile.scss";
 import { useUser } from "../../context/UserProvider";
@@ -6,31 +6,68 @@ import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 function UpdateProfileModal() {
   const { user } = useUser();
+
+  const [selectedFile, setSelectedFile] = useState();
+  const [photoPreview, setPhotoPreview] = useState(user.pfp);
   const [profile, setProfile] = useState({
     name: user.name,
     username: user.username,
     pronouns: user.pronouns ? user.pronouns : "default",
-    bio: user.bio,
+    bio: user.bio ? user.bio : "",
   });
-  const [img, setImg] = useState(user.pfp);
+
+  useEffect(() => {
+    if (!selectedFile) {
+      setPhotoPreview(user.pfp);
+      return;
+    }
+    const photoURL = URL.createObjectURL(selectedFile);
+    setPhotoPreview(photoURL);
+
+    return () => URL.revokeObjectURL(photoURL);
+  }, [selectedFile]);
 
   const handleChange = (e) => {
     setProfile((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
+  const handlePhotoPreview = (e) => {
+    if (!e.target.files || e.target.files.length === 0) setSelectedFile(undefined);
+    else setSelectedFile(e.target.files[0]);
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    const modal = document.getElementById("modal");
+    modal.close();
+    setProfile({
+      name: user.name,
+      username: user.username,
+      pronouns: user.pronouns ? user.pronouns : "default",
+      bio: user.bio ? user.bio : "",
+    });
+  };
+
+  /**
+   * Submit update form:
+   * check image size
+   * compress image
+   * send request to api to upload image and update profile
+   */
+
   return (
     <>
-      {user && profile && (
+      {profile && (
         <Modal title='Edit Profile'>
           <form>
             <header className='update__profile__img'>
-              <img src={img} alt='Update Photo' />
+              <img src={photoPreview} alt='Update Photo' />
               <div>
                 <span>
                   <label className='update__profile__upload__img'>
                     <PhotoIcon />
                     Upload Photo
-                    <input type='file' accept='image/*' />
+                    <input type='file' accept='image/*' onChange={handlePhotoPreview} />
                   </label>
                 </span>
                 <span style={{ color: "red" }}>
@@ -74,6 +111,12 @@ function UpdateProfileModal() {
                 />
               </div>
             </main>
+            <footer className='update__profile__footer'>
+              <button className='primary__btn'>Update</button>
+              <button className='secondary__btn' onClick={handleCancel}>
+                Cancel
+              </button>
+            </footer>
           </form>
         </Modal>
       )}
