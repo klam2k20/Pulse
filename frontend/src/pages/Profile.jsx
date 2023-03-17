@@ -36,7 +36,7 @@ function Profile() {
 
   return (
     <>
-      {user && profileData && postData && followerData && (
+      {profileData && postData && followerData && (
         <section className='app__profile__wrapper'>
           <main className='app__profile'>
             <header className='app__profile__header'>
@@ -65,18 +65,30 @@ function Profile() {
                   </span>
                 </div>
                 <div className='app__profile__header__bio__main'>
-                  <span>
-                    <b>{profileData.name}</b>
-                  </span>
+                  <div>
+                    <span>
+                      <b>{profileData.name}</b>
+                    </span>
+                    {profileData.pronouns !== "default" && (
+                      <span className='app__profile__header__bio_pronouns'>
+                        {profileData.pronouns}
+                      </span>
+                    )}
+                  </div>
                   <span>{profileData.bio}</span>
                 </div>
               </div>
             </header>
 
             <div className='app__profile__header__bio__main__mobile'>
-              <span>
-                <b>{profileData.name}</b>
-              </span>
+              <div>
+                <span>
+                  <b>{profileData.name}</b>
+                </span>
+                {profileData.pronouns !== "default" && (
+                  <span className='app__profile__header__bio_pronouns'>{profileData.pronouns}</span>
+                )}
+              </div>
               <span>{profileData.bio}</span>
             </div>
             <div className='app__profile__header__bio__stats__mobile'>

@@ -22,7 +22,7 @@ import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
 import { Link, useNavigate } from "react-router-dom";
 
 const DEFAULT_PFP =
-  "https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png";
+  "https://storage.googleapis.com/pulse_photo_bucket/641236b9b6918058560edfbb-default.png-1679019738104";
 
 function Navbar() {
   const { user } = useUser();

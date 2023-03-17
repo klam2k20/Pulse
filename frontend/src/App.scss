@@ -41,3 +41,8 @@ body,
   border: 1px solid gray;
   cursor: pointer;
 }
+
+input:read-only {
+  background: rgba(235, 235, 235, 0.5);
+  cursor: not-allowed;
+}

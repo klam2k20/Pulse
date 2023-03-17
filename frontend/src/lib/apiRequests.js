@@ -29,4 +29,8 @@ const uploadPhoto = (photo) => {
   return axios.post("/upload", formData, { headers: { "Content-Type": "multipart/form-data" } });
 };
 
-export { registerUser, loginUser, getUser, getPosts, getFollowers, uploadPhoto };
+const updateUser = (username, name, pronouns, bio, pfp) => {
+  return axios.put(`/api/user/${username}`, { name, pronouns, bio, pfp });
+};
+
+export { registerUser, loginUser, getUser, getPosts, getFollowers, uploadPhoto, updateUser };

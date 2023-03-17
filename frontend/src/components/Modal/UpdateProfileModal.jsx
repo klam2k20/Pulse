@@ -4,12 +4,13 @@ import "../../scss/updateProfile.scss";
 import { useUser } from "../../context/UserProvider";
 import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-hot-toast";
-import { uploadPhoto } from "../../lib/apiRequests";
+import { uploadPhoto, updateUser } from "../../lib/apiRequests";
+import { useMutation, useQueryClient } from "react-query";
 
 const maxImgSize = 5 * 1024 * 1024;
 
 function UpdateProfileModal() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [selectedFile, setSelectedFile] = useState();
   const [photoPreview, setPhotoPreview] = useState(user.pfp);
   const [profile, setProfile] = useState({
@@ -30,6 +31,19 @@ function UpdateProfileModal() {
     return () => URL.revokeObjectURL(photoURL);
   }, [selectedFile]);
 
+  const queryClient = useQueryClient();
+  const userMutation = useMutation(
+    (u) => updateUser(u.username, u.name, u.pronouns, u.bio, u.pfp).then((res) => res.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries(["profile"]),
+    }
+  );
+
+  const closeModal = () => {
+    const modal = document.getElementById("modal");
+    modal.close();
+  };
+
   const handleChange = (e) => {
     setProfile((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -48,14 +62,40 @@ function UpdateProfileModal() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
-    const { data } = await uploadPhoto(selectedFile);
+    try {
+      let pfp = photoPreview;
+      if (selectedFile) {
+        const { data } = await uploadPhoto(selectedFile);
+        pfp = data;
+      }
+      userMutation.mutate(
+        {
+          username: user.username,
+          name: profile.name,
+          pronouns: profile.pronouns,
+          bio: profile.bio,
+          pfp,
+        },
+        {
+          onSuccess: (data) =>
+            setUser((prev) => ({
+              ...prev,
+              name: data.name,
+              pronouns: data.pronouns,
+              bio: data.bio,
+              pfp: data.pfp,
+            })),
+        }
+      );
+      closeModal();
+    } catch (err) {
+      //TODO Display toast with error
+    }
   };
 
   const handleCancel = (e) => {
     e.preventDefault();
-    const modal = document.getElementById("modal");
-    modal.close();
+    closeModal();
     setSelectedFile(undefined);
     setProfile({
       name: user.name,
@@ -64,11 +104,6 @@ function UpdateProfileModal() {
       bio: user.bio ? user.bio : "",
     });
   };
-
-  /**
-   * Submit update form:
-   * send request to api to upload image and update profile
-   */
 
   return (
     <>
@@ -97,7 +132,7 @@ function UpdateProfileModal() {
               </div>
               <div>
                 <label htmlFor='username'> Username </label>
-                <input type='text' id='username' value={profile.username} onChange={handleChange} />
+                <input type='text' id='username' value={profile.username} readOnly />
               </div>
               <div>
                 <label htmlFor='pronouns'>Pronouns </label>
