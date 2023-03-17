@@ -8,6 +8,8 @@ import { uploadPhoto, updateUser } from "../../lib/apiRequests";
 import { useMutation, useQueryClient } from "react-query";
 
 const maxImgSize = 5 * 1024 * 1024;
+const defaultPhoto =
+  "https://storage.googleapis.com/pulse_photo_bucket/641236b9b6918058560edfbb-default.png-1679019738104";
 
 function UpdateProfileModal() {
   const { user, setUser } = useUser();
@@ -23,6 +25,9 @@ function UpdateProfileModal() {
   useEffect(() => {
     if (!selectedFile) {
       setPhotoPreview(user.pfp);
+      return;
+    } else if (selectedFile.name && selectedFile.name === "default") {
+      setPhotoPreview("../../../public/default.png");
       return;
     }
     const photoURL = URL.createObjectURL(selectedFile);
@@ -63,8 +68,9 @@ function UpdateProfileModal() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      let pfp = photoPreview;
-      if (selectedFile) {
+      let pfp;
+      if (photoPreview === "../../../public/default.png") pfp = defaultPhoto;
+      else if (selectedFile) {
         const { data } = await uploadPhoto(selectedFile);
         pfp = data;
       }
@@ -89,7 +95,8 @@ function UpdateProfileModal() {
       );
       closeModal();
     } catch (err) {
-      //TODO Display toast with error
+      console.log(`Update User Profile: ${err}`);
+      toast.error("Error Updating Profile. Please Try Again Shortly.");
     }
   };
 
@@ -105,6 +112,11 @@ function UpdateProfileModal() {
     });
   };
 
+  const handleRemovePhoto = (e) => {
+    e.preventDefault();
+    setSelectedFile({ name: "default" });
+  };
+
   return (
     <>
       {profile && (
@@ -117,10 +129,15 @@ function UpdateProfileModal() {
                   <label className='update__profile__upload__img'>
                     <PhotoIcon />
                     Upload Photo
-                    <input type='file' accept='image/*' onChange={handlePhotoPreview} />
+                    <input
+                      type='file'
+                      accept='image/*'
+                      onChange={handlePhotoPreview}
+                      onClick={(e) => (e.target.value = null)}
+                    />
                   </label>
                 </span>
-                <span style={{ color: "red" }}>
+                <span style={{ color: "red" }} onClick={handleRemovePhoto}>
                   <TrashIcon /> Remove Current Photo
                 </span>
               </div>
