@@ -3,16 +3,12 @@ import { useUser } from "../context/UserProvider";
 import { useQuery } from "react-query";
 import { getFollowers, getPosts, getUser } from "../lib/apiRequests";
 import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
+import { useState } from "react";
 
 function Profile() {
   const { user } = useUser();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const username = window.location.href.split("/")[4];
-
-  const editProfile = (e) => {
-    e.preventDefault();
-    const modal = document.getElementById("modal");
-    modal.showModal();
-  };
 
   const {
     data: profileData,
@@ -36,7 +32,7 @@ function Profile() {
 
   return (
     <>
-      {profileData && postData && followerData && (
+      {user && profileData && postData && followerData && (
         <>
           <main className='app__profile'>
             <header className='app__profile__header'>
@@ -48,7 +44,7 @@ function Profile() {
                 <div className='app__profile__header__bio__heading'>
                   <span>{profileData.username}</span>
                   {profileData.username === user.username ? (
-                    <button onClick={editProfile}>Edit Profile</button>
+                    <button onClick={() => setIsModalOpen(true)}>Edit Profile</button>
                   ) : (
                     <button>Follow</button>
                   )}
@@ -132,7 +128,7 @@ function Profile() {
             </div>
           </main>
 
-          <UpdateProfileModal />
+          <UpdateProfileModal isOpen={isModalOpen} close={() => setIsModalOpen(false)} />
         </>
       )}
     </>

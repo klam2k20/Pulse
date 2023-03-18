@@ -8,7 +8,7 @@ import { uploadPhoto, updateUser } from "../../lib/apiRequests";
 import { useMutation, useQueryClient } from "react-query";
 import { defaultSizes, defaultUrls } from "../../lib/constants";
 
-function UpdateProfileModal() {
+function UpdateProfileModal({ isOpen, close }) {
   const { user, setUser } = useUser();
   const [selectedFile, setSelectedFile] = useState();
   const [photoPreview, setPhotoPreview] = useState(user.pfp);
@@ -40,11 +40,6 @@ function UpdateProfileModal() {
       onSuccess: () => queryClient.invalidateQueries(["profile"]),
     }
   );
-
-  const closeModal = () => {
-    const modal = document.getElementById("modal");
-    modal.close();
-  };
 
   const handleChange = (e) => {
     setProfile((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -90,7 +85,7 @@ function UpdateProfileModal() {
             })),
         }
       );
-      closeModal();
+      close();
     } catch (err) {
       console.log(`Update User Profile: ${err}`);
       toast.error("Error Updating Profile. Please Try Again Shortly.");
@@ -99,7 +94,7 @@ function UpdateProfileModal() {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    closeModal();
+    close();
     setSelectedFile(undefined);
     setProfile({
       name: user.name,
@@ -116,8 +111,8 @@ function UpdateProfileModal() {
 
   return (
     <>
-      {profile && (
-        <Modal title='Edit Profile'>
+      {isOpen && profile && (
+        <Modal title='Edit Profile' close={close}>
           <form>
             <header className='update__profile__img'>
               <img src={photoPreview} alt='Update Photo' />
@@ -176,11 +171,11 @@ function UpdateProfileModal() {
               </div>
             </main>
             <footer className='update__profile__footer'>
-              <button className='primary__btn' onClick={handleUpdate}>
-                Update
-              </button>
               <button className='secondary__btn' onClick={handleCancel}>
                 Cancel
+              </button>
+              <button className='primary__btn' onClick={handleUpdate}>
+                Update
               </button>
             </footer>
           </form>
