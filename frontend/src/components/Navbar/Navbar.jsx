@@ -48,7 +48,7 @@ function Navbar() {
   return (
     <>
       {user && (
-        <nav>
+        <nav className='app__navbar'>
           <button onClick={handleClick}>
             <Link to='/' className='app__navbar__logo' name='Home'>
               <Logo />

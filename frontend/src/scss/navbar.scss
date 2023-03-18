@@ -1,6 +1,6 @@
 @use "./index.scss" as *;
 
-nav {
+.app__navbar {
   @include flex(flex-start, space-between);
   flex-direction: column;
   border-right: 1px solid $light-gray;
@@ -19,17 +19,6 @@ nav {
 
   @media screen and (max-width: 480px) {
     display: none;
-    // flex-direction: row;
-    // @include flex(center, space-between);
-    // width: 100%;
-    // border-right: none;
-    // border-top: 1px solid rgb(219, 219, 219);
-    // right: 0;
-    // left: 0;
-    // bottom: 0;
-    // top: auto;
-    // z-index: 10;
-    // background-color: white;
   }
 }
 

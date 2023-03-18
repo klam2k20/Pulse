@@ -1,0 +1,18 @@
+@use "./index.scss" as *;
+
+.app__navfooter {
+  display: none;
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: row;
+    @include flex(center, space-around);
+    width: 100%;
+    border-top: 1px solid $light-gray;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: auto;
+    z-index: 10;
+  }
+}

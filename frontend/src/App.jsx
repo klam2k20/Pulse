@@ -3,6 +3,7 @@ import "./App.scss";
 import Navbar from "./components/Navbar/Navbar";
 import { Home, Login, Profile, Register, Explore } from "./pages";
 import { Toaster } from "react-hot-toast";
+import NavFooter from "./components/Navbar/NavFooter";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function Layout() {
       <section className='app__layout__main__wrapper'>
         <Outlet />
       </section>
+      <NavFooter />
     </div>
   );
 }
