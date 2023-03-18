@@ -60,8 +60,8 @@ function UpdateProfileModal({ isOpen, close }) {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      let pfp;
-      if (photoPreview === "../../../public/default.png") pfp = defaultUrls.defaultPhoto;
+      let pfp = photoPreview;
+      if (pfp === "../../../public/default.png") pfp = defaultUrls.defaultPhoto;
       else if (selectedFile) {
         const { data } = await uploadPhoto(selectedFile);
         pfp = data;
@@ -112,8 +112,17 @@ function UpdateProfileModal({ isOpen, close }) {
   return (
     <>
       {isOpen && profile && (
-        <Modal title='Edit Profile' close={close}>
-          <form>
+        <Modal close={close}>
+          <header className='update__profile__header'>
+            <button className='secondary__btn' onClick={handleCancel}>
+              Cancel
+            </button>
+            <h4>Edit Profile</h4>
+            <button className='primary__btn' onClick={handleUpdate}>
+              Update
+            </button>
+          </header>
+          <form className='update__profile__form'>
             <header className='update__profile__img'>
               <img src={photoPreview} alt='Update Photo' />
               <div>
@@ -170,14 +179,6 @@ function UpdateProfileModal({ isOpen, close }) {
                 />
               </div>
             </main>
-            <footer className='update__profile__footer'>
-              <button className='secondary__btn' onClick={handleCancel}>
-                Cancel
-              </button>
-              <button className='primary__btn' onClick={handleUpdate}>
-                Update
-              </button>
-            </footer>
           </form>
         </Modal>
       )}

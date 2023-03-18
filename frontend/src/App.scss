@@ -42,7 +42,7 @@ body,
   }
 }
 
-.primary__btn {
+.primary__outline__btn {
   width: 100%;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -52,11 +52,25 @@ body,
   cursor: pointer;
 }
 
-.secondary__btn {
+.secondary__outline__btn {
   width: 100%;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid gray;
+  cursor: pointer;
+}
+
+.primary__btn {
+  width: fit-content;
+  color: $primary-color;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.secondary__btn {
+  width: fit-content;
+  border: none;
   cursor: pointer;
 }
 

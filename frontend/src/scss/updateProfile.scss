@@ -1,11 +1,14 @@
 @use "../scss/index.scss" as *;
 
-form {
-  @include flex(flex-start, center);
+.update__profile__header {
+  @include flex(center, space-between);
+  padding-bottom: 0.5rem;
+}
+
+.update__profile__form {
+  @include flex(flex-start, flex-start);
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  position: relative;
 }
 
 .update__profile__img {
@@ -47,9 +50,7 @@ form {
   @include flex(flex-start, flex-start);
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid $light-gray;
   padding: 0.5rem 0;
-  flex: 1;
 
   div {
     @include flex(flex-start, space-between);
@@ -70,13 +71,4 @@ form {
       resize: none;
     }
   }
-}
-
-.update__profile__footer {
-  @include flex(center, space-around);
-  width: 100%;
-  gap: 0.5rem;
-  padding-top: 1rem;
-  position: absolute;
-  bottom: 1rem;
 }
