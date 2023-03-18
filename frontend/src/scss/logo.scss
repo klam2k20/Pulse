@@ -1,3 +1,5 @@
+@use "./index.scss" as *;
+
 .ekg-container {
   display: flex;
   justify-content: center;
@@ -11,8 +13,8 @@
 }
 
 .ekg-line {
-  fill: #da2c74;
-  stroke: #da2c74;
+  fill: $primary-color;
+  stroke: $primary-color;
   stroke-width: 2;
   stroke-linecap: round;
   // animation-name: pulse;

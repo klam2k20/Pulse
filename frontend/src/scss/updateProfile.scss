@@ -9,8 +9,8 @@ form {
 .update__profile__img {
   @include flex(center, center);
   gap: 1rem;
-  border-top: 1px solid rgb(219, 219, 219);
-  border-bottom: 1px solid rgb(219, 219, 219);
+  border-top: 1px solid $light-gray;
+  border-bottom: 1px solid $light-gray;
   padding: 0.5rem 0;
   width: 100%;
 
@@ -45,7 +45,7 @@ form {
   @include flex(flex-start, center);
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid rgb(219, 219, 219);
+  border-bottom: 1px solid $light-gray;
   padding: 0.5rem 0;
 
   div {
@@ -58,7 +58,7 @@ form {
       width: 75%;
       border: 0px;
       outline: none;
-      border-bottom: 1px solid rgb(219, 219, 219);
+      border-bottom: 1px solid $light-gray;
       padding: 0.5rem 0;
     }
 

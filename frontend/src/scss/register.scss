@@ -19,7 +19,7 @@
 
     span {
       font-weight: bold;
-      color: rgb(213, 42, 116);
+      color: $primary-color;
       letter-spacing: 1px;
     }
   }
@@ -44,7 +44,7 @@
       width: 100%;
       padding: 0.5rem 1rem;
       border-radius: 0.5rem;
-      background-color: rgb(213, 42, 116);
+      background-color: $primary-color;
       color: white;
       border: none;
       cursor: pointer;
@@ -60,7 +60,7 @@
   }
 
   a {
-    color: rgb(213, 42, 116);
+    color: $primary-color;
   }
 }
 

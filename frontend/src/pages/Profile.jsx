@@ -37,7 +37,7 @@ function Profile() {
   return (
     <>
       {profileData && postData && followerData && (
-        <section className='app__profile__wrapper'>
+        <>
           <main className='app__profile'>
             <header className='app__profile__header'>
               <div className='app__profile__header__img'>
@@ -133,7 +133,7 @@ function Profile() {
           </main>
 
           <UpdateProfileModal />
-        </section>
+        </>
       )}
     </>
   );

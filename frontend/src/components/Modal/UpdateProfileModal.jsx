@@ -6,10 +6,7 @@ import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-hot-toast";
 import { uploadPhoto, updateUser } from "../../lib/apiRequests";
 import { useMutation, useQueryClient } from "react-query";
-
-const maxImgSize = 5 * 1024 * 1024;
-const defaultPhoto =
-  "https://storage.googleapis.com/pulse_photo_bucket/641236b9b6918058560edfbb-default.png-1679019738104";
+import { defaultSizes, defaultUrls } from "../../lib/constants";
 
 function UpdateProfileModal() {
   const { user, setUser } = useUser();
@@ -57,7 +54,7 @@ function UpdateProfileModal() {
     if (!e.target.files || e.target.files.length === 0) setSelectedFile(undefined);
     else {
       /** Check photo size is <5MB */
-      if (e.target.files[0].size > maxImgSize) {
+      if (e.target.files[0].size > defaultSizes.maxPhotoSize) {
         toast.error("File Size Limited Exceeded. Please Select a File Smaller than 5MB");
         return;
       }
@@ -69,7 +66,7 @@ function UpdateProfileModal() {
     e.preventDefault();
     try {
       let pfp;
-      if (photoPreview === "../../../public/default.png") pfp = defaultPhoto;
+      if (photoPreview === "../../../public/default.png") pfp = defaultUrls.defaultPhoto;
       else if (selectedFile) {
         const { data } = await uploadPhoto(selectedFile);
         pfp = data;

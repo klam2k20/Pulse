@@ -1,6 +1,6 @@
 import { Route, Routes, Outlet } from "react-router-dom";
 import "./App.scss";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import { Home, Login, Profile, Register, Explore } from "./pages";
 import { Toaster } from "react-hot-toast";
 
@@ -25,7 +25,9 @@ function Layout() {
   return (
     <div className='layout'>
       <Navbar />
-      <Outlet />
+      <section className='app__layout__main__wrapper'>
+        <Outlet />
+      </section>
     </div>
   );
 }

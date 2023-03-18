@@ -15,14 +15,12 @@ import {
   PlusCircleIcon as PlusCircleIconSolid,
   UserCircleIcon as UserCircleIconSolid,
 } from "@heroicons/react/24/solid";
-import "../scss/navbar.scss";
-import Logo from "./Logo";
-import { useUser } from "../context/UserProvider";
+import "../../scss/navbar.scss";
+import Logo from "../Logo";
+import { useUser } from "../../context/UserProvider";
 import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
 import { Link, useNavigate } from "react-router-dom";
-
-const DEFAULT_PFP =
-  "https://storage.googleapis.com/pulse_photo_bucket/641236b9b6918058560edfbb-default.png-1679019738104";
+import { defaultUrls } from "../../lib/constants";
 
 function Navbar() {
   const { user } = useUser();
@@ -45,7 +43,7 @@ function Navbar() {
       if (url.split("/")[4] === user?.username) setSelected("profile");
       else setSelected();
     } else setSelected(route);
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -100,14 +98,14 @@ function Navbar() {
               name={"profile"}
               handleClick={handleClick}
               icon={
-                user.pfp !== DEFAULT_PFP ? (
+                user.pfp !== defaultUrls.defaultPhoto ? (
                   <img className='app__navbar__item__img' src={user.pfp} alt='user profile' />
                 ) : (
                   <UserCircleIcon />
                 )
               }
               selectedIcon={
-                user.pfp !== DEFAULT_PFP ? (
+                user.pfp !== defaultUrls.defaultPhoto ? (
                   <img
                     className='app__navbar__item__img'
                     style={{ border: "2px solid black" }}
