@@ -20,7 +20,7 @@ import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
 import { useNavigate } from "react-router-dom";
 import { defaultUrls } from "../../lib/constants";
 
-function NavFooter() {
+function NavFooter({ openPostModal }) {
   const { user } = useUser();
   const [selected, setSelected] = useState("home");
   const navigate = useNavigate();
@@ -30,6 +30,8 @@ function NavFooter() {
     setSelected(e.target.name);
     if (e.target.name === "profile") {
       navigate(`/profile/${user.username}`);
+    } else if (e.target.name === "create") {
+      openPostModal();
     }
   };
 

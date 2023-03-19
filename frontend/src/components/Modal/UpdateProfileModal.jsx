@@ -92,8 +92,7 @@ function UpdateProfileModal({ isOpen, close }) {
     }
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
+  const handleClose = () => {
     close();
     setSelectedFile(undefined);
     setProfile({
@@ -104,6 +103,11 @@ function UpdateProfileModal({ isOpen, close }) {
     });
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    handleClose();
+  };
+
   const handleRemovePhoto = (e) => {
     e.preventDefault();
     setSelectedFile({ name: "default" });
@@ -112,7 +116,7 @@ function UpdateProfileModal({ isOpen, close }) {
   return (
     <>
       {isOpen && profile && (
-        <Modal close={close}>
+        <Modal close={handleClose}>
           <header className='update__profile__header'>
             <button className='secondary__btn' onClick={handleCancel}>
               Cancel

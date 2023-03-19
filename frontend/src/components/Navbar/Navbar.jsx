@@ -22,7 +22,7 @@ import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
 import { Link, useNavigate } from "react-router-dom";
 import { defaultUrls } from "../../lib/constants";
 
-function Navbar() {
+function Navbar({ openPostModal }) {
   const { user } = useUser();
   const [selected, setSelected] = useState("home");
   const navigate = useNavigate();
@@ -32,6 +32,8 @@ function Navbar() {
     setSelected(e.target.name);
     if (e.target.name === "profile") {
       navigate(`/profile/${user.username}`);
+    } else if (e.target.name === "create") {
+      openPostModal();
     }
   };
 
