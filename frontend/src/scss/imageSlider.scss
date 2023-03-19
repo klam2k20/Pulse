@@ -1,0 +1,73 @@
+@use "../scss/index.scss" as *;
+
+.image__slider__wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.image__slider {
+  @include flex(center, center);
+  height: 100%;
+  img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+  }
+}
+
+.image__slider__controls {
+  @include flex(center, center);
+  z-index: 2;
+  position: absolute;
+  @include position(0, 0, 0, 0);
+}
+
+.image__slider__control {
+  background: rgba(52, 52, 52, 0.8);
+  width: fit-content;
+  padding: 0.25rem;
+  border-radius: 50%;
+  z-index: 2;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(104, 104, 104, 0.8);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+  }
+}
+
+.left__control {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+}
+
+.right__control {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+}
+
+.image__slider__dots {
+  @include flex(center, center);
+  gap: 0.25rem;
+  position: absolute;
+  bottom: 0.5rem;
+  width: 100%;
+  .image__slider__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: rgb(168, 168, 168);
+  }
+  .active__dot {
+    background-color: $primary-color;
+  }
+}

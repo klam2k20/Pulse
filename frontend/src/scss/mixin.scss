@@ -3,3 +3,10 @@
   align-items: $align-item;
   justify-content: $justify-content;
 }
+
+@mixin position($top, $bottom, $left, $right) {
+  top: $top;
+  bottom: $bottom;
+  left: $left;
+  right: $right;
+}

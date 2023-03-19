@@ -78,3 +78,7 @@ input:read-only {
   background: rgba(235, 235, 235, 0.5);
   cursor: not-allowed;
 }
+
+input[type="file"] {
+  display: none;
+}
