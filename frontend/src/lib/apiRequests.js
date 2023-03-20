@@ -33,4 +33,17 @@ const updateUser = (username, name, pronouns, bio, pfp) => {
   return axios.put(`/api/user/${username}`, { name, pronouns, bio, pfp });
 };
 
-export { registerUser, loginUser, getUser, getPosts, getFollowers, uploadPhoto, updateUser };
+const sharePost = (images, caption) => {
+  return axios.post("api/post", { images, caption });
+};
+
+export {
+  registerUser,
+  loginUser,
+  getUser,
+  getPosts,
+  getFollowers,
+  uploadPhoto,
+  updateUser,
+  sharePost,
+};

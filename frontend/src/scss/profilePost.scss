@@ -1,0 +1,36 @@
+@use "../scss/index.scss" as *;
+
+.profile__post {
+  position: relative;
+
+  &:hover {
+    .profile__post__overlay {
+      display: flex;
+    }
+  }
+}
+
+.profile__post__overlay {
+  position: absolute;
+  @include position(0, 0, 0, 0);
+  background: rgba(52, 52, 52, 0.3);
+  display: none;
+  transition: all ease-out;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: rgba(255, 255, 255, 0.8);
+  }
+
+  &__top__right {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  &__center {
+    transform: translateY(-50%);
+    gap: 0.5rem;
+  }
+}

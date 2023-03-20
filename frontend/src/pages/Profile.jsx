@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { getFollowers, getPosts, getUser } from "../lib/apiRequests";
 import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
 import { useState } from "react";
+import ProfilePost from "../components/Post/ProfilePost";
 
 function Profile() {
   const { user } = useUser();
@@ -29,7 +30,6 @@ function Profile() {
   // Add loading and error pages
   if (isProfileLoading || isPostLoading || isFollowerLoading) return <span>"Loading..."</span>;
   if (isProfileError || isPostError || isFollwoerError) return <span>"Error..."</span>;
-
   return (
     <>
       {user && profileData && postData && followerData && (
@@ -102,29 +102,9 @@ function Profile() {
               </span>
             </div>
             <div className='app__profile__main'>
-              <img src='../../public/pic1.jpeg' />
-              <img src='../../public/pic2.jpeg' />
-              <img src='../../public/pic3.jpeg' />
-              <img src='../../public/pic4.jpeg' />
-              <img src='../../public/pic5.jpeg' />
-              <img src='../../public/pic6.jpeg' />
-              <img src='../../public/pic7.jpeg' />
-              <img src='../../public/pic8.jpeg' />
-              <img src='../../public/pic1.jpeg' />
-              <img src='../../public/pic2.jpeg' />
-              <img src='../../public/pic3.jpeg' />
-              <img src='../../public/pic4.jpeg' />
-              <img src='../../public/pic5.jpeg' />
-              <img src='../../public/pic6.jpeg' />
-              <img src='../../public/pic7.jpeg' />
-              <img src='../../public/pic8.jpeg' />
-              <img src='../../public/pic1.jpeg' />
-              <img src='../../public/pic2.jpeg' />
-              <img src='../../public/pic3.jpeg' />
-              <img src='../../public/pic4.jpeg' />
-              <img src='../../public/pic5.jpeg' />
-              <img src='../../public/pic6.jpeg' />
-              <img src='../../public/pic7.jpeg' />
+              {postData.map((p) => (
+                <ProfilePost key={p._id} post={p} />
+              ))}
             </div>
           </main>
 

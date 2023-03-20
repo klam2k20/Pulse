@@ -5,16 +5,25 @@ import { PhotoIcon } from "@heroicons/react/24/outline";
 import ImageSlider from "../ImageSlider/ImageSlider";
 import { useUser } from "../../context/UserProvider";
 import { defaultSizes } from "../../lib/constants";
+import { sharePost, uploadPhoto } from "../../lib/apiRequests";
+import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-hot-toast";
 
 function CreatePostModal({ isOpen, close }) {
   const { user } = useUser();
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [caption, setCaption] = useState("");
   const [isDragActive, setIsDragActive] = useState(false);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (selectedFiles.length === 0) setIndex(0);
   }, [selectedFiles]);
+
+  const queryClient = useQueryClient();
+  const postMutation = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
+    onSuccess: () => queryClient.invalidateQueries(["posts"]),
+  });
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -55,6 +64,23 @@ function CreatePostModal({ isOpen, close }) {
     handleClose();
   };
 
+  const handleSharePost = (e) => {
+    e.preventDefault();
+
+    try {
+      const promises = selectedFiles.map((f) => uploadPhoto(f));
+
+      Promise.all(promises).then((res) => {
+        const images = res.map((data) => data.data);
+        postMutation.mutate({ images, caption });
+      });
+      handleClose();
+    } catch (err) {
+      console.log(`Share Post: ${err}`);
+      toast.error("Error Sharing Post. Please Try Again Shortly");
+    }
+  };
+
   return (
     isOpen && (
       <Modal close={handleClose}>
@@ -81,7 +107,9 @@ function CreatePostModal({ isOpen, close }) {
                 Next
               </button>
             ) : (
-              <button className='primary__btn'>Share</button>
+              <button className='primary__btn' onClick={handleSharePost}>
+                Share
+              </button>
             ))}
         </div>
         <div className='flex__center__center create__post__content'>
@@ -130,7 +158,13 @@ function CreatePostModal({ isOpen, close }) {
                   validation={false}
                 />
               </div>
-              <textarea placeholder='Write a caption...' maxLength='2200' cols='80' />
+              <textarea
+                placeholder='Write a caption...'
+                maxLength='2200'
+                cols='80'
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+              />
             </div>
           )}
         </div>

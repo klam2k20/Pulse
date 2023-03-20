@@ -4,7 +4,7 @@ const defaultUrls = {
 };
 
 const defaultSizes = {
-  maxPhotoSize: 0.1 * 1024 * 1024,
+  maxPhotoSize: 5 * 1024 * 1024,
 };
 
 export { defaultUrls, defaultSizes };
