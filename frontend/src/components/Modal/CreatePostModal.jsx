@@ -57,7 +57,7 @@ function CreatePostModal({ isOpen, close }) {
   return (
     isOpen && (
       <Modal close={handleClose}>
-        <div className='create_post__header'>
+        <div className='create__post__header'>
           {index > 0 &&
             (index === 1 ? (
               <button className='secondary__btn' onClick={handleCancel}>
@@ -124,7 +124,7 @@ function CreatePostModal({ isOpen, close }) {
                   validation={false}
                 />
               </div>
-              <textarea placeholder='Write a caption' />
+              <textarea placeholder='Write a caption' maxLength='2200' rows='10' cols='80' />
             </div>
           )}
         </div>
