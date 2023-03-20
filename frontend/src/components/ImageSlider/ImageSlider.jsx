@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  PlusIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import "../../scss/imageSlider.scss";
 import { defaultSizes } from "../../lib/constants";
 import { toast } from "react-hot-toast";
 
-function ImageSlider({ photos, setPhotos }) {
+function ImageSlider({ photos, setPhotos, validation }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -18,38 +23,74 @@ function ImageSlider({ photos, setPhotos }) {
     else if (direction === "right" && index < photos.length - 1) setIndex(index + 1);
   };
 
+  const handleAdditionalUploads = (e) => {
+    e.preventDefault();
+    if (e.target.files.length > 0) {
+      setPhotos((prev) => [...prev, ...e.target.files]);
+    }
+  };
+
+  const handleDeleteUpload = (e) => {
+    e.preventDefault();
+    setPhotos((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+  };
+
   return (
-    <div className='image__slider__wrapper'>
-      <div className='image__slider'>
-        <img
-          src={URL.createObjectURL(photos[index])}
-          alt={photos[index].originalname}
-          style={{
-            border:
-              photos[index].size > defaultSizes.maxPhotoSize ? "2px solid red" : "2px solid green",
-          }}
-        />
-      </div>
-      {photos.length > 1 && (
-        <>
-          {index > 0 && (
-            <button className='image__slider__control left__control'>
-              <ChevronLeftIcon onClick={(e) => handleControls(e, "left")} />
-            </button>
+    <>
+      {photos.length > 0 && (
+        <div className='image__slider__wrapper'>
+          <div className='image__slider'>
+            <img
+              src={URL.createObjectURL(photos[index])}
+              alt={photos[index].originalname}
+              style={{
+                border: validation
+                  ? photos[index].size > defaultSizes.maxPhotoSize
+                    ? "2px solid red"
+                    : "2px solid green"
+                  : "0px",
+              }}
+            />
+          </div>
+          {photos.length > 1 && (
+            <>
+              {index > 0 && (
+                <button className='image__slider__control left__control'>
+                  <ChevronLeftIcon onClick={(e) => handleControls(e, "left")} />
+                </button>
+              )}
+              {index < photos.length - 1 && (
+                <button className='image__slider__control right__control'>
+                  <ChevronRightIcon onClick={(e) => handleControls(e, "right")} />
+                </button>
+              )}
+              <span className='image__slider__dots'>
+                {[...Array(photos.length).keys()].map((i) => (
+                  <div className={`image__slider__dot ${i === index ? "active__dot" : ""}`} />
+                ))}
+              </span>
+            </>
           )}
-          {index < photos.length - 1 && (
-            <button className='image__slider__control right__control'>
-              <ChevronRightIcon onClick={(e) => handleControls(e, "right")} />
-            </button>
+          {validation && (
+            <>
+              <label className='image__slider__upload__more'>
+                <PlusIcon />
+                <input
+                  type='file'
+                  accept='image/*, video/*'
+                  multiple
+                  onChange={handleAdditionalUploads}
+                  onClick={(e) => (e.target.value = null)}
+                />
+              </label>
+              <button className='image__slider__delete' onClick={handleDeleteUpload}>
+                <XMarkIcon />
+              </button>
+            </>
           )}
-          <span className='image__slider__dots'>
-            {[...Array(photos.length).keys()].map((i) => (
-              <div className={`image__slider__dot ${i === index ? "active__dot" : ""}`} />
-            ))}
-          </span>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

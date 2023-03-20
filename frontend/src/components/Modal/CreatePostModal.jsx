@@ -1,13 +1,19 @@
 import Modal from "./modal";
 import "../../scss/createPost.scss";
-import { useState } from "react";
-import { PhotoIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 import ImageSlider from "../ImageSlider/ImageSlider";
+import { useUser } from "../../context/UserProvider";
 
 function CreatePostModal({ isOpen, close }) {
+  const { user } = useUser();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [isDragActive, setIsDragActive] = useState(false);
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (selectedFiles.length === 0) setIndex(0);
+  }, [selectedFiles]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -100,11 +106,25 @@ function CreatePostModal({ isOpen, close }) {
               </label>
             </div>
           )}
-          {index === 1 && <ImageSlider photos={selectedFiles} setPhotos={setSelectedFiles} />}
+          {index === 1 && (
+            <ImageSlider photos={selectedFiles} setPhotos={setSelectedFiles} validation={true} />
+          )}
           {index === 2 && (
             <div className='create__post__caption'>
+              {user && (
+                <div className='create__post__caption__header'>
+                  <img src={user.pfp} alt='User Profile Photo' />
+                  <span>{user.username}</span>
+                </div>
+              )}
+              <div className='create__post__caption__photo'>
+                <ImageSlider
+                  photos={selectedFiles}
+                  setPhotos={setSelectedFiles}
+                  validation={false}
+                />
+              </div>
               <textarea placeholder='Write a caption' />
-              <ImageSlider photos={selectedFiles} setPhotos={setSelectedFiles} />
             </div>
           )}
         </div>

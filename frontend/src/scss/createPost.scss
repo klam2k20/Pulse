@@ -41,6 +41,33 @@
 }
 
 .create__post__caption {
-  @include flex(center, center);
+  @include flex(flex-start, flex-start);
   flex-direction: column;
+  height: 100%;
+  gap: 0.5rem;
+  textarea {
+    resize: none;
+    outline: none;
+    border: 0;
+    padding: 0.25rem 0.5rem;
+    width: 100%;
+    flex: 1;
+  }
+  &__header {
+    @include flex(center, flex-start);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    img {
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+.create__post__caption__photo {
+  width: 100%;
+  height: 75%;
 }

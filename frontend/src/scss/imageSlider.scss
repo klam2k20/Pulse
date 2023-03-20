@@ -16,6 +16,7 @@
 }
 
 .image__slider__control {
+  @include flex(center, center);
   background: rgba(52, 52, 52, 0.8);
   width: fit-content;
   padding: 0.25rem;
@@ -62,5 +63,50 @@
   }
   .active__dot {
     background-color: $primary-color;
+  }
+}
+
+.image__slider__upload__more {
+  position: absolute;
+  z-index: 2;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: rgba(52, 52, 52, 0.8);
+  padding: 0.25rem;
+  border-radius: 50%;
+  cursor: pointer;
+  @include flex(center, center);
+
+  &:hover {
+    background: rgba(104, 104, 104, 0.8);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+  }
+}
+
+.image__slider__delete {
+  position: absolute;
+  z-index: 2;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(52, 52, 52, 0.8);
+  padding: 0.25rem;
+  border-radius: 50%;
+  cursor: pointer;
+  @include flex(center, center);
+  width: fit-content;
+
+  &:hover {
+    background: rgba(104, 104, 104, 0.8);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: white;
   }
 }
