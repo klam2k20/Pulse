@@ -57,7 +57,7 @@ function CreatePostModal({ isOpen, close }) {
   return (
     isOpen && (
       <Modal close={handleClose}>
-        <div className='create__post__header'>
+        <div className='flex__center__center create__post__header'>
           {index > 0 &&
             (index === 1 ? (
               <button className='secondary__btn' onClick={handleCancel}>
@@ -78,13 +78,13 @@ function CreatePostModal({ isOpen, close }) {
               <button className='primary__btn'>Share</button>
             ))}
         </div>
-        <div className='create__post__content'>
+        <div className='flex__center__center create__post__content'>
           {index === 0 && (
             <div
               className={
                 isDragActive
-                  ? "create__post__content__drag drag__active"
-                  : "create__post__content__drag"
+                  ? "flex__center__center create__post__content__drag drag__active"
+                  : "flex__center__center create__post__content__drag"
               }
               onDragEnter={handleDragOver}
               onDragOver={handleDragOver}
@@ -124,7 +124,7 @@ function CreatePostModal({ isOpen, close }) {
                   validation={false}
                 />
               </div>
-              <textarea placeholder='Write a caption' maxLength='2200' rows='10' cols='80' />
+              <textarea placeholder='Write a caption...' maxLength='2200' cols='80' />
             </div>
           )}
         </div>

@@ -39,7 +39,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
     <>
       {photos.length > 0 && (
         <div className='image__slider__wrapper'>
-          <div className='image__slider'>
+          <div className='flex__center__center image__slider'>
             <img
               src={URL.createObjectURL(photos[index])}
               alt={photos[index].originalname}
@@ -55,16 +55,16 @@ function ImageSlider({ photos, setPhotos, validation }) {
           {photos.length > 1 && (
             <>
               {index > 0 && (
-                <button className='image__slider__control left__control'>
+                <button className='flex__center__center image__slider__control left__control'>
                   <ChevronLeftIcon onClick={(e) => handleControls(e, "left")} />
                 </button>
               )}
               {index < photos.length - 1 && (
-                <button className='image__slider__control right__control'>
+                <button className='flex__center__center image__slider__control right__control'>
                   <ChevronRightIcon onClick={(e) => handleControls(e, "right")} />
                 </button>
               )}
-              <span className='image__slider__dots'>
+              <span className='flex__center__center image__slider__dots'>
                 {[...Array(photos.length).keys()].map((i) => (
                   <div className={`image__slider__dot ${i === index ? "active__dot" : ""}`} />
                 ))}
@@ -73,7 +73,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
           )}
           {validation && (
             <>
-              <label className='image__slider__upload__more'>
+              <label className='flex__center__center image__slider__control image__slider__add'>
                 <PlusIcon />
                 <input
                   type='file'
@@ -83,7 +83,9 @@ function ImageSlider({ photos, setPhotos, validation }) {
                   onClick={(e) => (e.target.value = null)}
                 />
               </label>
-              <button className='image__slider__delete' onClick={handleDeleteUpload}>
+              <button
+                className='flex__center__center image__slider__control image__slider__delete'
+                onClick={handleDeleteUpload}>
                 <XMarkIcon />
               </button>
             </>
