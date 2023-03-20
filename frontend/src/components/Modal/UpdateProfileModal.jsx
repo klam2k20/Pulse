@@ -50,7 +50,7 @@ function UpdateProfileModal({ isOpen, close }) {
     else {
       /** Check photo size is <5MB */
       if (e.target.files[0].size > defaultSizes.maxPhotoSize) {
-        toast.error("File Size Limited Exceeded. Please Select a File Smaller than 5MB");
+        toast.error("File Size Limited Exceeded. Please Select a Photo Smaller than 5MB");
         return;
       }
       setSelectedFile(e.target.files[0]);

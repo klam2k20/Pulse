@@ -10,16 +10,9 @@
   height: 100%;
   img {
     width: 100%;
-    aspect-ratio: 1/1;
+    height: 100%;
     object-fit: cover;
   }
-}
-
-.image__slider__controls {
-  @include flex(center, center);
-  z-index: 2;
-  position: absolute;
-  @include position(0, 0, 0, 0);
 }
 
 .image__slider__control {

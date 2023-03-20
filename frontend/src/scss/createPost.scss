@@ -1,9 +1,13 @@
 @use "../scss/index.scss" as *;
 
 .create_post__header {
-  @include flex(center, space-between);
+  @include flex(center, center);
   padding-bottom: 0.5rem;
   border-bottom: 1px solid $light-gray;
+  h4 {
+    text-align: center;
+    width: 100%;
+  }
 }
 
 .create__post__content {
@@ -34,4 +38,9 @@
 
 .drag__active {
   background-color: $light-gray;
+}
+
+.create__post__caption {
+  @include flex(center, center);
+  flex-direction: column;
 }

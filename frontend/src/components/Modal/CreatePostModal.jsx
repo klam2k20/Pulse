@@ -7,7 +7,7 @@ import ImageSlider from "../ImageSlider/ImageSlider";
 function CreatePostModal({ isOpen, close }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [isDragActive, setIsDragActive] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
+  const [index, setIndex] = useState(0);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -25,13 +25,21 @@ function CreatePostModal({ isOpen, close }) {
     setIsDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       setSelectedFiles((prev) => [...prev, ...e.dataTransfer.files]);
-      setActiveStep(1);
+      setIndex(1);
+    }
+  };
+
+  const handleFileUpload = (e) => {
+    e.preventDefault();
+    if (e.target.files.length > 0) {
+      setSelectedFiles((prev) => [...prev, ...e.target.files]);
+      setIndex(1);
     }
   };
 
   const handleClose = () => {
     setSelectedFiles([]);
-    setActiveStep(0);
+    setIndex(0);
     close();
   };
 
@@ -44,14 +52,28 @@ function CreatePostModal({ isOpen, close }) {
     isOpen && (
       <Modal close={handleClose}>
         <div className='create_post__header'>
-          <button className='secondary__btn' onClick={handleCancel}>
-            Cancel
-          </button>
-          <h4>Share</h4>
-          <button className='primary__btn'>Create Post</button>
+          {index > 0 &&
+            (index === 1 ? (
+              <button className='secondary__btn' onClick={handleCancel}>
+                Cancel
+              </button>
+            ) : (
+              <button className='secondary__btn' onClick={() => setIndex(1)}>
+                Previous
+              </button>
+            ))}
+          <h4>Create a New Post</h4>
+          {index > 0 &&
+            (index === 1 ? (
+              <button className='primary__btn' onClick={() => setIndex(2)}>
+                Next
+              </button>
+            ) : (
+              <button className='primary__btn'>Share</button>
+            ))}
         </div>
         <div className='create__post__content'>
-          {activeStep === 0 && (
+          {index === 0 && (
             <div
               className={
                 isDragActive
@@ -72,18 +94,18 @@ function CreatePostModal({ isOpen, close }) {
                   type='file'
                   multiple
                   accept='image/*, video/*'
+                  onChange={handleFileUpload}
                   onClick={(e) => (e.target.value = null)}
                 />
               </label>
             </div>
           )}
-          {activeStep === 1 && (
-            <ImageSlider>
-              {selectedFiles.map((f) => {
-                const imageUrl = URL.createObjectURL(f);
-                return <img src={imageUrl} alt='selected image' />;
-              })}
-            </ImageSlider>
+          {index === 1 && <ImageSlider photos={selectedFiles} setPhotos={setSelectedFiles} />}
+          {index === 2 && (
+            <div className='create__post__caption'>
+              <textarea placeholder='Write a caption' />
+              <ImageSlider photos={selectedFiles} setPhotos={setSelectedFiles} />
+            </div>
           )}
         </div>
       </Modal>
