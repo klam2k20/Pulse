@@ -86,3 +86,8 @@ input:read-only {
 input[type="file"] {
   display: none;
 }
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

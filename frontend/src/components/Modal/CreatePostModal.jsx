@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import ImageSlider from "../ImageSlider/ImageSlider";
 import { useUser } from "../../context/UserProvider";
+import { defaultSizes } from "../../lib/constants";
 
 function CreatePostModal({ isOpen, close }) {
   const { user } = useUser();
@@ -71,7 +72,12 @@ function CreatePostModal({ isOpen, close }) {
           <h4>Create a New Post</h4>
           {index > 0 &&
             (index === 1 ? (
-              <button className='primary__btn' onClick={() => setIndex(2)}>
+              <button
+                className='primary__btn'
+                disabled={
+                  selectedFiles.some((f) => f.size > defaultSizes.maxPhotoSize) ? "disabled" : ""
+                }
+                onClick={() => setIndex(2)}>
                 Next
               </button>
             ) : (

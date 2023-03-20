@@ -13,7 +13,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (photos[index].size > defaultSizes.maxPhotoSize)
+    if (photos[index]?.size > defaultSizes.maxPhotoSize)
       toast.error("Please Select a Photo Smaller than 5MB");
   }, [index]);
 
@@ -33,6 +33,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
   const handleDeleteUpload = (e) => {
     e.preventDefault();
     setPhotos((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+    if (index == photos.length - 1) setIndex((prev) => prev - 1);
   };
 
   return (
@@ -42,7 +43,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
           <div className='flex__center__center image__slider'>
             <img
               src={URL.createObjectURL(photos[index])}
-              alt={photos[index].originalname}
+              alt={photos[index].name}
               style={{
                 border: validation
                   ? photos[index].size > defaultSizes.maxPhotoSize
@@ -66,7 +67,10 @@ function ImageSlider({ photos, setPhotos, validation }) {
               )}
               <span className='flex__center__center image__slider__dots'>
                 {[...Array(photos.length).keys()].map((i) => (
-                  <div className={`image__slider__dot ${i === index ? "active__dot" : ""}`} />
+                  <div
+                    key={photos[i].name}
+                    className={`image__slider__dot ${i === index ? "active__dot" : ""}`}
+                  />
                 ))}
               </span>
             </>

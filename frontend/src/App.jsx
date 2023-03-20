@@ -19,7 +19,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
-      <Toaster position='bottom-center' />
+      <Toaster position='bottom-center' toastOptions={{ duration: 1000 }} />
     </>
   );
 }
