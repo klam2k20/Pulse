@@ -4,6 +4,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const followerRouter = require("./routes/follower");
+const commentRouter = require("./routes/comment");
 const dbConnection = require("./db/connection");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -20,6 +21,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/follower", followerRouter);
+app.use("/api/comment", commentRouter);
 
 dbConnection
   .then((db) => {

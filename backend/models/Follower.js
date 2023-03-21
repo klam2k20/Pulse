@@ -9,6 +9,6 @@ const followerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Follower = mongoose.model("Follwoer", followerSchema);
+const Follower = mongoose.model("Follower", followerSchema);
 
 module.exports = Follower;
