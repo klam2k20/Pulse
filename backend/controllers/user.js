@@ -1,12 +1,19 @@
 const User = require("../models/User");
+const Post = require("../models/Post");
+const Follower = require("../models/Follower");
 
 const getUserProfile = async (req, res) => {
-  if (!req.params.username) return res.json(req.user);
+  let username = req.params.username;
+
+  if (!username) username = req.user.username;
 
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username }, "name username pfp pronouns bio");
     if (!user) return res.status(404).json({ message: "User Not Found" });
-    return res.json(user);
+    const posts = await Post.find({ creator: user._id }, "-updatedAt").sort({ createdAt: -1 });
+    const followers = await Follower.find({ followed: user._id }, "name username");
+    const following = await Follower.find({ follower: user._id }, "name username");
+    return res.json({ user, posts, followers, following });
   } catch (err) {
     console.log(`Get User Profile: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
