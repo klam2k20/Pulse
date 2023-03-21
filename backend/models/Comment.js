@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const commentSchema = new mongoose.Schema(
   {
     user: { type: String, ref: "User", required: true },
-    type: { type: String, enum: ["post", "comment"] },
-    item: { type: String, required: true },
+    parent: { type: String },
+    post: { type: String, ref: "Post", required: true },
+    comment: { type: String, required: true },
   },
   { timestamps: true }
 );
