@@ -1,14 +1,14 @@
 @use "../scss/index.scss" as *;
 
-svg {
-  width: 24px;
-  height: 24px;
-  fill: rgba(255, 255, 255, 0.8);
-}
-
 .profile__post {
   position: relative;
   cursor: pointer;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: rgb(255, 255, 255);
+  }
 
   &:hover {
     .profile__post__overlay {
