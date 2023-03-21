@@ -19,6 +19,10 @@ const getPosts = (username) => {
   return axios.get(`/api/post/${username}`);
 };
 
+const getPost = (username) => {
+  return axios.get(`/api/post/${username}`);
+};
+
 const getFollowers = (username) => {
   return axios.get(`/api/follower/${username}`);
 };

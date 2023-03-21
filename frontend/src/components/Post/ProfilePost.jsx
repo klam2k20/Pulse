@@ -1,13 +1,10 @@
-import {
-  HeartIcon,
-  ChatBubbleBottomCenterTextIcon,
-  Square2StackIcon,
-} from "@heroicons/react/24/solid";
+import { HeartIcon, ChatBubbleOvalLeftIcon, Square2StackIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 import "../../scss/profilePost.scss";
 
 function ProfilePost({ post }) {
   return (
-    <div className='profile__post'>
+    <Link to={`/post/${post._id}`} className='profile__post' state={post}>
       <img src={post.images[0]} alt={`Post ${post._id}`} />
       {post.images.length > 1 && (
         <div className='profile__post__overlay__top__right'>
@@ -17,10 +14,10 @@ function ProfilePost({ post }) {
       <div className='flex__center__center profile__post__overlay'>
         <div className='flex__center__center profile__post__overlay__center'>
           <HeartIcon />
-          <ChatBubbleBottomCenterTextIcon />
+          <ChatBubbleOvalLeftIcon />
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

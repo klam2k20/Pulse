@@ -1,0 +1,6 @@
+@use "../scss/index.scss" as *;
+
+.app__comment {
+  @include flex(center, flex-start);
+  gap: 1rem;
+}

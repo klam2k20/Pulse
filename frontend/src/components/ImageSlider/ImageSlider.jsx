@@ -42,7 +42,12 @@ function ImageSlider({ photos, setPhotos, validation }) {
         <div className='image__slider__wrapper'>
           <div className='flex__center__center image__slider'>
             <img
-              src={URL.createObjectURL(photos[index])}
+              src={
+                typeof photos[index] === "string" &&
+                photos[index].includes("https://storage.googleapis.com")
+                  ? photos[index]
+                  : URL.createObjectURL(photos[index])
+              }
               alt={photos[index].name}
               style={{
                 border: validation
@@ -68,7 +73,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
               <span className='flex__center__center image__slider__dots'>
                 {[...Array(photos.length).keys()].map((i) => (
                   <div
-                    key={photos[i].name}
+                    key={photos[i].name || photos[i]}
                     className={`image__slider__dot ${i === index ? "active__dot" : ""}`}
                   />
                 ))}

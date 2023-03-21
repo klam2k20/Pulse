@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import NavFooter from "./components/Navbar/NavFooter";
 import { useState } from "react";
 import CreatePostModal from "./components/Modal/CreatePostModal";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='/profile/:username' element={<Profile />} />
+          <Route path='/post/:postId' element={<Post />} />
           <Route path='/explore' element={<Explore />} />
         </Route>
         <Route path='/login' element={<Login />} />

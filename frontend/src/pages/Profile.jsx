@@ -1,7 +1,7 @@
 import "../scss/profile.scss";
 import { useUser } from "../context/UserProvider";
 import { useQuery } from "react-query";
-import { getFollowers, getPosts, getUser } from "../lib/apiRequests";
+import { getUser } from "../lib/apiRequests";
 import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
 import { useState } from "react";
 import ProfilePost from "../components/Post/ProfilePost";
@@ -20,6 +20,7 @@ function Profile() {
   // Add loading and error pages
   if (isProfileLoading) return <span>"Loading..."</span>;
   if (isProfileError) return <span>"Error..."</span>;
+  console.log(profileData);
   return (
     <>
       {user && profileData && (
@@ -57,7 +58,7 @@ function Profile() {
                     </span>
                     {profileData.user.pronouns !== "default" && (
                       <span className='app__profile__header__bio_pronouns'>
-                        {profileData.pronouns}
+                        {profileData.user.pronouns}
                       </span>
                     )}
                   </div>
@@ -69,13 +70,15 @@ function Profile() {
             <div className='app__profile__header__bio__main__mobile'>
               <div>
                 <span>
-                  <b>{profileData.name}</b>
+                  <b>{profileData.user.name}</b>
                 </span>
-                {profileData.pronouns !== "default" && (
-                  <span className='app__profile__header__bio_pronouns'>{profileData.pronouns}</span>
+                {profileData.user.pronouns !== "default" && (
+                  <span className='app__profile__header__bio_pronouns'>
+                    {profileData.user.pronouns}
+                  </span>
                 )}
               </div>
-              <span>{profileData.bio}</span>
+              <span>{profileData.user.bio}</span>
             </div>
             <div className='app__profile__header__bio__stats__mobile'>
               <span>
