@@ -11,7 +11,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const getUser = async () => {
       const { data } = await axios.get("/api/user");
-      setUser(data);
+      setUser(data.user);
     };
 
     if (!user) {

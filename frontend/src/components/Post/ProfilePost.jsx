@@ -9,12 +9,12 @@ function ProfilePost({ post }) {
   return (
     <div className='profile__post'>
       <img src={post.images[0]} alt={`Post ${post._id}`} />
+      {post.images.length > 1 && (
+        <div className='profile__post__overlay__top__right'>
+          <Square2StackIcon />
+        </div>
+      )}
       <div className='flex__center__center profile__post__overlay'>
-        {post.images.length > 1 && (
-          <div className='profile__post__overlay__top__right'>
-            <Square2StackIcon />
-          </div>
-        )}
         <div className='flex__center__center profile__post__overlay__center'>
           <HeartIcon />
           <ChatBubbleBottomCenterTextIcon />

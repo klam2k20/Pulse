@@ -22,7 +22,7 @@ function CreatePostModal({ isOpen, close }) {
 
   const queryClient = useQueryClient();
   const postMutation = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
-    onSuccess: () => queryClient.invalidateQueries(["posts"]),
+    onSuccess: () => queryClient.invalidateQueries(["profile"]),
   });
 
   const handleDragOver = (e) => {
@@ -107,7 +107,10 @@ function CreatePostModal({ isOpen, close }) {
                 Next
               </button>
             ) : (
-              <button className='primary__btn' onClick={handleSharePost}>
+              <button
+                className='primary__btn'
+                disabled={selectedFiles.length > 0 && caption !== "" ? "" : "disabled"}
+                onClick={handleSharePost}>
                 Share
               </button>
             ))}

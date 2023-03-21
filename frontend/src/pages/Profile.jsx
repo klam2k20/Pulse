@@ -16,34 +16,24 @@ function Profile() {
     isLoading: isProfileLoading,
     isError: isProfileError,
   } = useQuery(["profile"], () => getUser(username).then((res) => res.data));
-  const {
-    data: postData,
-    isLoading: isPostLoading,
-    isError: isPostError,
-  } = useQuery(["posts"], async () => await getPosts(username).then((res) => res.data));
-  const {
-    data: followerData,
-    isLoading: isFollowerLoading,
-    isError: isFollwoerError,
-  } = useQuery(["followers"], async () => await getFollowers(username).then((res) => res.data));
 
   // Add loading and error pages
-  if (isProfileLoading || isPostLoading || isFollowerLoading) return <span>"Loading..."</span>;
-  if (isProfileError || isPostError || isFollwoerError) return <span>"Error..."</span>;
+  if (isProfileLoading) return <span>"Loading..."</span>;
+  if (isProfileError) return <span>"Error..."</span>;
   return (
     <>
-      {user && profileData && postData && followerData && (
+      {user && profileData && (
         <>
           <main className='app__profile'>
             <header className='app__profile__header'>
               <div className='app__profile__header__img'>
-                <img src={profileData.pfp} alt='user profile' />
+                <img src={profileData.user.pfp} alt='user profile' />
               </div>
 
               <div className='app__profile__header__bio'>
                 <div className='app__profile__header__bio__heading'>
-                  <span>{profileData.username}</span>
-                  {profileData.username === user.username ? (
+                  <span>{profileData.user.username}</span>
+                  {profileData.user.username === user.username ? (
                     <button onClick={() => setIsModalOpen(true)}>Edit Profile</button>
                   ) : (
                     <button>Follow</button>
@@ -51,27 +41,27 @@ function Profile() {
                 </div>
                 <div className='app__profile__header__bio__stats'>
                   <span>
-                    <b>{postData.length}</b> posts
+                    <b>{profileData.posts.length}</b> posts
                   </span>
                   <span>
-                    <b>{followerData.followers.length}</b> followers
+                    <b>{profileData.followers.length}</b> followers
                   </span>
                   <span>
-                    <b>{followerData.following.length}</b> following
+                    <b>{profileData.following.length}</b> following
                   </span>
                 </div>
                 <div className='app__profile__header__bio__main'>
                   <div>
                     <span>
-                      <b>{profileData.name}</b>
+                      <b>{profileData.user.name}</b>
                     </span>
-                    {profileData.pronouns !== "default" && (
+                    {profileData.user.pronouns !== "default" && (
                       <span className='app__profile__header__bio_pronouns'>
                         {profileData.pronouns}
                       </span>
                     )}
                   </div>
-                  <span>{profileData.bio}</span>
+                  <span>{profileData.user.bio}</span>
                 </div>
               </div>
             </header>
@@ -89,20 +79,20 @@ function Profile() {
             </div>
             <div className='app__profile__header__bio__stats__mobile'>
               <span>
-                <b>{postData.length}</b> <br />
+                <b>{profileData.posts.length}</b> <br />
                 posts
               </span>
               <span>
-                <b>{followerData.followers.length}</b> <br />
+                <b>{profileData.followers.length}</b> <br />
                 followers
               </span>
               <span>
-                <b>{followerData.following.length}</b> <br />
+                <b>{profileData.following.length}</b> <br />
                 following
               </span>
             </div>
             <div className='app__profile__main'>
-              {postData.map((p) => (
+              {profileData.posts.map((p) => (
                 <ProfilePost key={p._id} post={p} />
               ))}
             </div>

@@ -1,7 +1,14 @@
 @use "../scss/index.scss" as *;
 
+svg {
+  width: 24px;
+  height: 24px;
+  fill: rgba(255, 255, 255, 0.8);
+}
+
 .profile__post {
   position: relative;
+  cursor: pointer;
 
   &:hover {
     .profile__post__overlay {
@@ -10,24 +17,18 @@
   }
 }
 
+.profile__post__overlay__top__right {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
 .profile__post__overlay {
   position: absolute;
   @include position(0, 0, 0, 0);
   background: rgba(52, 52, 52, 0.3);
   display: none;
   transition: all ease-out;
-
-  svg {
-    width: 24px;
-    height: 24px;
-    fill: rgba(255, 255, 255, 0.8);
-  }
-
-  &__top__right {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-  }
 
   &__center {
     transform: translateY(-50%);
