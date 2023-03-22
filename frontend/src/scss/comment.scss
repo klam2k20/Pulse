@@ -1,6 +1,16 @@
 @use "../scss/index.scss" as *;
 
-.app__comment {
-  @include flex(center, flex-start);
-  gap: 1rem;
+.app__comment__wrapper {
+  @include flex(center, space-between);
+
+  .app__comment {
+    @include flex(center, flex-start);
+    gap: 1rem;
+  }
+
+  svg {
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+  }
 }

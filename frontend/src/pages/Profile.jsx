@@ -5,11 +5,12 @@ import { getUser } from "../lib/apiRequests";
 import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
 import { useState } from "react";
 import ProfilePost from "../components/Post/ProfilePost";
+import { useParams } from "react-router-dom";
 
 function Profile() {
   const { user } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const username = window.location.href.split("/")[4];
+  const { username } = useParams();
 
   const {
     data: profileData,
@@ -28,13 +29,13 @@ function Profile() {
           <main className='app__profile'>
             <header className='app__profile__header'>
               <div className='app__profile__header__img'>
-                <img src={profileData.user.pfp} alt='user profile' />
+                <img src={profileData.pfp} alt='user profile' />
               </div>
 
               <div className='app__profile__header__bio'>
                 <div className='app__profile__header__bio__heading'>
-                  <span>{profileData.user.username}</span>
-                  {profileData.user.username === user.username ? (
+                  <span>{profileData.username}</span>
+                  {profileData.username === user.username ? (
                     <button onClick={() => setIsModalOpen(true)}>Edit Profile</button>
                   ) : (
                     <button>Follow</button>
@@ -42,27 +43,27 @@ function Profile() {
                 </div>
                 <div className='app__profile__header__bio__stats'>
                   <span>
-                    <b>{profileData.posts.length}</b> posts
+                    <b>{profileData.posts}</b> posts
                   </span>
                   <span>
-                    <b>{profileData.followers.length}</b> followers
+                    <b>{profileData.followers}</b> followers
                   </span>
                   <span>
-                    <b>{profileData.following.length}</b> following
+                    <b>{profileData.following}</b> following
                   </span>
                 </div>
                 <div className='app__profile__header__bio__main'>
                   <div>
                     <span>
-                      <b>{profileData.user.name}</b>
+                      <b>{profileData.name}</b>
                     </span>
-                    {profileData.user.pronouns !== "default" && (
+                    {profileData.pronouns !== "default" && (
                       <span className='app__profile__header__bio_pronouns'>
-                        {profileData.user.pronouns}
+                        {profileData.pronouns}
                       </span>
                     )}
                   </div>
-                  <span>{profileData.user.bio}</span>
+                  <span>{profileData.bio}</span>
                 </div>
               </div>
             </header>
@@ -70,34 +71,32 @@ function Profile() {
             <div className='app__profile__header__bio__main__mobile'>
               <div>
                 <span>
-                  <b>{profileData.user.name}</b>
+                  <b>{profileData.name}</b>
                 </span>
-                {profileData.user.pronouns !== "default" && (
-                  <span className='app__profile__header__bio_pronouns'>
-                    {profileData.user.pronouns}
-                  </span>
+                {profileData.pronouns !== "default" && (
+                  <span className='app__profile__header__bio_pronouns'>{profileData.pronouns}</span>
                 )}
               </div>
-              <span>{profileData.user.bio}</span>
+              <span>{profileData.bio}</span>
             </div>
             <div className='app__profile__header__bio__stats__mobile'>
               <span>
-                <b>{profileData.posts.length}</b> <br />
+                <b>{profileData.posts}</b> <br />
                 posts
               </span>
               <span>
-                <b>{profileData.followers.length}</b> <br />
+                <b>{profileData.followers}</b> <br />
                 followers
               </span>
               <span>
-                <b>{profileData.following.length}</b> <br />
+                <b>{profileData.following}</b> <br />
                 following
               </span>
             </div>
             <div className='app__profile__main'>
-              {profileData.posts.map((p) => (
+              {/* {profileData.posts.map((p) => (
                 <ProfilePost key={p._id} post={p} />
-              ))}
+              ))} */}
             </div>
           </main>
 

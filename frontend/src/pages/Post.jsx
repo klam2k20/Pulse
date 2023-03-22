@@ -6,6 +6,7 @@ import "../scss/post.scss";
 import Comment from "../components/Comment";
 
 function Post() {
+  //TODO: USE PFP OR USERNAME FROM POST NOT USER
   const { user } = useUser();
   const location = useLocation();
   const post = location.state;
@@ -15,6 +16,8 @@ function Post() {
         <ImageSlider photos={post.images} />
       </div>
       <div className='app__post__info'>
+        //TODO: Make the header just the caption and create a caption component remove caption //
+        from comments section
         <header className='app__post__header'>
           {user && (
             <>
