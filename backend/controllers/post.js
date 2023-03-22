@@ -1,5 +1,7 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Like = require("../models/Like");
+const Comment = require("../models/Comment");
 
 const getPosts = async (req, res) => {
   let username = req.params.username;
@@ -9,8 +11,18 @@ const getPosts = async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ message: "Username Not Found" });
-    const posts = await Post.find({ userId: user._id }).sort({ createdAt: -1 });
-    return res.json(posts);
+    const posts = await Post.find({ userId: user._id }, "-updatedAt -__v -userId").sort({
+      createdAt: -1,
+    });
+
+    const postsWithLikesAndComments = await Promise.all(
+      posts.map(async (p) => {
+        const likes = await Like.count({ postId: p._id.toString() });
+        const comments = await Comment.count({ postId: p._id.toString() });
+        return { ...p._doc, likes, comments };
+      })
+    );
+    return res.json(postsWithLikesAndComments);
   } catch (err) {
     console.log(`Get Posts: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
