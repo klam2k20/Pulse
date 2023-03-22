@@ -36,17 +36,6 @@
   }
 }
 
-.app__post__header {
-  @include flex(center, flex-start);
-  gap: 1rem;
-  padding-bottom: 1rem;
-  img {
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
-  }
-}
-
 .app__post__comments {
   padding: 1rem 0;
   overflow-y: hidden;
@@ -61,7 +50,7 @@
   }
 }
 
-.app__post__actions {
+.app__post__stats {
   @include flex(center, flex-start);
   gap: 0.5rem;
   width: 100%;
@@ -71,8 +60,8 @@
   }
 }
 
-.app__post__comment {
-  @include flex(center, flex-start);
+.app__post__add__comment {
+  @include flex(flex-start, flex-start);
   width: 100%;
   padding: 0.5rem 0;
   border-top: 1px solid $light-gray;

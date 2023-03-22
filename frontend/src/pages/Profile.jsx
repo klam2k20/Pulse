@@ -27,7 +27,6 @@ function Profile() {
   // Add loading and error pages
   if (isProfileLoading || isPostLoading) return <span>"Loading..."</span>;
   if (isProfileError || isPostError) return <span>"Error..."</span>;
-  console.log(profileData);
   return (
     <>
       {user && profileData && (
