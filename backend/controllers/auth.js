@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Post = require("../models/Post");
+const Follower = require("../models/Follower");
 
 const SECONDS_IN_DAY = 86400;
 
@@ -28,8 +30,9 @@ const registerUser = async (req, res) => {
     return res.cookie("token", token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
       name: user.name,
       username: user.username,
-      email: user.email,
-      token: token,
+      posts: 0,
+      followers: 0,
+      following: 0,
     });
   } catch (err) {
     console.log(`Register User: ${err}`);
@@ -51,14 +54,19 @@ const loginUser = async (req, res) => {
         ? await User.findOne({ email: login })
         : await User.findOne({ username: login });
     if (user && (await user.validatePassword(password))) {
+      const posts = await Post.count({ userId: user._id });
+      const followers = await Follower.count({ followed: user._id });
+      const following = await Follower.count({ follower: user._id });
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: SECONDS_IN_DAY,
       });
       return res.cookie("token", token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
         name: user.name,
         username: user.username,
-        email: user.email,
-        token: token,
+        pfp: user.pfp,
+        posts,
+        followers,
+        following,
       });
     }
     return res.status(401).json({ message: `Invalid ${type} or Password` });
