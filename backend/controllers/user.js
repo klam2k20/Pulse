@@ -10,7 +10,7 @@ const getUserProfile = async (req, res) => {
   try {
     const user = await User.findOne({ username }, "name username pfp pronouns bio");
     if (!user) return res.status(404).json({ message: "User Not Found" });
-    const posts = await Post.find({ creator: user._id }, "-updatedAt").sort({ createdAt: -1 });
+    const posts = await Post.find({ userId: user._id }, "-updatedAt").sort({ createdAt: -1 });
     const followers = await Follower.find({ followed: user._id }, "name username");
     const following = await Follower.find({ follower: user._id }, "name username");
     return res.json({ user, posts, followers, following });

@@ -9,7 +9,7 @@ const getPosts = async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ message: "Username Not Found" });
-    const posts = await Post.find({ creator: user._id }).sort({ createdAt: -1 });
+    const posts = await Post.find({ userId: user._id }).sort({ createdAt: -1 });
     return res.json(posts);
   } catch (err) {
     console.log(`Get Posts: ${err}`);
@@ -30,7 +30,7 @@ const sharePosts = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ message: "User Not Found" });
     const post = await Post.create({
-      creator: user._id,
+      userId: user._id,
       images,
       caption,
     });
