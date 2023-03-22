@@ -13,8 +13,14 @@ function ProfilePost({ post }) {
       )}
       <div className='flex__center__center profile__post__overlay'>
         <div className='flex__center__center profile__post__overlay__center'>
-          <HeartIcon />
-          <ChatBubbleOvalLeftIcon />
+          <span className='flex__center__center'>
+            <HeartIcon />
+            <span>{post.likes}</span>
+          </span>
+          <span className='flex__center__center'>
+            <ChatBubbleOvalLeftIcon />
+            <span>{post.comments}</span>
+          </span>
         </div>
       </div>
     </Link>

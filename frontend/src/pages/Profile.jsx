@@ -1,7 +1,7 @@
 import "../scss/profile.scss";
 import { useUser } from "../context/UserProvider";
 import { useQuery } from "react-query";
-import { getUser } from "../lib/apiRequests";
+import { getPosts, getUser } from "../lib/apiRequests";
 import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
 import { useState } from "react";
 import ProfilePost from "../components/Post/ProfilePost";
@@ -18,9 +18,15 @@ function Profile() {
     isError: isProfileError,
   } = useQuery(["profile"], () => getUser(username).then((res) => res.data));
 
+  const {
+    data: postData,
+    isLoading: isPostLoading,
+    isError: isPostError,
+  } = useQuery(["post"], () => getPosts(username).then((res) => res.data));
+
   // Add loading and error pages
-  if (isProfileLoading) return <span>"Loading..."</span>;
-  if (isProfileError) return <span>"Error..."</span>;
+  if (isProfileLoading || isPostLoading) return <span>"Loading..."</span>;
+  if (isProfileError || isPostError) return <span>"Error..."</span>;
   console.log(profileData);
   return (
     <>
@@ -94,9 +100,9 @@ function Profile() {
               </span>
             </div>
             <div className='app__profile__main'>
-              {/* {profileData.posts.map((p) => (
+              {postData.map((p) => (
                 <ProfilePost key={p._id} post={p} />
-              ))} */}
+              ))}
             </div>
           </main>
 
