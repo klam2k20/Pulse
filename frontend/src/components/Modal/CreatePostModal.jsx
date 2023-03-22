@@ -22,7 +22,7 @@ function CreatePostModal({ isOpen, close }) {
 
   const queryClient = useQueryClient();
   const postMutation = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
-    onSuccess: () => queryClient.invalidateQueries(["profile"]),
+    onSuccess: () => queryClient.invalidateQueries(["post"]),
   });
 
   const handleDragOver = (e) => {
