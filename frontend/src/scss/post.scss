@@ -37,10 +37,13 @@
 }
 
 .app__post__comments {
-  padding: 1rem 0;
-  overflow-y: hidden;
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  gap: 0.75rem;
   flex: 1;
   width: 100%;
+  padding: 1rem 0;
+  overflow-y: hidden;
   border-top: 1px solid $light-gray;
   border-bottom: 1px solid $light-gray;
   img {

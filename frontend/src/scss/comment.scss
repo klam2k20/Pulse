@@ -1,16 +1,55 @@
 @use "../scss/index.scss" as *;
 
 .app__comment__wrapper {
-  @include flex(center, space-between);
-
-  .app__comment {
-    @include flex(center, flex-start);
-    gap: 1rem;
-  }
+  width: 100%;
 
   svg {
     height: 12px;
     width: 12px;
     cursor: pointer;
+  }
+
+  .app__comment {
+    @include flex(flex-start, flex-start);
+    gap: 0.5rem;
+    width: 100%;
+
+    &__content {
+      flex: 1;
+    }
+  }
+
+  .app__comment__stats {
+    @include flex(center, flex-start);
+    gap: 0.5rem;
+    width: 100%;
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+
+    .app__comment__date {
+      color: $light-font;
+    }
+
+    .app__comment__likes,
+    .app__comment__reply {
+      cursor: pointer;
+      font-weight: 600;
+      color: $light-font;
+    }
+  }
+
+  .app__comment__replies {
+    cursor: pointer;
+    font-weight: 600;
+    color: $light-font;
+    font-size: 0.9rem;
+    @include flex(center, flex-start);
+    margin-top: 1rem;
+    .app__comment__reply__line {
+      height: 0;
+      width: 2rem;
+      border-bottom: 1px solid $light-gray;
+      margin-right: 1rem;
+    }
   }
 }

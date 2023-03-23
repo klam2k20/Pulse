@@ -19,10 +19,6 @@ const getPosts = (username) => {
   return axios.get(`/api/post/${username}`);
 };
 
-const getPost = (username) => {
-  return axios.get(`/api/post/${username}`);
-};
-
 const getFollowers = (username) => {
   return axios.get(`/api/follower/${username}`);
 };
@@ -41,6 +37,10 @@ const sharePost = (images, caption) => {
   return axios.post("api/post", { images, caption });
 };
 
+const getComments = (postId) => {
+  return axios.get(`api/comment?postId=${postId}`);
+};
+
 export {
   registerUser,
   loginUser,
@@ -50,4 +50,5 @@ export {
   uploadPhoto,
   updateUser,
   sharePost,
+  getComments,
 };
