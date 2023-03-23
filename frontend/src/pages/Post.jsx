@@ -32,7 +32,7 @@ function Post() {
             <span>An Error Occurred While Fetching Comments. Please refresh</span>
           )}
           {isCommentsLoading && <span>Loading Comments...</span>}
-          {comments && comments.map((c) => <Comment comment={c} />)}
+          {comments && comments.map((c) => <Comment key={c._id} comment={c} />)}
         </div>
         <div className='app__post__stats'>
           <HeartIcon /> {post.likes}
