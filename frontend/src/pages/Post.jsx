@@ -7,6 +7,7 @@ import Caption from "../components/Caption";
 import { useQuery } from "react-query";
 import { getComments } from "../lib/apiRequests";
 import Comment from "../components/Comment";
+import { differenceInDays, differenceInHours, differenceInMinutes, format } from "date-fns";
 
 function Post() {
   const { user } = useUser();
@@ -17,6 +18,18 @@ function Post() {
     isLoading: isCommentsLoading,
     isError: isCommentsError,
   } = useQuery(["comments"], () => getComments(post._id).then((res) => res.data));
+
+  const createdAtDate = new Date(post.createdAt);
+  const now = Date.now();
+
+  const timestamp =
+    differenceInMinutes(now, createdAtDate) > 60
+      ? differenceInHours(now, createdAtDate) > 24
+        ? differenceInDays(now, createdAtDate) > 7
+          ? format(createdAtDate, "MMMM d")
+          : `${differenceInDays(now, createdAtDate)} DAYS AGO`
+        : `${differenceInHours(now, createdAtDate)} HOURS AGO`
+      : `${differenceInMinutes(now, createdAtDate)} MINUTES AGO`;
 
   return (
     <div className='app__post'>
@@ -38,7 +51,7 @@ function Post() {
           <HeartIcon /> {post.likes}
           <ChatBubbleOvalLeftIcon /> {post.comments}
         </div>
-        <div className='app__post__date'>{post.createdAt}</div>
+        <div className='app__post__date'>{timestamp}</div>
         <form className='app__post__add__comment'>
           <textarea placeholder='Add a comment' />
           <button className='primary__btn'>Post</button>

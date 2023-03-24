@@ -49,7 +49,7 @@ function Comment({ comment }) {
             )}
           </button>
           <ul className='app__replies' style={{ display: showReplies ? "flex" : "none" }}>
-            {showReplies && comment.replies?.map((r) => <Comment comment={r} />)}
+            {showReplies && comment.replies?.map((r) => <Comment key={r._id} comment={r} />)}
           </ul>
         </>
       )}
