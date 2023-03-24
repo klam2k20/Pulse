@@ -64,7 +64,7 @@ const getComments = async (req, res) => {
 
 const postComment = async (req, res) => {
   const { _id: userId } = req.user;
-  const { postId, comment } = req.body;
+  const { postId, comment, parentId } = req.body;
 
   if (!postId || !comment)
     res
@@ -75,6 +75,7 @@ const postComment = async (req, res) => {
     const newComment = await Comment.create({
       userId,
       postId,
+      parentId,
       comment,
     });
     res.json(newComment);
