@@ -1,5 +1,4 @@
 const Comment = require("../models/Comment");
-const User = require("../models/User");
 
 const getComments = async (req, res) => {
   const postId = req.query.postId;
@@ -63,4 +62,26 @@ const getComments = async (req, res) => {
   }
 };
 
-module.exports = { getComments };
+const postComment = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { postId, comment } = req.body;
+
+  if (!postId || !comment)
+    res
+      .status(400)
+      .json({ message: "Missing one or more required fields: post id and/or comment" });
+
+  try {
+    const newComment = await Comment.create({
+      userId,
+      postId,
+      comment,
+    });
+    res.json(newComment);
+  } catch (err) {
+    console.log(`Post Comment Error: ${err}`);
+    res.status(500).json({ message: `Database Error: ${err}` });
+  }
+};
+
+module.exports = { getComments, postComment };
