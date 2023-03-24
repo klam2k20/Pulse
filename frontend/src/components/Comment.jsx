@@ -6,7 +6,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import differenceInWeeks from "date-fns/differenceInWeeks";
 import { useState } from "react";
 
-function Comment({ comment }) {
+function Comment({ comment, handleReply }) {
   const [showReplies, setShowReplies] = useState(false);
 
   const createdAtDate = new Date(comment.createdAt);
@@ -31,7 +31,12 @@ function Comment({ comment }) {
             {comment.likes.length > 0 && (
               <div className='app__semibold__pointer'>{comment.likes.length} likes</div>
             )}
-            <div className='app__semibold__pointer'>Reply</div>
+            <div
+              role='button'
+              className='app__semibold__pointer'
+              onClick={(e) => handleReply(e, comment.user[0].username, comment._id)}>
+              Reply
+            </div>
           </div>
         </div>
         <HeartIcon />
@@ -49,7 +54,14 @@ function Comment({ comment }) {
             )}
           </button>
           <ul className='app__replies' style={{ display: showReplies ? "flex" : "none" }}>
-            {showReplies && comment.replies?.map((r) => <Comment key={r._id} comment={r} />)}
+            {showReplies &&
+              comment.replies?.map((r) => (
+                <Comment
+                  key={r._id}
+                  comment={r}
+                  handleReply={(e) => handleReply(e, r.user[0].username, r.parentId)}
+                />
+              ))}
           </ul>
         </>
       )}

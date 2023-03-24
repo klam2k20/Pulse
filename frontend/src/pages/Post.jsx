@@ -13,6 +13,7 @@ import { postComment } from "../lib/apiRequests";
 
 function Post() {
   const [comment, setComment] = useState("");
+  const [reply, setReply] = useState("");
   const { user } = useUser();
   const location = useLocation();
   const post = location.state;
@@ -23,7 +24,7 @@ function Post() {
     isError: isCommentsError,
   } = useQuery(["comments"], () => getComments(post._id).then((res) => res.data));
   const commentMutation = useMutation(
-    (c) => postComment(c.postId, c.comment).then((res) => res.data),
+    (c) => postComment(c.postId, c.comment, c.parentId).then((res) => res.data),
     {
       onSuccess: () => queryClient.invalidateQueries(["comments"]),
     }
@@ -41,12 +42,37 @@ function Post() {
         : `${differenceInHours(now, createdAtDate)} HOURS AGO`
       : `${differenceInMinutes(now, createdAtDate)} MINUTES AGO`;
 
-  const handleComment = (e) => {
+  const handleSubmitComment = (e) => {
+    console.log("commenting");
     e.preventDefault();
     commentMutation.mutate({ postId: post._id, comment: comment.trim() });
     setComment("");
   };
 
+  const handleSubmitReply = (e) => {
+    console.log("replying");
+    e.preventDefault();
+    console.log(reply);
+    commentMutation.mutate({ postId: post._id, comment: comment.trim(), parentId: reply });
+    setComment("");
+    setReply("");
+  };
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    document.getElementById("add__comment").focus();
+  };
+
+  const handleReply = (e, replyTo, parentId) => {
+    e.preventDefault();
+    console.log(parentId);
+    setReply(parentId);
+    setComment(`@${replyTo} `);
+    document.getElementById("add__comment").focus();
+  };
+
+  if (isCommentsLoading) return <span>Loading...</span>;
+  if (isCommentsError) return <span>Something went wrong...</span>;
   return (
     <div className='app__post'>
       <div className='app__post__photos'>
@@ -61,15 +87,19 @@ function Post() {
             <span>An Error Occurred While Fetching Comments. Please refresh</span>
           )}
           {isCommentsLoading && <span>Loading Comments...</span>}
-          {comments && comments.map((c) => <Comment key={c._id} comment={c} />)}
+          {comments &&
+            comments.map((c) => <Comment key={c._id} comment={c} handleReply={handleReply} />)}
         </div>
         <div className='app__post__stats'>
           <HeartIcon /> {post.likes}
-          <ChatBubbleOvalLeftIcon /> {post.comments}
+          <ChatBubbleOvalLeftIcon onClick={handleComment} /> {comments.length}
         </div>
         <div className='app__post__date'>{timestamp}</div>
-        <form className='app__post__add__comment' onSubmit={handleComment}>
+        <form
+          className='app__post__add__comment'
+          onSubmit={reply ? handleSubmitReply : handleSubmitComment}>
           <textarea
+            id='add__comment'
             placeholder='Add a comment'
             value={comment}
             onChange={(e) => setComment(e.target.value)}

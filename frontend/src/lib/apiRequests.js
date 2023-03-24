@@ -41,8 +41,8 @@ const getComments = (postId) => {
   return axios.get(`api/comment?postId=${postId}`);
 };
 
-const postComment = (postId, comment) => {
-  return axios.post("api/comment", { postId, comment });
+const postComment = (postId, comment, parentId) => {
+  return axios.post("api/comment", { postId, comment, parentId });
 };
 
 export {
