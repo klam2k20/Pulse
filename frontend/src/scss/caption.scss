@@ -2,7 +2,7 @@
 
 .app__post__caption {
   @include flex(center, flex-start);
-  gap: 1rem;
+  gap: 0.5rem;
 
   img {
     width: 32px;
