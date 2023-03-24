@@ -41,6 +41,10 @@ const getComments = (postId) => {
   return axios.get(`api/comment?postId=${postId}`);
 };
 
+const postComment = (postId, comment) => {
+  return axios.post("api/comment", { postId, comment });
+};
+
 export {
   registerUser,
   loginUser,
@@ -51,4 +55,5 @@ export {
   updateUser,
   sharePost,
   getComments,
+  postComment,
 };
