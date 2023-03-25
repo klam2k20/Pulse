@@ -24,7 +24,7 @@ const getPosts = async (req, res) => {
     );
     return res.json(postsWithLikesAndComments);
   } catch (err) {
-    console.log(`Get Posts: ${err}`);
+    console.log(`Get Posts Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
 };
@@ -42,7 +42,7 @@ const getPost = async (req, res) => {
 
     return res.json({ ...post._doc, likes, comments });
   } catch (err) {
-    console.log(`Get Post: ${err}`);
+    console.log(`Get Post Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
 };
@@ -66,7 +66,7 @@ const sharePosts = async (req, res) => {
     });
     return res.json(post);
   } catch (err) {
-    console.log(`Share Posts: ${err}`);
+    console.log(`Share Posts Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
 };

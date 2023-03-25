@@ -18,7 +18,7 @@ export function UserProvider({ children }) {
 
     if (!user) {
       getUser().catch((err) => {
-        console.log(`Get User Profile: ${err}`);
+        console.log(`Get User Profile Error: ${err}`);
         if (location.pathname !== '/login' && location.pathname !== '/register') navigate('/login');
       });
     }

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Modal from "./modal";
-import "../../scss/Modals/updateProfile.scss";
-import { useUser } from "../../context/UserProvider";
-import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { toast } from "react-hot-toast";
-import { uploadPhoto, updateUser } from "../../lib/apiRequests";
-import { useMutation, useQueryClient } from "react-query";
-import { defaultSizes, defaultUrls } from "../../lib/constants";
+import React, { useEffect, useState } from 'react';
+import Modal from './modal';
+import '../../scss/Modals/updateProfile.scss';
+import { useUser } from '../../context/UserProvider';
+import { PhotoIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { toast } from 'react-hot-toast';
+import { uploadPhoto, updateUser } from '../../lib/apiRequests';
+import { useMutation, useQueryClient } from 'react-query';
+import { defaultSizes, defaultUrls } from '../../lib/constants';
 
 function UpdateProfileModal({ isOpen, close }) {
   const { user, setUser } = useUser();
@@ -15,16 +15,16 @@ function UpdateProfileModal({ isOpen, close }) {
   const [profile, setProfile] = useState({
     name: user.name,
     username: user.username,
-    pronouns: user.pronouns ? user.pronouns : "default",
-    bio: user.bio ? user.bio : "",
+    pronouns: user.pronouns ? user.pronouns : 'default',
+    bio: user.bio ? user.bio : '',
   });
 
   useEffect(() => {
     if (!selectedFile) {
       setPhotoPreview(user.pfp);
       return;
-    } else if (selectedFile.name && selectedFile.name === "default") {
-      setPhotoPreview("../../../public/default.png");
+    } else if (selectedFile.name && selectedFile.name === 'default') {
+      setPhotoPreview('../../../public/default.png');
       return;
     }
     const photoURL = URL.createObjectURL(selectedFile);
@@ -37,7 +37,7 @@ function UpdateProfileModal({ isOpen, close }) {
   const userMutation = useMutation(
     (u) => updateUser(u.username, u.name, u.pronouns, u.bio, u.pfp).then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries(["profile"]),
+      onSuccess: () => queryClient.invalidateQueries(['profile']),
     }
   );
 
@@ -50,7 +50,7 @@ function UpdateProfileModal({ isOpen, close }) {
     else {
       /** Check photo size is <5MB */
       if (e.target.files[0].size > defaultSizes.maxPhotoSize) {
-        toast.error("File Size Limited Exceeded. Please Select a Photo Smaller than 5MB");
+        toast.error('File Size Limited Exceeded. Please Select a Photo Smaller than 5MB');
         return;
       }
       setSelectedFile(e.target.files[0]);
@@ -61,7 +61,7 @@ function UpdateProfileModal({ isOpen, close }) {
     e.preventDefault();
     try {
       let pfp = photoPreview;
-      if (pfp === "../../../public/default.png") pfp = defaultUrls.defaultPhoto;
+      if (pfp === '../../../public/default.png') pfp = defaultUrls.defaultPhoto;
       else if (selectedFile) {
         const { data } = await uploadPhoto(selectedFile);
         pfp = data;
@@ -87,8 +87,8 @@ function UpdateProfileModal({ isOpen, close }) {
       );
       close();
     } catch (err) {
-      console.log(`Update User Profile: ${err}`);
-      toast.error("Error Updating Profile. Please Try Again Shortly.");
+      console.log(`Update User Profile Error: ${err}`);
+      toast.error('Error Updating Profile. Please Try Again Shortly.');
     }
   };
 
@@ -98,8 +98,8 @@ function UpdateProfileModal({ isOpen, close }) {
     setProfile({
       name: user.name,
       username: user.username,
-      pronouns: user.pronouns ? user.pronouns : "default",
-      bio: user.bio ? user.bio : "",
+      pronouns: user.pronouns ? user.pronouns : 'default',
+      bio: user.bio ? user.bio : '',
     });
   };
 
@@ -110,7 +110,7 @@ function UpdateProfileModal({ isOpen, close }) {
 
   const handleRemovePhoto = (e) => {
     e.preventDefault();
-    setSelectedFile({ name: "default" });
+    setSelectedFile({ name: 'default' });
   };
 
   return (
@@ -142,7 +142,7 @@ function UpdateProfileModal({ isOpen, close }) {
                     />
                   </label>
                 </span>
-                <span style={{ color: "red" }} onClick={handleRemovePhoto}>
+                <span style={{ color: 'red' }} onClick={handleRemovePhoto}>
                   <TrashIcon /> Remove Current Photo
                 </span>
               </div>

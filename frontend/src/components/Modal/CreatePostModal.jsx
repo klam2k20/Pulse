@@ -76,7 +76,7 @@ function CreatePostModal({ isOpen, close }) {
       });
       handleClose();
     } catch (err) {
-      console.log(`Share Post: ${err}`);
+      console.log(`Share Post Error: ${err}`);
       toast.error('Error Sharing Post. Please Try Again Shortly');
     }
   };

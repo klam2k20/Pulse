@@ -1,5 +1,5 @@
-const Follower = require("../models/Follower");
-const User = require("../models/User");
+const Follower = require('../models/Follower');
+const User = require('../models/User');
 
 const getFollowers = async (req, res) => {
   let username = req.params.username;
@@ -8,12 +8,12 @@ const getFollowers = async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: "Username Not Found" });
+    if (!user) return res.status(404).json({ message: 'Username Not Found' });
     const followers = await Follower.find({ followed: user._id });
     const following = await Follower.find({ follower: user._id });
     return res.json({ followers, following });
   } catch (err) {
-    console.log(`Get Followers: ${err}`);
+    console.log(`Get Followers Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
 };
