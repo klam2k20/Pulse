@@ -21,9 +21,6 @@ export function UserProvider({ children }) {
         console.log(`Get User Profile: ${err}`);
         if (location.pathname !== '/login' && location.pathname !== '/register') navigate('/login');
       });
-    } else {
-      navigate('/');
-      toast.success(`Welcome back, ${user.username}`);
     }
   }, []);
 

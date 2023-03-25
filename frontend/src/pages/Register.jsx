@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '../components/Input';
@@ -14,8 +14,15 @@ function Register() {
     email: '',
     password: '',
   });
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+      toast.success(`Welcome back, ${user.username}`);
+    }
+  });
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -45,7 +52,7 @@ function Register() {
       );
       setUser(data);
       navigate('/');
-      toast.success(`Welcome ${user.username}`);
+      toast.success(`Welcome ${data.username}`);
     } catch (err) {
       console.log(`Register User Error: ${err}`);
       if (err.response.status === 409)

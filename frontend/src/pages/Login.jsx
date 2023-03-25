@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '../components/Input';
@@ -12,8 +12,15 @@ function Login() {
     email: '',
     password: '',
   });
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+      toast.success(`Welcome back, ${user.username}`);
+    }
+  });
 
   const handleChange = (e) => {
     setLogin((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -31,7 +38,7 @@ function Login() {
       const { data } = await loginUser(login.email, login.password);
       setUser(data);
       navigate('/');
-      toast.success(`Welcome back, ${user.username}`);
+      toast.success(`Welcome back, ${data.username}`);
     } catch (err) {
       console.log(`Login User Error: ${err}`);
       if (err.response.status === 401)
