@@ -1,11 +1,11 @@
-import "../scss/Pages/profile.scss";
-import { useUser } from "../context/UserProvider";
-import { useQuery } from "react-query";
-import { getPosts, getUser } from "../lib/apiRequests";
-import UpdateProfileModal from "../components/Modal/UpdateProfileModal";
-import { useState } from "react";
-import ProfilePost from "../components/Post/ProfilePost";
-import { useParams } from "react-router-dom";
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import UpdateProfileModal from '../components/Modal/UpdateProfileModal';
+import ProfilePost from '../components/Post/ProfilePost';
+import { useUser } from '../context/UserProvider';
+import { getPosts, getUser } from '../lib/apiRequests';
+import '../scss/Pages/profile.scss';
 
 function Profile() {
   const { user } = useUser();
@@ -16,13 +16,13 @@ function Profile() {
     data: profileData,
     isLoading: isProfileLoading,
     isError: isProfileError,
-  } = useQuery(["profile"], () => getUser(username).then((res) => res.data));
+  } = useQuery(['profile'], () => getUser(username).then((res) => res.data));
 
   const {
     data: postData,
     isLoading: isPostLoading,
     isError: isPostError,
-  } = useQuery(["post"], () => getPosts(username).then((res) => res.data));
+  } = useQuery(['posts'], () => getPosts(username).then((res) => res.data));
 
   // Add loading and error pages
   if (isProfileLoading || isPostLoading) return <span>"Loading..."</span>;
@@ -62,7 +62,7 @@ function Profile() {
                     <span>
                       <b>{profileData.name}</b>
                     </span>
-                    {profileData.pronouns !== "default" && (
+                    {profileData.pronouns !== 'default' && (
                       <span className='app__profile__header__bio_pronouns'>
                         {profileData.pronouns}
                       </span>
@@ -78,7 +78,7 @@ function Profile() {
                 <span>
                   <b>{profileData.name}</b>
                 </span>
-                {profileData.pronouns !== "default" && (
+                {profileData.pronouns !== 'default' && (
                   <span className='app__profile__header__bio_pronouns'>{profileData.pronouns}</span>
                 )}
               </div>

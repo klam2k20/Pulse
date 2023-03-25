@@ -4,7 +4,7 @@ const Like = require('../models/Like');
 const Comment = require('../models/Comment');
 
 const getPosts = async (req, res) => {
-  let username = req.params.username;
+  let username = req.query.username;
 
   if (!username) username = req.user.username;
 
@@ -25,6 +25,24 @@ const getPosts = async (req, res) => {
     return res.json(postsWithLikesAndComments);
   } catch (err) {
     console.log(`Get Posts: ${err}`);
+    return res.status(500).json({ message: `Database Error: ${err}` });
+  }
+};
+
+const getPost = async (req, res) => {
+  let id = req.params.id;
+
+  try {
+    const post = await Post.findById(id, '-updatedAt -__v -userId').sort({
+      createdAt: -1,
+    });
+
+    const likes = await Like.count({ postId: post._id.toString(), parentId: undefined });
+    const comments = await Comment.count({ postId: post._id.toString() });
+
+    return res.json({ ...post._doc, likes, comments });
+  } catch (err) {
+    console.log(`Get Post: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
 };
@@ -53,4 +71,4 @@ const sharePosts = async (req, res) => {
   }
 };
 
-module.exports = { getPosts, sharePosts };
+module.exports = { getPosts, getPost, sharePosts };

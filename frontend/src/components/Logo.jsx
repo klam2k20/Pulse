@@ -1,5 +1,4 @@
-import React from "react";
-import "../scss/logo.scss";
+import '../scss/logo.scss';
 
 function Logo() {
   return (

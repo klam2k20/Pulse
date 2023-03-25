@@ -1,16 +1,14 @@
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as FilledHeartIcon } from "@heroicons/react/24/solid";
-import "../../scss/Post/comment.scss";
-import differenceInMinutes from "date-fns/differenceInMinutes";
-import differenceInHours from "date-fns/differenceInHours";
-import differenceInDays from "date-fns/differenceInDays";
-import differenceInWeeks from "date-fns/differenceInWeeks";
-import { useState } from "react";
-import { useUser } from "../../context/UserProvider";
+import { HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
+import differenceInDays from 'date-fns/differenceInDays';
+import differenceInHours from 'date-fns/differenceInHours';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
+import differenceInWeeks from 'date-fns/differenceInWeeks';
+import { useState } from 'react';
+import '../../scss/Post/comment.scss';
 
 function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
   const [showReplies, setShowReplies] = useState(false);
-  const { user } = useUser();
 
   const createdAtDate = new Date(comment.createdAt);
   const now = Date.now();
@@ -60,7 +58,7 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
               <span>{`View Replies (${comment.replies.length})`}</span>
             )}
           </button>
-          <ul className='app__replies' style={{ display: showReplies ? "flex" : "none" }}>
+          <ul className='app__replies' style={{ display: showReplies ? 'flex' : 'none' }}>
             {showReplies &&
               comment.replies?.map((r) => (
                 <Comment

@@ -1,18 +1,18 @@
-import Modal from "./modal";
-import "../../scss/Modals/createPost.scss";
-import { useEffect, useState } from "react";
-import { PhotoIcon } from "@heroicons/react/24/outline";
-import ImageSlider from "../ImageSlider/ImageSlider";
-import { useUser } from "../../context/UserProvider";
-import { defaultSizes } from "../../lib/constants";
-import { sharePost, uploadPhoto } from "../../lib/apiRequests";
-import { useMutation, useQueryClient } from "react-query";
-import { toast } from "react-hot-toast";
+import Modal from './modal';
+import '../../scss/Modals/createPost.scss';
+import { useEffect, useState } from 'react';
+import { PhotoIcon } from '@heroicons/react/24/outline';
+import ImageSlider from '../ImageSlider/ImageSlider';
+import { useUser } from '../../context/UserProvider';
+import { defaultSizes } from '../../lib/constants';
+import { sharePost, uploadPhoto } from '../../lib/apiRequests';
+import { useMutation, useQueryClient } from 'react-query';
+import { toast } from 'react-hot-toast';
 
 function CreatePostModal({ isOpen, close }) {
   const { user } = useUser();
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [caption, setCaption] = useState("");
+  const [caption, setCaption] = useState('');
   const [isDragActive, setIsDragActive] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -22,15 +22,15 @@ function CreatePostModal({ isOpen, close }) {
 
   const queryClient = useQueryClient();
   const postMutation = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
-    onSuccess: () => queryClient.invalidateQueries(["post"]),
+    onSuccess: () => queryClient.invalidateQueries(['posts']),
   });
 
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
+    if (e.type === 'dragenter' || e.type === 'dragover') {
       setIsDragActive(true);
-    } else if (e.type === "dragleave") {
+    } else if (e.type === 'dragleave') {
       setIsDragActive(false);
     }
   };
@@ -77,7 +77,7 @@ function CreatePostModal({ isOpen, close }) {
       handleClose();
     } catch (err) {
       console.log(`Share Post: ${err}`);
-      toast.error("Error Sharing Post. Please Try Again Shortly");
+      toast.error('Error Sharing Post. Please Try Again Shortly');
     }
   };
 
@@ -101,7 +101,7 @@ function CreatePostModal({ isOpen, close }) {
               <button
                 className='primary__btn'
                 disabled={
-                  selectedFiles.some((f) => f.size > defaultSizes.maxPhotoSize) ? "disabled" : ""
+                  selectedFiles.some((f) => f.size > defaultSizes.maxPhotoSize) ? 'disabled' : ''
                 }
                 onClick={() => setIndex(2)}>
                 Next
@@ -109,7 +109,7 @@ function CreatePostModal({ isOpen, close }) {
             ) : (
               <button
                 className='primary__btn'
-                disabled={selectedFiles.length > 0 && caption !== "" ? "" : "disabled"}
+                disabled={selectedFiles.length > 0 && caption !== '' ? '' : 'disabled'}
                 onClick={handleSharePost}>
                 Share
               </button>
@@ -120,8 +120,8 @@ function CreatePostModal({ isOpen, close }) {
             <div
               className={
                 isDragActive
-                  ? "flex__center create__post__content__drag drag__active"
-                  : "flex__center create__post__content__drag"
+                  ? 'flex__center create__post__content__drag drag__active'
+                  : 'flex__center create__post__content__drag'
               }
               onDragEnter={handleDragOver}
               onDragOver={handleDragOver}

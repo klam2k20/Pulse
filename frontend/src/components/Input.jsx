@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import '../scss/input.scss';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import '../scss/input.scss';
 
 function Input({ type, name, placeholder, state, setState, className }) {
   const [isLabelVisible, setIsLabelVisible] = useState(false);
