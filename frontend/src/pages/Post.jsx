@@ -38,32 +38,38 @@ function Post() {
     isLoading: isCommentsLoading,
     isError: isCommentsError,
   } = useQuery(['comments'], () => getComments(postId).then((res) => res.data));
+
   const {
     data: likes,
     isLoading: isLikesLoading,
     isError: isLikesError,
   } = useQuery(['likes'], () => getPostLikes(postId).then((res) => res.data));
+
   const commentMutation = useMutation(
     (c) => postComment(c.postId, c.comment, c.parentId).then((res) => res.data),
     {
       onSuccess: () => queryClient.invalidateQueries(['comments']),
     }
   );
+
   const addPostLikeMutation = useMutation(
     (l) => addPostLike(l.postId, l.userId).then((res) => res.data),
     {
       onSuccess: () => queryClient.invalidateQueries(['likes']),
     }
   );
+
   const removePostLikeMutation = useMutation((l) => removePostLike(l.postId, l.userId), {
     onSuccess: () => queryClient.invalidateQueries(['likes']),
   });
+
   const addCommentLikeMutation = useMutation(
     (l) => addCommentLike(l.postId, l.userId, l.parentId).then((res) => res.data),
     {
       onSuccess: () => queryClient.invalidateQueries(['comments']),
     }
   );
+
   const removeCommentLikeMutation = useMutation(
     (l) => removeCommentLike(l.postId, l.userId, l.parentId),
     {
@@ -95,8 +101,11 @@ function Post() {
 
   const handleSubmitReply = (e) => {
     e.preventDefault();
-    console.log(reply);
-    commentMutation.mutate({ postId, comment: comment.trim(), parentId: reply });
+    commentMutation.mutate({
+      postId,
+      comment: comment.trim().split(' ').slice(1).join(' '),
+      parentId: reply,
+    });
     setComment('');
     setReply('');
   };
