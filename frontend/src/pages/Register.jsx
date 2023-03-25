@@ -1,42 +1,64 @@
-import { useState } from "react";
-import { Input } from "../components/Input";
-import { Link, useNavigate } from "react-router-dom";
-import "../scss/Pages/register.scss";
-import Logo from "../components/Logo";
-import { registerUser } from "../lib/apiRequests";
-import { toast } from "react-hot-toast";
-import { useUser } from "../context/UserProvider";
+import { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { Input } from '../components/Input';
+import Logo from '../components/Logo';
+import { useUser } from '../context/UserProvider';
+import { registerUser } from '../lib/apiRequests';
+import '../scss/Pages/auth.scss';
 
 function Register() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [register, setRegister] = useState({
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+  });
   const { setUser } = useUser();
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setRegister((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const isFormIncomplete = () => {
+    const emailRegex = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$');
+    return (
+      !register.name ||
+      !register.username ||
+      !register.email ||
+      !register.password ||
+      !emailRegex.test(register.email)
+    );
+  };
+
   const submitForm = async (e) => {
     e.preventDefault();
+    if (isFormIncomplete()) return;
     try {
-      const { data } = await registerUser(name, username, email, password);
+      const { data } = await registerUser(
+        register.name,
+        register.username,
+        register.email,
+        register.password
+      );
       setUser(data);
-      navigate("/");
-      toast.success(`Welcome ${data.username}`);
+      navigate('/');
+      toast.success(`Welcome ${user.username}`);
     } catch (err) {
-      console.log(`Register User: ${err}`);
+      console.log(`Register User Error: ${err}`);
       if (err.response.status === 409)
-        toast.error(err.response.data.message, {
-          position: "bottom-right",
+        toast.error('Username and/or email already registered', {
+          position: 'bottom-right',
         });
     }
   };
 
   return (
-    <div className='app__register'>
+    <div className='app__auth'>
       <div className='app__register__left'>
         <div>
-          <h1> Welcome to Pulse</h1>
-          <h3>The social media app that connects you to the world around you!</h3>
           <p>
             With Pulse, you can share your thoughts, ideas, and experiences with your friends and
             family, as well as meet new people who share your interests. Whether you're looking for
@@ -45,54 +67,55 @@ function Register() {
           </p>
         </div>
       </div>
-      <div className='app__register__right'>
-        <div className='app__register__logo'>
+      <div className='app__auth__form'>
+        <div className='app__logo'>
           <Logo />
-          <span>PULSE</span>
+          <h3>PULSE</h3>
         </div>
         <form onSubmit={submitForm}>
           <h1>Welcome to Pulse</h1>
           <span>The social media app that connects you to the world around you!</span>
-          <div className='app__register__form__inputs'>
+          <div className='app__register__inputs'>
             <div>
               <Input
                 type='text'
+                name='name'
                 placeholder='Name'
-                state={name}
-                setState={setName}
+                state={register.name}
+                setState={handleChange}
                 className='top'
               />
               <Input
                 type='text'
+                name='username'
                 placeholder='Username'
-                state={username}
-                setState={setUsername}
+                state={register.username}
+                setState={handleChange}
                 className='bottom'
               />
             </div>
-
             <div>
               <Input
                 type='email'
+                name='email'
                 placeholder='Email'
-                state={email}
-                setState={setEmail}
+                state={register.email}
+                setState={handleChange}
                 className='top'
               />
               <Input
                 type='password'
+                name='password'
                 placeholder='Password'
-                state={password}
-                setState={setPassword}
+                state={register.password}
+                setState={handleChange}
                 className='bottom'
               />
             </div>
           </div>
-          {!name || !username || !email || !password ? (
-            <button disabled>Sign Up</button>
-          ) : (
-            <button>Sign Up</button>
-          )}
+          <button className='primary__outline__btn' disabled={isFormIncomplete() ? 'disabled' : ''}>
+            Sign Up
+          </button>
         </form>
         <span>
           Already have an account? <Link to='/login'>Login</Link>

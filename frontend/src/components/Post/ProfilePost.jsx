@@ -1,6 +1,6 @@
-import { HeartIcon, ChatBubbleOvalLeftIcon, Square2StackIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
-import "../../scss/Post/profilePost.scss";
+import { HeartIcon, ChatBubbleOvalLeftIcon, Square2StackIcon } from '@heroicons/react/24/solid';
+import { Link } from 'react-router-dom';
+import '../../scss/Post/profilePost.scss';
 
 function ProfilePost({ post }) {
   return (

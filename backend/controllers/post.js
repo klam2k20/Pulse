@@ -1,7 +1,7 @@
-const Post = require("../models/Post");
-const User = require("../models/User");
-const Like = require("../models/Like");
-const Comment = require("../models/Comment");
+const Post = require('../models/Post');
+const User = require('../models/User');
+const Like = require('../models/Like');
+const Comment = require('../models/Comment');
 
 const getPosts = async (req, res) => {
   let username = req.params.username;
@@ -10,14 +10,14 @@ const getPosts = async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: "Username Not Found" });
-    const posts = await Post.find({ userId: user._id }, "-updatedAt -__v -userId").sort({
+    if (!user) return res.status(404).json({ message: 'Username Not Found' });
+    const posts = await Post.find({ userId: user._id }, '-updatedAt -__v -userId').sort({
       createdAt: -1,
     });
 
     const postsWithLikesAndComments = await Promise.all(
       posts.map(async (p) => {
-        const likes = await Like.count({ postId: p._id.toString() });
+        const likes = await Like.count({ postId: p._id.toString(), parentId: undefined });
         const comments = await Comment.count({ postId: p._id.toString() });
         return { ...p._doc, likes, comments };
       })
@@ -35,12 +35,12 @@ const sharePosts = async (req, res) => {
 
   if (!images || !caption)
     return res.status(400).json({
-      message: "Missing one or more Required Fields: Images and/or Caption",
+      message: 'Missing one or more Required Fields: Images and/or Caption',
     });
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: "User Not Found" });
+    if (!user) return res.status(404).json({ message: 'User Not Found' });
     const post = await Post.create({
       userId: user._id,
       images,

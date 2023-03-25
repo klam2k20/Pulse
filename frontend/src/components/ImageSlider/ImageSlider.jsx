@@ -1,26 +1,26 @@
-import { useEffect, useState } from "react";
 import {
-  ChevronRightIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
   PlusIcon,
   XMarkIcon,
-} from "@heroicons/react/24/outline";
-import "../../scss/ImageSlider/imageSlider.scss";
-import { defaultSizes } from "../../lib/constants";
-import { toast } from "react-hot-toast";
+} from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { defaultSizes } from '../../lib/constants';
+import '../../scss/ImageSlider/imageSlider.scss';
 
 function ImageSlider({ photos, setPhotos, validation }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (photos[index]?.size > defaultSizes.maxPhotoSize)
-      toast.error("Please Select a Photo Smaller than 5MB");
+    if (validation && photos[index]?.size > defaultSizes.maxPhotoSize)
+      toast.error('Please Select a Photo Smaller than 5MB');
   }, [index]);
 
   const handleControls = (e, direction) => {
     e.preventDefault();
-    if (direction === "left" && index > 0) setIndex(index - 1);
-    else if (direction === "right" && index < photos.length - 1) setIndex(index + 1);
+    if (direction === 'left' && index > 0) setIndex(index - 1);
+    else if (direction === 'right' && index < photos.length - 1) setIndex(index + 1);
   };
 
   const handleAdditionalUploads = (e) => {
@@ -43,8 +43,8 @@ function ImageSlider({ photos, setPhotos, validation }) {
           <div className='flex__center image__slider'>
             <img
               src={
-                typeof photos[index] === "string" &&
-                photos[index].includes("https://storage.googleapis.com")
+                typeof photos[index] === 'string' &&
+                photos[index].includes('https://storage.googleapis.com')
                   ? photos[index]
                   : URL.createObjectURL(photos[index])
               }
@@ -52,35 +52,29 @@ function ImageSlider({ photos, setPhotos, validation }) {
               style={{
                 border: validation
                   ? photos[index].size > defaultSizes.maxPhotoSize
-                    ? "2px solid red"
-                    : "2px solid green"
-                  : "0px",
+                    ? '2px solid red'
+                    : '2px solid green'
+                  : '0px',
               }}
             />
           </div>
           {photos.length > 1 && (
             <>
               {index > 0 && (
-                <button
-                  className='flex__center
-  r image__slider__control left__control'>
-                  <ChevronLeftIcon onClick={(e) => handleControls(e, "left")} />
+                <button className='flex__center image__slider__control left__control'>
+                  <ChevronLeftIcon onClick={(e) => handleControls(e, 'left')} />
                 </button>
               )}
               {index < photos.length - 1 && (
-                <button
-                  className='flex__center
-  r image__slider__control right__control'>
-                  <ChevronRightIcon onClick={(e) => handleControls(e, "right")} />
+                <button className='flex__center image__slider__control right__control'>
+                  <ChevronRightIcon onClick={(e) => handleControls(e, 'right')} />
                 </button>
               )}
-              <span
-                className='flex__center
-r image__slider__dots'>
+              <span className='flex__center image__slider__dots'>
                 {[...Array(photos.length).keys()].map((i) => (
                   <div
                     key={photos[i].name || photos[i]}
-                    className={`image__slider__dot ${i === index ? "active__dot" : ""}`}
+                    className={`image__slider__dot ${i === index ? 'active__dot' : ''}`}
                   />
                 ))}
               </span>
@@ -88,9 +82,7 @@ r image__slider__dots'>
           )}
           {validation && (
             <>
-              <label
-                className='flex__center
-r image__slider__control image__slider__add'>
+              <label className='flex__center image__slider__control image__slider__add'>
                 <PlusIcon />
                 <input
                   type='file'
@@ -101,8 +93,7 @@ r image__slider__control image__slider__add'>
                 />
               </label>
               <button
-                className='flex__center
-  r image__slider__control image__slider__delete'
+                className='flex__center image__slider__control image__slider__delete'
                 onClick={handleDeleteUpload}>
                 <XMarkIcon />
               </button>

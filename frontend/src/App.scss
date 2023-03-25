@@ -1,6 +1,6 @@
-@use "./scss/" as *;
+@use './scss/' as *;
 
-@import url("https://fonts.googleapis.com/css2?family=Mate+SC&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
 
 * {
   padding: 0;
@@ -21,12 +21,18 @@ textarea {
   width: 100%;
 }
 
+input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
 input:read-only {
   background: rgba(235, 235, 235, 0.5);
   cursor: not-allowed;
 }
 
-input[type="file"] {
+input[type='file'] {
   display: none;
 }
 
