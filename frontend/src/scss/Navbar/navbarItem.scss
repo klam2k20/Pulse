@@ -1,4 +1,4 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 button {
   background-color: transparent;
@@ -13,15 +13,15 @@ button {
 .app__navbar__item {
   @include flex(center, flex-start);
   gap: 1rem;
+  padding: 0.75rem;
   border-radius: 2rem;
   text-decoration: none;
-  padding: 0.75rem;
   cursor: pointer;
 
   &:hover {
     background-color: #fafafa;
 
-    .app__navbar__item__icon {
+    &__icon {
       transform: scale(1.1);
     }
   }
@@ -30,9 +30,9 @@ button {
   .app__navbar__item__img {
     width: 24px;
     height: 24px;
+    border-radius: 50%;
     color: black;
     pointer-events: none;
-    border-radius: 50%;
   }
 
   .app__navbar__item__label {
@@ -40,6 +40,7 @@ button {
     font-size: 1rem;
     pointer-events: none;
     text-transform: capitalize;
+
     @media screen and (max-width: 768px) {
       display: none;
     }

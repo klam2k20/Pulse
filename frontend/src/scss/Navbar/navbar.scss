@@ -1,15 +1,16 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .app__navbar {
   @include flex(flex-start, space-between);
   flex-direction: column;
-  border-right: 1px solid $light-gray;
   width: 335px;
   padding: 1rem;
+  border-right: 1px solid $light-gray;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
+
   @media screen and (max-width: 1919px) {
     width: 245px;
   }
@@ -25,22 +26,8 @@
   @include flex(center, flex-start);
   gap: 0.5rem;
   padding: 1.5rem 0.75rem;
-  text-decoration: none;
   color: black;
-
-  @media screen and (max-width: 768px) {
-    padding: 1.5rem 0rem;
-    .ekg {
-      width: 36px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    padding: 0rem;
-    .ekg {
-      width: 36px;
-    }
-  }
+  text-decoration: none;
 
   .ekg-line {
     fill: black;
@@ -48,10 +35,19 @@
   }
 
   h1 {
-    pointer-events: none;
     font-family: $font-family-heading;
+    pointer-events: none;
+
     @media screen and (max-width: 768px) {
       display: none;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 1.5rem 0rem;
+
+    .ekg {
+      width: 36px;
     }
   }
 }
@@ -60,22 +56,17 @@
   @include flex(flex-start, flex-start);
   flex-direction: column;
   flex: 1;
-  width: 100%;
   gap: 0.25rem;
+  width: 100%;
 
   @media screen and (max-width: 767px) {
     width: fit-content;
-  }
-
-  @media screen and (max-width: 480px) {
-    flex-direction: row;
-    @include flex(center, center);
-    gap: 0.25rem;
   }
 }
 
 .app__navbar__footer {
   width: 100%;
+
   @media screen and (max-width: 768px) {
     width: fit-content;
   }

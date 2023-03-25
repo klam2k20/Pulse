@@ -1,50 +1,48 @@
-import React, { useEffect, useState } from "react";
 import {
+  Bars3Icon,
+  HeartIcon,
   HomeIcon,
   MagnifyingGlassIcon,
   MapIcon,
-  HeartIcon,
-  Bars3Icon,
   PlusCircleIcon,
   UserCircleIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 import {
+  HeartIcon as HeartIconSolid,
   HomeIcon as HomeIconSolid,
   MapIcon as MapIconSolid,
-  HeartIcon as HeartIconSolid,
   PlusCircleIcon as PlusCircleIconSolid,
   UserCircleIcon as UserCircleIconSolid,
-} from "@heroicons/react/24/solid";
-import "../../scss/Navbar/navbar.scss";
-import Logo from "../Logo";
-import { useUser } from "../../context/UserProvider";
-import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
-import { Link, useNavigate } from "react-router-dom";
-import { defaultUrls } from "../../lib/constants";
+} from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserProvider';
+import { defaultUrls } from '../../lib/constants';
+import '../../scss/Navbar/navbar.scss';
+import Logo from '../Logo';
+import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 
 function Navbar({ openPostModal }) {
+  const [selected, setSelected] = useState('home');
   const { user } = useUser();
-  const [selected, setSelected] = useState("home");
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleClick = (e) => {
     e.preventDefault();
     setSelected(e.target.name);
-    if (e.target.name === "profile") {
+    if (e.target.name === 'profile') {
       navigate(`/profile/${user.username}`);
-    } else if (e.target.name === "create") {
+    } else if (e.target.name === 'create') {
       openPostModal();
     }
   };
 
   useEffect(() => {
-    const url = window.location.href;
-    const route = url.split("/")[3];
-    if (!route) setSelected("home");
-    else if (route === "profile") {
-      if (url.split("/")[4] === user?.username) setSelected("profile");
-      else setSelected();
-    } else setSelected(route);
+    if (location.pathname === '/') setSelected('home');
+    else if (location.pathname.startsWith('/profile')) {
+      if (location.pathname.split('/')[2] === user?.username) setSelected('profile');
+    } else setSelected('explore');
   }, [user]);
 
   return (
@@ -52,7 +50,7 @@ function Navbar({ openPostModal }) {
       {user && (
         <nav className='app__navbar'>
           <button onClick={handleClick}>
-            <Link to='/' className='app__navbar__logo' name='Home'>
+            <Link to='/' className='app__navbar__logo' name='home'>
               <Logo />
               <h1 className='app__navbar__label'>PULSE</h1>
             </Link>
@@ -60,7 +58,7 @@ function Navbar({ openPostModal }) {
 
           <div className='app__navbar__actions'>
             <NavbarLinkItem
-              name={"home"}
+              name={'home'}
               handleClick={handleClick}
               icon={<HomeIcon />}
               selectedIcon={<HomeIconSolid />}
@@ -68,14 +66,14 @@ function Navbar({ openPostModal }) {
               page='/'
             />
             <NavbarButtonItem
-              name={"search"}
+              name={'search'}
               handleClick={handleClick}
               icon={<MagnifyingGlassIcon />}
-              selectedIcon={<MagnifyingGlassIcon style={{ strokeWidth: "2.5" }} />}
+              selectedIcon={<MagnifyingGlassIcon style={{ strokeWidth: '2.5' }} />}
               selected={selected}
             />
             <NavbarLinkItem
-              name={"explore"}
+              name={'explore'}
               handleClick={handleClick}
               icon={<MapIcon />}
               selectedIcon={<MapIconSolid />}
@@ -83,21 +81,21 @@ function Navbar({ openPostModal }) {
               page='/explore'
             />
             <NavbarButtonItem
-              name={"notifications"}
+              name={'notifications'}
               handleClick={handleClick}
               icon={<HeartIcon />}
               selectedIcon={<HeartIconSolid />}
               selected={selected}
             />
             <NavbarButtonItem
-              name={"create"}
+              name={'create'}
               handleClick={handleClick}
               icon={<PlusCircleIcon />}
               selectedIcon={<PlusCircleIconSolid />}
               selected={selected}
             />
             <NavbarLinkItem
-              name={"profile"}
+              name={'profile'}
               handleClick={handleClick}
               icon={
                 user.pfp !== defaultUrls.defaultPhoto ? (
@@ -110,7 +108,7 @@ function Navbar({ openPostModal }) {
                 user.pfp !== defaultUrls.defaultPhoto ? (
                   <img
                     className='app__navbar__item__img'
-                    style={{ border: "2px solid black" }}
+                    style={{ border: '2px solid black' }}
                     src={user.pfp}
                     alt='user profile'
                   />
@@ -125,10 +123,10 @@ function Navbar({ openPostModal }) {
 
           <div className='app__navbar__footer'>
             <NavbarButtonItem
-              name={"more"}
+              name={'more'}
               handleClick={handleClick}
               icon={<Bars3Icon />}
-              selectedIcon={<Bars3Icon style={{ strokeWidth: "2.5" }} />}
+              selectedIcon={<Bars3Icon style={{ strokeWidth: '2.5' }} />}
               selected={selected}
             />
           </div>

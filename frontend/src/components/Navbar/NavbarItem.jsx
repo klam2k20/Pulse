@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import "../../scss/Navbar/navbarItem.scss";
+import { Link } from 'react-router-dom';
+import '../../scss/Navbar/navbarItem.scss';
 
 function NavbarLinkItem({ name, handleClick, icon, selectedIcon, selected, page }) {
   return (
@@ -8,7 +8,7 @@ function NavbarLinkItem({ name, handleClick, icon, selectedIcon, selected, page 
         <div className='app__navbar__item__icon'>{selected === name ? selectedIcon : icon}</div>
         <span
           className='app__navbar__item__label'
-          style={{ fontWeight: selected === name ? "bold" : "normal" }}>
+          style={{ fontWeight: selected === name ? 'bold' : 'normal' }}>
           {name}
         </span>
       </Link>
@@ -22,7 +22,7 @@ function NavbarButtonItem({ name, handleClick, icon, selectedIcon, selected }) {
       <div className='app__navbar__item__icon'>{selected === name ? selectedIcon : icon}</div>
       <span
         className='app__navbar__item__label'
-        style={{ fontWeight: selected === name ? "bold" : "normal" }}>
+        style={{ fontWeight: selected === name ? 'bold' : 'normal' }}>
         {name}
       </span>
     </button>

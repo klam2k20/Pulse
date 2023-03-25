@@ -1,14 +1,12 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .app__navfooter {
   display: none;
 
   @media screen and (max-width: 480px) {
-    display: flex;
-    flex-direction: row;
     @include flex(center, space-between);
     width: 100%;
-    border-top: 1px solid $light-gray;
     padding: 0.5rem 1rem;
+    border-top: 1px solid $light-gray;
   }
 }
