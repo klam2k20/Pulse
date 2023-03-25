@@ -18,7 +18,7 @@ const getPosts = async (req, res) => {
     const postsWithLikesAndComments = await Promise.all(
       posts.map(async (p) => {
         const likes = await Like.count({ postId: p._id.toString(), parentId: undefined });
-        const comments = await Comment.count({ postId: p._id.toString() });
+        const comments = await Comment.count({ postId: p._id.toString(), parentId: undefined });
         return { ...p._doc, likes, comments };
       })
     );
@@ -38,7 +38,7 @@ const getPost = async (req, res) => {
     });
 
     const likes = await Like.count({ postId: post._id.toString(), parentId: undefined });
-    const comments = await Comment.count({ postId: post._id.toString() });
+    const comments = await Comment.count({ postId: post._id.toString(), parentId: undefined });
 
     return res.json({ ...post._doc, likes, comments });
   } catch (err) {
