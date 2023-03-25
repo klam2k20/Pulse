@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "./modal";
-import "../../scss/updateProfile.scss";
+import "../../scss/Modals/updateProfile.scss";
 import { useUser } from "../../context/UserProvider";
 import { PhotoIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-hot-toast";

@@ -1,4 +1,4 @@
-import "../scss/caption.scss";
+import "../../scss/Post/caption.scss";
 
 function Caption({ avatar, username, caption }) {
   return (

@@ -1,4 +1,4 @@
-import "../../scss/modal.scss";
+import "../../scss/Modals/modal.scss";
 
 function Modal({ children, close }) {
   return (

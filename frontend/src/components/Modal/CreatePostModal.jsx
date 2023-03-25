@@ -1,5 +1,5 @@
 import Modal from "./modal";
-import "../../scss/createPost.scss";
+import "../../scss/Modals/createPost.scss";
 import { useEffect, useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import ImageSlider from "../ImageSlider/ImageSlider";
@@ -84,7 +84,7 @@ function CreatePostModal({ isOpen, close }) {
   return (
     isOpen && (
       <Modal close={handleClose}>
-        <div className='flex__center__center create__post__header'>
+        <div className='flex__center create__post__header'>
           {index > 0 &&
             (index === 1 ? (
               <button className='secondary__btn' onClick={handleCancel}>
@@ -115,13 +115,13 @@ function CreatePostModal({ isOpen, close }) {
               </button>
             ))}
         </div>
-        <div className='flex__center__center create__post__content'>
+        <div className='flex__center create__post__content'>
           {index === 0 && (
             <div
               className={
                 isDragActive
-                  ? "flex__center__center create__post__content__drag drag__active"
-                  : "flex__center__center create__post__content__drag"
+                  ? "flex__center create__post__content__drag drag__active"
+                  : "flex__center create__post__content__drag"
               }
               onDragEnter={handleDragOver}
               onDragOver={handleDragOver}

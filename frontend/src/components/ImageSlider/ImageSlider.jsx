@@ -5,7 +5,7 @@ import {
   PlusIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import "../../scss/imageSlider.scss";
+import "../../scss/ImageSlider/imageSlider.scss";
 import { defaultSizes } from "../../lib/constants";
 import { toast } from "react-hot-toast";
 
@@ -40,7 +40,7 @@ function ImageSlider({ photos, setPhotos, validation }) {
     <>
       {photos.length > 0 && (
         <div className='image__slider__wrapper'>
-          <div className='flex__center__center image__slider'>
+          <div className='flex__center image__slider'>
             <img
               src={
                 typeof photos[index] === "string" &&
@@ -61,16 +61,22 @@ function ImageSlider({ photos, setPhotos, validation }) {
           {photos.length > 1 && (
             <>
               {index > 0 && (
-                <button className='flex__center__center image__slider__control left__control'>
+                <button
+                  className='flex__center
+  r image__slider__control left__control'>
                   <ChevronLeftIcon onClick={(e) => handleControls(e, "left")} />
                 </button>
               )}
               {index < photos.length - 1 && (
-                <button className='flex__center__center image__slider__control right__control'>
+                <button
+                  className='flex__center
+  r image__slider__control right__control'>
                   <ChevronRightIcon onClick={(e) => handleControls(e, "right")} />
                 </button>
               )}
-              <span className='flex__center__center image__slider__dots'>
+              <span
+                className='flex__center
+r image__slider__dots'>
                 {[...Array(photos.length).keys()].map((i) => (
                   <div
                     key={photos[i].name || photos[i]}
@@ -82,7 +88,9 @@ function ImageSlider({ photos, setPhotos, validation }) {
           )}
           {validation && (
             <>
-              <label className='flex__center__center image__slider__control image__slider__add'>
+              <label
+                className='flex__center
+r image__slider__control image__slider__add'>
                 <PlusIcon />
                 <input
                   type='file'
@@ -93,7 +101,8 @@ function ImageSlider({ photos, setPhotos, validation }) {
                 />
               </label>
               <button
-                className='flex__center__center image__slider__control image__slider__delete'
+                className='flex__center
+  r image__slider__control image__slider__delete'
                 onClick={handleDeleteUpload}>
                 <XMarkIcon />
               </button>

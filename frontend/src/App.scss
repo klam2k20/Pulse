@@ -14,35 +14,28 @@ body,
   width: 100%;
 }
 
-.layout {
-  @include flex(stretch, center);
-  height: 100%;
-
-  .app__layout__main__wrapper {
-    @include flex(flex-start, center);
-    width: 100%;
-    overflow-y: scroll;
-    padding: 2rem 1rem;
-    margin-left: 335px;
-    height: 100%;
-    @media screen and (max-width: 1919px) {
-      margin-left: 245px;
-    }
-    @media screen and (max-width: 768px) {
-      margin-left: 72px;
-    }
-    @media screen and (max-width: 480px) {
-      margin-left: 0;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    flex-direction: column;
-    @include flex(center, space-between);
-  }
+textarea {
+  resize: none;
+  outline: none;
+  border: 0;
+  width: 100%;
 }
 
-.flex__center__center {
+input:read-only {
+  background: rgba(235, 235, 235, 0.5);
+  cursor: not-allowed;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.flex__center {
   @include flex(center, center);
 }
 
@@ -76,18 +69,4 @@ body,
   width: fit-content;
   border: none;
   cursor: pointer;
-}
-
-input:read-only {
-  background: rgba(235, 235, 235, 0.5);
-  cursor: not-allowed;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }

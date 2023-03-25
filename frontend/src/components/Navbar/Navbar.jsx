@@ -15,7 +15,7 @@ import {
   PlusCircleIcon as PlusCircleIconSolid,
   UserCircleIcon as UserCircleIconSolid,
 } from "@heroicons/react/24/solid";
-import "../../scss/navbar.scss";
+import "../../scss/Navbar/navbar.scss";
 import Logo from "../Logo";
 import { useUser } from "../../context/UserProvider";
 import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";

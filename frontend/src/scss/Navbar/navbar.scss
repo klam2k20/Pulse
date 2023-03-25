@@ -1,4 +1,4 @@
-@use "./index.scss" as *;
+@use "../index.scss" as *;
 
 .app__navbar {
   @include flex(flex-start, space-between);
@@ -16,7 +16,6 @@
   @media screen and (max-width: 768px) {
     width: 72px;
   }
-
   @media screen and (max-width: 480px) {
     display: none;
   }
@@ -31,7 +30,6 @@
 
   @media screen and (max-width: 768px) {
     padding: 1.5rem 0rem;
-
     .ekg {
       width: 36px;
     }
@@ -39,7 +37,6 @@
 
   @media screen and (max-width: 480px) {
     padding: 0rem;
-
     .ekg {
       width: 36px;
     }

@@ -1,4 +1,4 @@
-@use "../scss/index.scss" as *;
+@use "../index.scss" as *;
 
 .update__profile__header {
   @include flex(center, space-between);
@@ -64,11 +64,6 @@
       outline: none;
       border-bottom: 1px solid $light-gray;
       padding: 0.5rem 0;
-    }
-
-    textarea {
-      border-bottom: 0px;
-      resize: none;
     }
   }
 }

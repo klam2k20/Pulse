@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Input } from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
-import "../scss/login.scss";
+import "../scss/Pages/login.scss";
 import Logo from "../components/Logo";
 import { loginUser } from "../lib/apiRequests";
 import { useUser } from "../context/UserProvider";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
-import "../scss/register.scss";
+import "../scss/Pages/register.scss";
 import Logo from "../components/Logo";
 import { registerUser } from "../lib/apiRequests";
 import { toast } from "react-hot-toast";

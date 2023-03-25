@@ -33,7 +33,7 @@ const getComments = async (req, res) => {
             $map: {
               input: "$likes",
               as: "like",
-              in: { _id: "$$like._id", userId: "$$like.userId", parentId: "$$like.parentId" },
+              in: { _id: "$$like._id", userId: "$$like.userId" },
             },
           },
           user: {

@@ -1,4 +1,4 @@
-import "../scss/profile.scss";
+import "../scss/Pages/profile.scss";
 import { useUser } from "../context/UserProvider";
 import { useQuery } from "react-query";
 import { getPosts, getUser } from "../lib/apiRequests";

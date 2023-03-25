@@ -1,4 +1,4 @@
-@use "../scss/index.scss" as *;
+@use "../index.scss" as *;
 
 .app__post__caption {
   @include flex(center, flex-start);

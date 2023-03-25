@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../../scss/navbarItem.scss";
+import "../../scss/Navbar/navbarItem.scss";
 
 function NavbarLinkItem({ name, handleClick, icon, selectedIcon, selected, page }) {
   return (

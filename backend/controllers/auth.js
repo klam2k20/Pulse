@@ -28,6 +28,7 @@ const registerUser = async (req, res) => {
       expiresIn: SECONDS_IN_DAY,
     });
     return res.cookie("token", token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
+      _id: user._id,
       name: user.name,
       username: user.username,
       posts: 0,
@@ -61,6 +62,7 @@ const loginUser = async (req, res) => {
         expiresIn: SECONDS_IN_DAY,
       });
       return res.cookie("token", token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
+        _id: user._id,
         name: user.name,
         username: user.username,
         pfp: user.pfp,

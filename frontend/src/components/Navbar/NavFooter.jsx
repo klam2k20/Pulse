@@ -14,7 +14,7 @@ import {
   PlusCircleIcon as PlusCircleIconSolid,
   UserCircleIcon as UserCircleIconSolid,
 } from "@heroicons/react/24/solid";
-import "../../scss/navfooter.scss";
+import "../../scss/Navbar/navfooter.scss";
 import { useUser } from "../../context/UserProvider";
 import { NavbarLinkItem, NavbarButtonItem } from "./NavbarItem";
 import { useNavigate } from "react-router-dom";

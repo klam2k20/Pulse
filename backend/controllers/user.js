@@ -14,6 +14,7 @@ const getUserProfile = async (req, res) => {
     const followers = await Follower.count({ followed: user._id });
     const following = await Follower.count({ follower: user._id });
     return res.json({
+      _id: user._id,
       name: user.name,
       username: user.username,
       pfp: user.pfp,

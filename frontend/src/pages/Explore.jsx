@@ -1,4 +1,4 @@
-import "../scss/explore.scss";
+import "../scss/Pages/explore.scss";
 
 function Explore() {
   return <div className='app__explore__wrapper'>Explore Page</div>;

@@ -45,6 +45,30 @@ const postComment = (postId, comment, parentId) => {
   return axios.post("api/comment", { postId, comment, parentId });
 };
 
+const getPostLikes = (postId) => {
+  return axios.get(`api/like?postId=${postId}`);
+};
+
+const addPostLike = (postId, userId) => {
+  return axios.post("api/like", { postId, userId });
+};
+
+const removePostLike = (postId, userId) => {
+  return axios.delete(`api/like?postId=${postId}&userId=${userId}`);
+};
+
+const addCommentLike = (postId, userId, parentId) => {
+  console.log("add comment");
+  console.log(postId);
+  console.log(userId);
+  console.log(parentId);
+  return axios.post("api/like", { postId, userId, parentId });
+};
+
+const removeCommentLike = (postId, userId, commentId) => {
+  return axios.delete(`api/like?postId=${postId}&userId=${userId}&parentId=${commentId}`);
+};
+
 export {
   registerUser,
   loginUser,
@@ -56,4 +80,9 @@ export {
   sharePost,
   getComments,
   postComment,
+  getPostLikes,
+  addPostLike,
+  removePostLike,
+  addCommentLike,
+  removeCommentLike,
 };

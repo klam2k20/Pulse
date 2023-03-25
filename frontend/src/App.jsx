@@ -1,5 +1,6 @@
 import { Route, Routes, Outlet } from "react-router-dom";
 import "./App.scss";
+import "./scss/Pages/layout.scss";
 import Navbar from "./components/Navbar/Navbar";
 import { Home, Login, Profile, Register, Explore } from "./pages";
 import { Toaster } from "react-hot-toast";

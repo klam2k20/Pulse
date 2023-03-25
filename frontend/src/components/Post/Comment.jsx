@@ -1,13 +1,16 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
-import "../scss/comment.scss";
+import { HeartIcon as FilledHeartIcon } from "@heroicons/react/24/solid";
+import "../../scss/Post/comment.scss";
 import differenceInMinutes from "date-fns/differenceInMinutes";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInDays from "date-fns/differenceInDays";
 import differenceInWeeks from "date-fns/differenceInWeeks";
 import { useState } from "react";
+import { useUser } from "../../context/UserProvider";
 
-function Comment({ comment, handleReply }) {
+function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
   const [showReplies, setShowReplies] = useState(false);
+  const { user } = useUser();
 
   const createdAtDate = new Date(comment.createdAt);
   const now = Date.now();
@@ -39,7 +42,11 @@ function Comment({ comment, handleReply }) {
             </div>
           </div>
         </div>
-        <HeartIcon />
+        {comment.likes.some((l) => l._id) ? (
+          <FilledHeartIcon onClick={(e) => handleRemoveLike(e, comment._id)} />
+        ) : (
+          <HeartIcon onClick={(e) => handleAddLike(e, comment._id)} />
+        )}
       </div>
       {comment.replies?.length > 0 && (
         <>
@@ -60,6 +67,8 @@ function Comment({ comment, handleReply }) {
                   key={r._id}
                   comment={r}
                   handleReply={(e) => handleReply(e, r.user[0].username, r.parentId)}
+                  handleAddLike={handleAddLike}
+                  handleRemoveLike={handleRemoveLike}
                 />
               ))}
           </ul>
