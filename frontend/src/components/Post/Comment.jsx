@@ -1,25 +1,11 @@
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
-import differenceInDays from 'date-fns/differenceInDays';
-import differenceInHours from 'date-fns/differenceInHours';
-import differenceInMinutes from 'date-fns/differenceInMinutes';
-import differenceInWeeks from 'date-fns/differenceInWeeks';
 import { useState } from 'react';
+import { formatCommentTimestamp } from '../../lib/format';
 import '../../scss/Post/comment.scss';
 
 function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
   const [showReplies, setShowReplies] = useState(false);
-
-  const createdAtDate = new Date(comment.createdAt);
-  const now = Date.now();
-  const createdAt =
-    differenceInMinutes(now, createdAtDate) > 60
-      ? differenceInHours(now, createdAtDate) > 24
-        ? differenceInDays(now, createdAtDate) > 7
-          ? `${differenceInWeeks(now, createdAtDate)}w`
-          : `${differenceInDays(now, createdAtDate)}d`
-        : `${differenceInHours(now, createdAtDate)}h`
-      : `${differenceInMinutes(now, createdAtDate)}m`;
 
   return (
     <>
@@ -28,7 +14,7 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
         <div className='app__comment__content'>
           <b>{comment.user[0].username}</b> {comment.comment}
           <div className='app__comment__stats'>
-            <div>{createdAt}</div>
+            <div>{formatCommentTimestamp(new Date(comment.createdAt))}</div>
             {comment.likes.length > 0 && (
               <div className='app__semibold__pointer'>{comment.likes.length} likes</div>
             )}

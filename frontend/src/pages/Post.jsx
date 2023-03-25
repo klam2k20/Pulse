@@ -1,24 +1,24 @@
+import { ChatBubbleOvalLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import ImageSlider from '../components/ImageSlider/ImageSlider';
-import { useUser } from '../context/UserProvider';
-import { HeartIcon, ChatBubbleOvalLeftIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
-import '../scss/Pages/post.scss';
 import Caption from '../components/Post/Caption';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import Comment from '../components/Post/Comment';
+import { useUser } from '../context/UserProvider';
 import {
   addCommentLike,
   addPostLike,
   getComments,
   getPost,
   getPostLikes,
+  postComment,
   removeCommentLike,
   removePostLike,
 } from '../lib/apiRequests';
-import Comment from '../components/Post/Comment';
-import { differenceInDays, differenceInHours, differenceInMinutes, format } from 'date-fns';
-import { useState } from 'react';
-import { postComment } from '../lib/apiRequests';
+import { formatPostTimestamp } from '../lib/format';
+import '../scss/Pages/post.scss';
 
 function Post() {
   const [comment, setComment] = useState('');
@@ -80,18 +80,6 @@ function Post() {
   if (isPostLoading || isCommentsLoading || isLikesLoading) return <span>Loading...</span>;
   if (isPostError || isCommentsError || isLikesError) return <span>Something went wrong...</span>;
   if (!user) return <span>Something went wrong...</span>;
-
-  const createdAtDate = new Date(post.createdAt);
-  const now = Date.now();
-
-  const timestamp =
-    differenceInMinutes(now, createdAtDate) > 60
-      ? differenceInHours(now, createdAtDate) > 24
-        ? differenceInDays(now, createdAtDate) > 7
-          ? format(createdAtDate, 'MMMM d')
-          : `${differenceInDays(now, createdAtDate)} DAYS AGO`
-        : `${differenceInHours(now, createdAtDate)} HOURS AGO`
-      : `${differenceInMinutes(now, createdAtDate)} MINUTES AGO`;
 
   const handleSubmitComment = (e) => {
     e.preventDefault();
@@ -176,7 +164,7 @@ function Post() {
           {likes.length}
           <ChatBubbleOvalLeftIcon onClick={handleComment} /> {comments.length}
         </div>
-        <div className='app__post__date'>{timestamp}</div>
+        <div className='app__post__date'>{formatPostTimestamp(new Date(post.createdAt))}</div>
         <form
           className='app__post__add__comment'
           onSubmit={reply ? handleSubmitReply : handleSubmitComment}>
