@@ -6,7 +6,7 @@
   height: 100%;
 
   @media screen and (max-width: 1024px) {
-    @include flex(center, stretch);
+    @include flex(center, flex-start);
     flex-direction: column;
   }
 }
@@ -31,7 +31,7 @@
 }
 
 .app__post__info {
-  @include flex(flex-start, flex-start);
+  @include flex(flex-start, flex-end);
   flex-direction: column;
   flex: 1;
   gap: 0.5rem;
