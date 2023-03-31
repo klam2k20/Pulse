@@ -1,6 +1,8 @@
 import '../../scss/Post/caption.scss';
+import CaptionLoading from '../StatusIndicator/CaptionLoading';
 
-function Caption({ avatar, username, caption }) {
+function Caption({ avatar, username, caption, isLoading }) {
+  if (isLoading) return <CaptionLoading />;
   return (
     <div className='app__post__caption'>
       <img src={avatar} alt={username} loading='lazy' />

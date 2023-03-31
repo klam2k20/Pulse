@@ -4,8 +4,9 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useUser } from '../../context/UserProvider';
 import { addPostLike, removePostLike } from '../../lib/apiRequests';
 import '../../scss/Post/actions.scss';
+import ActionsLoading from '../StatusIndicator/ActionsLoading';
 
-function Actions({ likes, numComments, setComment, setReplyId, postId }) {
+function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading }) {
   const { user } = useUser();
   const queryClient = useQueryClient();
 
@@ -34,6 +35,7 @@ function Actions({ likes, numComments, setComment, setReplyId, postId }) {
     unlikePost.mutate({ postId, userId: user._id });
   };
 
+  if (isLoading) return <ActionsLoading />;
   return (
     <div className='app__post__stats'>
       {likes.some((l) => l.userId._id === user._id) ? (

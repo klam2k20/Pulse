@@ -1,12 +1,29 @@
+@keyframes loading {
+  0% {
+    background-color-coloror: #80808080;
+  }
+  50% {
+    background-color: #808080cc;
+  }
+  100% {
+    background-color: #80808080;
+  }
+}
+
 @mixin flex($align-item, $justify-content) {
   display: flex;
   align-items: $align-item;
   justify-content: $justify-content;
 }
 
-@mixin position($top, $bottom, $left, $right) {
-  top: $top;
-  bottom: $bottom;
-  left: $left;
-  right: $right;
+@mixin loadingAnimation {
+  animation: loading 2s ease-in-out infinite;
+}
+
+@mixin loadingCircle($width, $height) {
+  @include loadingAnimation;
+  width: $width;
+  height: $height;
+  border-radius: 50%;
+  background-color: #80808080;
 }

@@ -1,0 +1,11 @@
+@use '../index.scss' as *;
+
+.app__post__stats {
+  .app__loading__icon {
+    @include loadingAnimation;
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background-color: #80808080;
+  }
+}

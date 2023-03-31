@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useUser } from '../../context/UserProvider';
 import { addCommentLike, removeCommentLike } from '../../lib/apiRequests';
-import Comment from './Comment';
 import '../../scss/Post/comments.scss';
-import { useEffect, useState } from 'react';
+import CommentsLoading from '../StatusIndicator/CommentsLoading';
+import Comment from './Comment';
 
 function Comments({ comments, isLoading, postId, setComment, setReplyId }) {
   const [isLaptop, setIsLaptop] = useState(false);
@@ -47,7 +48,7 @@ function Comments({ comments, isLoading, postId, setComment, setReplyId }) {
     unlikeComment.mutate({ postId, userId: user._id, parentId: commentId });
   };
 
-  if (isLoading) return <span>Loading Comments...</span>;
+  if (isLoading) return <CommentsLoading />;
   if (isLaptop && comments.length === 0) return;
   if (isLaptop) {
     return (

@@ -8,6 +8,8 @@ import AppError from '../components/StatusIndicator/AppError';
 import { getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
+//TODO: SHOW FOLLOWERS AND FOLLOWINGS AND ADD FOLLOW FUNCTIONALITY
+
 function Profile() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [profileError, setProfileError] = useState(null);

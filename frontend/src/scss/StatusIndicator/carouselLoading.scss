@@ -1,10 +1,8 @@
 @use '../index.scss' as *;
 
-.app__grid__loading {
+.app__carousel__loading {
   @include loadingAnimation;
   width: 100%;
-  border-radius: 0.5rem;
-  aspect-ratio: 1/1;
+  height: 100%;
   background-color: #80808080;
-  object-fit: cover;
 }

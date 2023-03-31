@@ -2,7 +2,7 @@ import '../scss/logo.scss';
 
 function Logo() {
   return (
-    <div className='ekg-container'>
+    <div className='flex__center ekg-container'>
       <svg className='ekg' viewBox='0 -50 110 100'>
         <polyline
           className='ekg-line'

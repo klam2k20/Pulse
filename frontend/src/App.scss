@@ -27,7 +27,8 @@ input {
   outline: none;
 }
 
-input:read-only {
+input:read-only,
+textarea:read-only {
   background: rgba(235, 235, 235, 0.5);
   cursor: not-allowed;
 }
@@ -104,4 +105,21 @@ img {
 .semibold__pointer {
   cursor: pointer;
   font-weight: 600;
+}
+
+.app__loading__line {
+  @include loadingAnimation;
+  width: 75%;
+  height: 0.5rem;
+  border-radius: 100px;
+  background-color: #80808080;
+}
+
+.app__loading__date {
+  @include loadingAnimation;
+  width: 10%;
+  height: 0.5rem;
+  margin: 0 1rem;
+  border-radius: 100px;
+  background-color: #80808080;
 }

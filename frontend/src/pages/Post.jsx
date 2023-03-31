@@ -12,8 +12,7 @@ import { getComments, getPost, getPostLikes } from '../lib/apiRequests';
 import { formatPostTimestamp } from '../lib/format';
 import '../scss/Pages/post.scss';
 
-//TODO: LOADING STATES
-//TODO: SHOW FOLLOWERS AND FOLLOWING AND POST LIKES AND COMMENT LIKES
+//TODO: POST LIKES AND COMMENT LIKES
 //TODO: WS VS SHORT POLLING VS LONG POLLING VS OTHER
 
 function Post() {
@@ -50,38 +49,48 @@ function Post() {
       />
     );
 
-  if (isPostLoading || isCommentsLoading || isLikesLoading) return <span>Loading...</span>;
-
   return (
     <div className='app__post'>
       <div className='app__post__photos'>
-        <Carousel photos={post.images} />
+        <Carousel photos={post?.images} isLoading={isPostLoading} />
       </div>
 
       <div className='app__post__info'>
-        <Caption avatar={user.pfp} username={user.username} caption={post.caption} />
+        <Caption
+          avatar={user.pfp}
+          username={user.username}
+          caption={post?.caption}
+          isLoading={isPostLoading}
+        />
         <Comments
           comments={comments}
           postId={postId}
           setComment={setComment}
           setReplyId={setReplyId}
+          isLoading={isCommentsLoading}
         />
         <Actions
           likes={likes}
-          numComments={comments.length}
+          numComments={comments?.length}
           setComment={setComment}
           setReplyId={setReplyId}
           postId={postId}
+          isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
         />
-        <div className='font__color__light app__post__date'>
-          {formatPostTimestamp(new Date(post.createdAt))}
-        </div>
+        {isPostLoading ? (
+          <span className='app__loading__date' />
+        ) : (
+          <div className='font__color__light app__post__date'>
+            {formatPostTimestamp(new Date(post.createdAt))}
+          </div>
+        )}
         <CommentForm
           comment={comment}
           setComment={setComment}
           replyId={replyId}
           setReplyId={setReplyId}
           postId={postId}
+          isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
         />
       </div>
     </div>

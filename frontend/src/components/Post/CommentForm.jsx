@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { postComment } from '../../lib/apiRequests';
 import '../../scss/Post/commentForm.scss';
+import CommentFormLoading from '../StatusIndicator/CommentFormLoading';
 
-function CommentForm({ comment, setComment, replyId, setReplyId, postId }) {
+function CommentForm({ comment, setComment, replyId, setReplyId, postId, isLoading }) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -55,6 +56,7 @@ function CommentForm({ comment, setComment, replyId, setReplyId, postId }) {
     }
   };
 
+  if (isLoading) return <CommentFormLoading />;
   return (
     <form
       className='app__comment__form'

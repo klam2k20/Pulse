@@ -1,9 +1,6 @@
-@use "./index.scss" as *;
+@use './index.scss' as *;
 
 .ekg-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   pointer-events: none;
 }
@@ -17,17 +14,4 @@
   stroke: $primary-color;
   stroke-width: 2;
   stroke-linecap: round;
-  // animation-name: pulse;
-  // animation-duration: 3s;
-  // animation-iteration-count: infinite;
-  // animation-timing-function: linear;
 }
-
-// @keyframes pulse {
-//   0% {
-//     stroke-dasharray: 0 500;
-//   }
-//   100% {
-//     stroke-dasharray: 500 0;
-//   }
-// }

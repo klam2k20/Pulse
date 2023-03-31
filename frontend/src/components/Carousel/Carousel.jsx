@@ -1,10 +1,11 @@
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useState, memo } from 'react';
+import { memo, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { defaultSizes } from '../../lib/constants';
 import '../../scss/Carousel/carousel.scss';
+import CarouselLoading from '../StatusIndicator/CarouselLoading';
 
-function Carousel({ photos, setPhotos, validation }) {
+function Carousel({ photos, setPhotos, validation, isLoading }) {
   const [index, setIndex] = useState(0);
 
   const handleAdditionalUploads = (e) => {
@@ -23,6 +24,7 @@ function Carousel({ photos, setPhotos, validation }) {
   const isGCSUri = () =>
     typeof photos[index] === 'string' && photos[index].includes('https://storage.googleapis.com');
 
+  if (isLoading) return <CarouselLoading />;
   return (
     <>
       {photos.length && (
