@@ -1,0 +1,23 @@
+@use '../index.scss' as *;
+
+.app__list__header {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $light-gray;
+  text-align: center;
+}
+
+.app__list {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  padding-top: 0.5rem;
+
+  .app__list__item {
+    @include flex(center, flex-start);
+    gap: 0.5rem;
+    padding: 0.5rem;
+
+    p {
+      font-size: 0.75rem;
+    }
+  }
+}

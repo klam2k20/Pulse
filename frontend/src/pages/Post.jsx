@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel/Carousel';
+import ListModal from '../components/Modal/ListModal';
 import Actions from '../components/Post/Actions';
 import Caption from '../components/Post/Caption';
 import CommentForm from '../components/Post/CommentForm';
@@ -18,6 +19,11 @@ import '../scss/Pages/post.scss';
 function Post() {
   const [comment, setComment] = useState('');
   const [replyId, setReplyId] = useState('');
+  const [modal, setModal] = useState({
+    isOpen: false,
+    title: '',
+    content: [],
+  });
   const { user } = useUser();
   const postId = useLocation().pathname.split('/')[3];
   const navigate = useNavigate();
@@ -39,6 +45,14 @@ function Post() {
     isLoading: isLikesLoading,
     isError: isLikesError,
   } = useQuery(['likes', postId], () => getPostLikes(postId).then((res) => res.data));
+
+  const closeModal = (e) => {
+    setModal({
+      isOpen: false,
+      title: '',
+      content: [],
+    });
+  };
 
   if (isPostError || isCommentsError || isLikesError)
     return (
@@ -68,6 +82,7 @@ function Post() {
           setComment={setComment}
           setReplyId={setReplyId}
           isLoading={isCommentsLoading}
+          setModal={setModal}
         />
         <Actions
           likes={likes}
@@ -76,6 +91,7 @@ function Post() {
           setReplyId={setReplyId}
           postId={postId}
           isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
+          setModal={setModal}
         />
         {isPostLoading ? (
           <span className='app__loading__date' />
@@ -93,6 +109,12 @@ function Post() {
           isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
         />
       </div>
+      <ListModal
+        list={modal.content}
+        title={modal.title}
+        isOpen={modal.isOpen}
+        close={closeModal}
+      />
     </div>
   );
 }

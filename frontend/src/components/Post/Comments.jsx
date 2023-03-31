@@ -1,3 +1,4 @@
+import { set } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useUser } from '../../context/UserProvider';
@@ -6,7 +7,7 @@ import '../../scss/Post/comments.scss';
 import CommentsLoading from '../StatusIndicator/CommentsLoading';
 import Comment from './Comment';
 
-function Comments({ comments, isLoading, postId, setComment, setReplyId }) {
+function Comments({ comments, isLoading, postId, setComment, setReplyId, setModal }) {
   const [isLaptop, setIsLaptop] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
   const { user } = useUser();
@@ -63,6 +64,7 @@ function Comments({ comments, isLoading, postId, setComment, setReplyId }) {
             handleReply={handleReply}
             handleAddLike={handleLikeComment}
             handleRemoveLike={handleUnlikeComment}
+            setModal={setModal}
           />
         ) : (
           comments.map((c) => (
@@ -72,6 +74,7 @@ function Comments({ comments, isLoading, postId, setComment, setReplyId }) {
               handleReply={handleReply}
               handleAddLike={handleLikeComment}
               handleRemoveLike={handleUnlikeComment}
+              setModal={setModal}
             />
           ))
         )}
@@ -87,6 +90,7 @@ function Comments({ comments, isLoading, postId, setComment, setReplyId }) {
           handleReply={handleReply}
           handleAddLike={handleLikeComment}
           handleRemoveLike={handleUnlikeComment}
+          setModal={setModal}
         />
       ))}
     </div>

@@ -6,7 +6,7 @@ import { addPostLike, removePostLike } from '../../lib/apiRequests';
 import '../../scss/Post/actions.scss';
 import ActionsLoading from '../StatusIndicator/ActionsLoading';
 
-function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading }) {
+function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading, setModal }) {
   const { user } = useUser();
   const queryClient = useQueryClient();
 
@@ -35,6 +35,21 @@ function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading
     unlikePost.mutate({ postId, userId: user._id });
   };
 
+  const showPostLikes = (e) => {
+    e.preventDefault();
+    const content = likes.map((l) => ({
+      id: l._id,
+      name: l.userId.name,
+      username: l.userId.username,
+      pfp: l.userId.pfp,
+    }));
+    setModal({
+      isOpen: true,
+      title: 'Likes',
+      content,
+    });
+  };
+
   if (isLoading) return <ActionsLoading />;
   return (
     <div className='app__post__stats'>
@@ -43,7 +58,9 @@ function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading
       ) : (
         <HeartIcon onClick={handleLikePost} />
       )}
-      {likes.length}
+      <button className='primary__btn' onClick={showPostLikes}>
+        {likes.length}
+      </button>
       <ChatBubbleOvalLeftIcon onClick={handleComment} />
       {numComments}
     </div>

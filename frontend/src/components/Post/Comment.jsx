@@ -5,22 +5,37 @@ import { useUser } from '../../context/UserProvider';
 import { formatCommentTimestamp } from '../../lib/format';
 import '../../scss/Post/comment.scss';
 
-function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
+function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setModal }) {
   const [showReplies, setShowReplies] = useState(false);
   const { user } = useUser();
+
+  const showCommentLikes = (e) => {
+    e.preventDefault();
+    const content = comment.likes.map((l) => ({
+      id: l._id,
+      name: l.userId.name,
+      username: l.userId.username,
+      pfp: l.userId.pfp,
+    }));
+    setModal({
+      isOpen: true,
+      title: 'Likes',
+      content,
+    });
+  };
 
   return (
     <>
       <li className='app__comment'>
-        <img src={comment.user[0].pfp} loading='lazy' />
+        <img className='avatar' src={comment.user[0].pfp} loading='lazy' />
         <div className='app__comment__content'>
           <b>{comment.user[0].username}</b> {comment.comment}
           <div className='app__comment__stats '>
             <div>{formatCommentTimestamp(new Date(comment.createdAt))}</div>
             {comment.likes.length > 0 && (
-              <div className='semibold__pointer'>{`${comment.likes.length} ${
-                comment.likes.length === 1 ? 'like' : 'likes'
-              }`}</div>
+              <div role='button' className='semibold__pointer' onClick={showCommentLikes}>{`${
+                comment.likes.length
+              } ${comment.likes.length === 1 ? 'like' : 'likes'}`}</div>
             )}
             <div
               role='button'
@@ -31,7 +46,7 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
           </div>
         </div>
 
-        {comment.likes.some((l) => l.userId === user._id) ? (
+        {comment.likes.some((l) => l.userId._id === user._id) ? (
           <FilledHeartIcon onClick={(e) => handleRemoveLike(e, comment._id)} />
         ) : (
           <HeartIcon onClick={(e) => handleAddLike(e, comment._id)} />
