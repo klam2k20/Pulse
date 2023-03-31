@@ -1,4 +1,5 @@
 const Comment = require('../models/Comment');
+const User = require('../models/User');
 
 const getComments = async (req, res) => {
   const postId = req.query.postId;
@@ -46,6 +47,10 @@ const getComments = async (req, res) => {
         },
       },
     ]);
+    await User.populate(commentsWithLikes, {
+      path: 'likes.userId',
+      select: '_id username name pfp',
+    });
     const repliesWithLikes = commentsWithLikes.filter((c) => c.parentId !== undefined);
     commentsWithLikes = commentsWithLikes.filter((c) => c.parentId === undefined);
 

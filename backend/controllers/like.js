@@ -8,7 +8,7 @@ const getPostLikes = async (req, res) => {
   try {
     const likes = await Like.find({ postId, parentId: undefined }, 'userId').populate(
       'userId',
-      '_id username'
+      '_id username name pfp'
     );
     return res.json(likes);
   } catch (err) {
