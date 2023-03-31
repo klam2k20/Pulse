@@ -12,7 +12,7 @@ function Login() {
     email: '',
     password: '',
   });
-  const { user, setUser } = useUser();
+  const { user, setUser, setError } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +37,7 @@ function Login() {
     try {
       const { data } = await loginUser(login.email, login.password);
       setUser(data);
+      setError(null);
       navigate('/');
       toast.success(`Welcome back, ${data.username}`);
     } catch (err) {
@@ -85,7 +86,7 @@ function Login() {
         </span>
       </div>
       <div className='app__login__right'>
-        <img src='/heart.png' />
+        <img src='/heart.png' loading='lazy' />
       </div>
     </div>
   );

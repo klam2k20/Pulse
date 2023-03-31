@@ -1,4 +1,4 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .update__profile__header {
   @include flex(center, space-between);
@@ -14,10 +14,10 @@
 .update__profile__img {
   @include flex(center, center);
   gap: 1rem;
+  width: 100%;
+  padding: 0.5rem 0;
   border-top: 1px solid $light-gray;
   border-bottom: 1px solid $light-gray;
-  padding: 0.5rem 0;
-  width: 100%;
 
   img {
     height: 5rem;
@@ -35,9 +35,11 @@
       @include flex(center, center);
       gap: 0.5rem;
       cursor: pointer;
+
       input {
         display: none;
       }
+
       svg {
         height: 24px;
         width: 24px;
@@ -60,10 +62,10 @@
     select,
     textarea {
       width: 75%;
-      border: 0px;
-      outline: none;
-      border-bottom: 1px solid $light-gray;
       padding: 0.5rem 0;
+      border: 0px;
+      border-bottom: 1px solid $light-gray;
+      outline: none;
     }
   }
 }

@@ -1,0 +1,104 @@
+@use '../index.scss' as *;
+
+.app__profile__header {
+  @include flex(center, space-between);
+  width: 100%;
+
+  @media screen and (max-width: 735px) {
+    gap: 1rem;
+  }
+}
+
+.app__profile__img {
+  @include flex(center, center);
+  flex: 1;
+
+  img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+
+    @media screen and (max-width: 735px) {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+
+  @media screen and (max-width: 735px) {
+    @include flex(center, flex-start);
+    flex: 0;
+  }
+}
+
+.app__profile__btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: $light-btn-bg;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.app__profile__info {
+  @include flex(flex-start, center);
+  flex-direction: column;
+  flex: 2;
+  gap: 1rem;
+
+  .app__profile__bio {
+    @include flex(flex-start, center);
+    flex-direction: column;
+    line-height: 1.25rem;
+  }
+
+  .app__profile__stats {
+    @include flex(center, flex-start);
+    gap: 2rem;
+
+    span {
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    @media screen and (max-width: 735px) {
+      display: none;
+    }
+  }
+
+  button {
+    @media screen and (max-width: 735px) {
+      display: none;
+    }
+  }
+}
+
+.app__profile__pronouns {
+  margin-left: 0.5rem;
+  color: $light-font;
+}
+
+.app__profile__button__mobile {
+  display: none;
+  width: 100%;
+
+  @media screen and (max-width: 735px) {
+    display: block;
+  }
+}
+
+.app__profile__stats__mobile {
+  display: none;
+  width: 100%;
+  padding: 0.5rem 0rem;
+  border: 1px solid $light-gray;
+  border-left: none;
+  border-right: none;
+
+  @media screen and (max-width: 735px) {
+    @include flex(center, space-around);
+
+    span {
+      line-height: 1.25rem;
+      text-align: center;
+    }
+  }
+}

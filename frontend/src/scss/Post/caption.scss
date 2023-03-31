@@ -1,8 +1,9 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .app__post__caption {
   @include flex(center, flex-start);
   gap: 0.5rem;
+  margin: 1rem 1rem 0.5rem;
 
   img {
     width: 32px;

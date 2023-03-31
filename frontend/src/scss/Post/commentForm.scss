@@ -1,0 +1,20 @@
+@use '../index.scss' as *;
+
+.app__comment__form {
+  @include flex(center, flex-start);
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid $light-gray;
+}
+
+.app__comment__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: $primary-color;
+}
+
+.comment__disabled {
+  opacity: 0.5;
+}

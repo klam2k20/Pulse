@@ -1,52 +1,60 @@
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
+import { useUser } from '../../context/UserProvider';
 import { formatCommentTimestamp } from '../../lib/format';
 import '../../scss/Post/comment.scss';
 
 function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
   const [showReplies, setShowReplies] = useState(false);
+  const { user } = useUser();
 
   return (
     <>
-      <div className='app__comment'>
-        <img src={comment.user[0].pfp} />
+      <li className='app__comment'>
+        <img src={comment.user[0].pfp} loading='lazy' />
         <div className='app__comment__content'>
           <b>{comment.user[0].username}</b> {comment.comment}
-          <div className='app__comment__stats'>
+          <div className='app__comment__stats '>
             <div>{formatCommentTimestamp(new Date(comment.createdAt))}</div>
             {comment.likes.length > 0 && (
-              <div className='app__semibold__pointer'>{comment.likes.length} likes</div>
+              <div className='semibold__pointer'>{`${comment.likes.length} ${
+                comment.likes.length === 1 ? 'like' : 'likes'
+              }`}</div>
             )}
             <div
               role='button'
-              className='app__semibold__pointer'
+              className='semibold__pointer'
               onClick={(e) => handleReply(e, comment.user[0].username, comment._id)}>
               Reply
             </div>
           </div>
         </div>
-        {comment.likes.some((l) => l._id) ? (
+
+        {comment.likes.some((l) => l.userId === user._id) ? (
           <FilledHeartIcon onClick={(e) => handleRemoveLike(e, comment._id)} />
         ) : (
           <HeartIcon onClick={(e) => handleAddLike(e, comment._id)} />
         )}
-      </div>
+      </li>
+
       {comment.replies?.length > 0 && (
         <>
           <button
-            className='app__semibold__pointer app__replies__btn'
+            className='semibold__pointer app__replies__btn'
             onClick={() => setShowReplies((prev) => !prev)}>
             <div className='app__reply__line' />
-            {showReplies ? (
-              <span>Hide Replies</span>
-            ) : (
-              <span>{`View Replies (${comment.replies.length})`}</span>
-            )}
+            <span>
+              {showReplies
+                ? 'Hide Replies'
+                : `View ${comment.replies.length === 1 ? 'Reply' : 'Replies'} (${
+                    comment.replies.length
+                  })`}
+            </span>
           </button>
-          <ul className='app__replies' style={{ display: showReplies ? 'flex' : 'none' }}>
-            {showReplies &&
-              comment.replies?.map((r) => (
+          {showReplies && (
+            <ul className='app__replies'>
+              {comment.replies?.map((r) => (
                 <Comment
                   key={r._id}
                   comment={r}
@@ -55,7 +63,8 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike }) {
                   handleRemoveLike={handleRemoveLike}
                 />
               ))}
-          </ul>
+            </ul>
+          )}
         </>
       )}
     </>

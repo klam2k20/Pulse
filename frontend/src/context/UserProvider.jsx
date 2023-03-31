@@ -1,30 +1,43 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await axios.get('/api/user');
-      setUser(data);
-    };
-
     if (!user) {
-      getUser().catch((err) => {
-        console.log(`Get User Profile Error: ${err}`);
-        if (location.pathname !== '/login' && location.pathname !== '/register') navigate('/login');
-      });
+      axios
+        .get('/api/user')
+        .then((res) => {
+          setLoading(false);
+          setUser(res.data);
+        })
+        .catch((err) => {
+          setError(err);
+          setLoading(false);
+          console.log(`Get User Profile Error: ${err}`);
+          if (location.pathname !== '/login' && location.pathname !== '/register')
+            navigate('/login');
+        });
     }
   }, []);
 
-  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
+  const contextValue = {
+    user,
+    setUser,
+    isLoading,
+    error,
+    setError,
+  };
+
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 }
 
 export const useUser = () => useContext(UserContext);

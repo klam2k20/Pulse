@@ -1,0 +1,38 @@
+@use '../index.scss' as *;
+
+.app__profile__img {
+  .app__loading__circle {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    animation: loading 2s ease-in-out infinite;
+    background-color: #80808080;
+
+    @media screen and (max-width: 735px) {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+}
+
+.app__profile__info {
+  .app__loading__line {
+    width: 75%;
+    height: 0.5rem;
+    border-radius: 100px;
+    animation: loading 2s ease-in-out infinite;
+    background-color: #80808080;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-color-coloror: #80808080;
+  }
+  50% {
+    background-color: #808080cc;
+  }
+  100% {
+    background-color: #80808080;
+  }
+}

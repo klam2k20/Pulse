@@ -1,12 +1,12 @@
-import "../../scss/Post/caption.scss";
+import '../../scss/Post/caption.scss';
 
 function Caption({ avatar, username, caption }) {
   return (
     <div className='app__post__caption'>
-      <img src={avatar} />
-      <div>
+      <img src={avatar} alt={username} loading='lazy' />
+      <span>
         <b>{username}</b> {caption}
-      </div>
+      </span>
     </div>
   );
 }

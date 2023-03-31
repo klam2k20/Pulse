@@ -1,0 +1,13 @@
+@use '../index.scss' as *;
+
+.app__post__comments {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  flex: 1;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  border-top: 1px solid $light-gray;
+  border-bottom: 1px solid $light-gray;
+  overflow-y: auto;
+}

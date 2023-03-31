@@ -1,8 +1,9 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .profile__post {
   position: relative;
   cursor: pointer;
+  text-decoration: none;
 
   svg {
     width: 24px;
@@ -17,23 +18,16 @@
   }
 }
 
-.profile__post__overlay__top__right {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-}
-
 .profile__post__overlay {
-  position: absolute;
-  @include position(0, 0, 0, 0);
-  background: rgba(52, 52, 52, 0.3);
   display: none;
+  border-radius: 0.5rem;
+  background: rgba(52, 52, 52, 0.3);
   transition: all ease-out;
 
   &__center {
-    transform: translateY(-50%);
     gap: 0.5rem;
     color: white;
     font-weight: bold;
+    transform: translateY(-50%);
   }
 }

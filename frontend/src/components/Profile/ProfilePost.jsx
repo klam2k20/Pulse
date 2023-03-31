@@ -1,17 +1,19 @@
 import { ChatBubbleOvalLeftIcon, HeartIcon, Square2StackIcon } from '@heroicons/react/24/solid';
-import { Link } from 'react-router-dom';
-import '../../scss/Post/profilePost.scss';
+import { Link, useParams } from 'react-router-dom';
+import '../../scss/Profile/profilePost.scss';
 
 function ProfilePost({ post }) {
+  const { username } = useParams();
+
   return (
-    <Link to={`/post/${post._id}`} className='profile__post'>
-      <img src={post.images[0]} alt={`Post ${post._id}`} />
+    <Link to={`/${username}/post/${post._id}`} className='profile__post'>
+      <img src={post.images[0]} alt={`Post ${post._id}`} loading='lazy' />
       {post.images.length > 1 && (
-        <div className='profile__post__overlay__top__right'>
+        <div className='absolute__top__right'>
           <Square2StackIcon />
         </div>
       )}
-      <div className='flex__center profile__post__overlay'>
+      <div className='flex__center absolute profile__post__overlay'>
         <div className='flex__center profile__post__overlay__center'>
           <span className='flex__center'>
             <HeartIcon />

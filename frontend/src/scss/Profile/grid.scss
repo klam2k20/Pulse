@@ -1,0 +1,26 @@
+@use '../index.scss' as *;
+
+.app__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+  padding-top: 2rem;
+  border-top: 1px solid $light-gray;
+
+  img {
+    width: 100%;
+    border-radius: 0.5rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 735px) {
+    padding: 0;
+    border-top: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    gap: 0.25rem;
+  }
+}

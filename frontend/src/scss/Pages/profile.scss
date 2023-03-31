@@ -1,10 +1,11 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .app__profile {
   @include flex(center, flex-start);
   flex-direction: column;
-  width: 70%;
   gap: 2rem;
+  width: 70%;
+  height: 100%;
 
   @media screen and (max-width: 1919px) {
     width: 85%;
@@ -16,153 +17,4 @@
   @media screen and (max-width: 480px) {
     gap: 1rem;
   }
-}
-
-.app__profile__header {
-  @include flex(center, space-between);
-  width: 100%;
-
-  @media screen and (max-width: 735px) {
-    gap: 1rem;
-  }
-
-  &__img {
-    @include flex(center, center);
-    flex: 1;
-
-    @media screen and (max-width: 735px) {
-      @include flex(center, flex-start);
-      flex: 0;
-    }
-
-    img {
-      width: 10rem;
-      height: 10rem;
-      border-radius: 50%;
-
-      @media screen and (max-width: 735px) {
-        width: 5rem;
-        height: 5rem;
-      }
-    }
-  }
-
-  &__bio {
-    @include flex(flex-start, center);
-    flex-direction: column;
-    flex: 2;
-    gap: 1rem;
-
-    &__heading {
-      @include flex(center, flex-start);
-      gap: 1rem;
-
-      @media screen and (max-width: 735px) {
-        flex-direction: column;
-        @include flex(flex-start, flex-start);
-      }
-
-      span {
-        font-size: 1.25rem;
-      }
-
-      button {
-        width: fit-content;
-        padding: 0.5rem 1rem;
-        background-color: $light-btn-bg;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        cursor: pointer;
-
-        @media screen and (max-width: 735px) {
-          width: 10rem;
-        }
-      }
-    }
-
-    &__stats {
-      @include flex(center, flex-start);
-      gap: 2rem;
-
-      span {
-        font-size: 1rem;
-        letter-spacing: 0.5px;
-      }
-
-      @media screen and (max-width: 735px) {
-        display: none;
-      }
-    }
-
-    &__main {
-      @include flex(flex-start, center);
-      flex-direction: column;
-
-      span {
-        line-height: 1.25rem;
-      }
-
-      @media screen and (max-width: 735px) {
-        display: none;
-      }
-    }
-  }
-}
-
-.app__profile__header__bio__main__mobile {
-  width: 100%;
-  display: none;
-
-  @media screen and (max-width: 735px) {
-    @include flex(flex-start, flex-start);
-    flex-direction: column;
-    span {
-      line-height: 1.25rem;
-    }
-  }
-}
-
-.app__profile__header__bio__stats__mobile {
-  width: 100%;
-  display: none;
-  padding: 0.5rem 0rem;
-  border: 1px solid $light-gray;
-  border-left: none;
-  border-right: none;
-
-  @media screen and (max-width: 735px) {
-    @include flex(center, space-around);
-    span {
-      text-align: center;
-      line-height: 1.25rem;
-    }
-  }
-}
-
-.app__profile__main {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  width: 100%;
-  padding-top: 2rem;
-  border-top: 1px solid $light-gray;
-
-  img {
-    object-fit: cover;
-    width: 100%;
-    aspect-ratio: 1/1;
-  }
-  @media screen and (max-width: 735px) {
-    padding: 0;
-    border-top: none;
-  }
-
-  @media screen and (max-width: 480px) {
-    gap: 0.25rem;
-  }
-}
-
-.app__profile__header__bio_pronouns {
-  color: $light-font;
-  margin-left: 0.5rem;
 }

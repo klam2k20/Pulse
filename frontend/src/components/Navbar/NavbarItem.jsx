@@ -3,7 +3,7 @@ import '../../scss/Navbar/navbarItem.scss';
 
 function NavbarLinkItem({ name, handleClick, icon, selectedIcon, selected, page }) {
   return (
-    <button onClick={handleClick}>
+    <li onClick={handleClick}>
       <Link to={page} className='app__navbar__item' name={name}>
         <div className='app__navbar__item__icon'>{selected === name ? selectedIcon : icon}</div>
         <span
@@ -12,20 +12,22 @@ function NavbarLinkItem({ name, handleClick, icon, selectedIcon, selected, page 
           {name}
         </span>
       </Link>
-    </button>
+    </li>
   );
 }
 
 function NavbarButtonItem({ name, handleClick, icon, selectedIcon, selected }) {
   return (
-    <button className='app__navbar__item' name={name} onClick={handleClick}>
-      <div className='app__navbar__item__icon'>{selected === name ? selectedIcon : icon}</div>
-      <span
-        className='app__navbar__item__label'
-        style={{ fontWeight: selected === name ? 'bold' : 'normal' }}>
-        {name}
-      </span>
-    </button>
+    <li onClick={handleClick}>
+      <button className='app__navbar__item' name={name}>
+        <div className='app__navbar__item__icon'>{selected === name ? selectedIcon : icon}</div>
+        <span
+          className='app__navbar__item__label'
+          style={{ fontWeight: selected === name ? 'bold' : 'normal' }}>
+          {name}
+        </span>
+      </button>
+    </li>
   );
 }
 

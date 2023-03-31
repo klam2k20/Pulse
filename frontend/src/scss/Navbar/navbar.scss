@@ -3,18 +3,17 @@
 .app__navbar {
   @include flex(flex-start, space-between);
   flex-direction: column;
+  position: fixed;
+  inset: 0;
   width: 335px;
   padding: 1rem;
   border-right: 1px solid $light-gray;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
 
   @media screen and (max-width: 1919px) {
     width: 245px;
   }
   @media screen and (max-width: 768px) {
+    @include flex(center, center);
     width: 72px;
   }
   @media screen and (max-width: 480px) {
@@ -29,11 +28,6 @@
   color: black;
   text-decoration: none;
 
-  .ekg-line {
-    fill: black;
-    stroke: black;
-  }
-
   h1 {
     font-family: $font-family-heading;
     pointer-events: none;
@@ -41,6 +35,11 @@
     @media screen and (max-width: 768px) {
       display: none;
     }
+  }
+
+  .ekg-line {
+    fill: black;
+    stroke: black;
   }
 
   @media screen and (max-width: 768px) {
@@ -59,7 +58,7 @@
   gap: 0.25rem;
   width: 100%;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     width: fit-content;
   }
 }

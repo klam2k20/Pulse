@@ -1,4 +1,4 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
 
 .layout {
   @include flex(stretch, center);
@@ -7,10 +7,11 @@
   .app__layout__main__wrapper {
     @include flex(flex-start, center);
     width: 100%;
-    overflow-y: scroll;
+    height: 100%;
     padding: 2rem 1rem;
     margin-left: 335px;
-    height: 100%;
+    overflow-y: auto;
+
     @media screen and (max-width: 1919px) {
       margin-left: 245px;
     }

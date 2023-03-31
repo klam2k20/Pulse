@@ -1,0 +1,22 @@
+@use '../index.scss' as *;
+
+.app__grid__loading {
+  width: 100%;
+  border-radius: 0.5rem;
+  animation: loading 2s ease-in-out infinite;
+  aspect-ratio: 1/1;
+  background-color: #80808080;
+  object-fit: cover;
+}
+
+@keyframes loading {
+  0% {
+    background-color-coloror: #80808080;
+  }
+  50% {
+    background-color: #808080cc;
+  }
+  100% {
+    background-color: #80808080;
+  }
+}

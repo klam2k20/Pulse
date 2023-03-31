@@ -1,54 +1,37 @@
-import Modal from './modal';
-import '../../scss/Modals/createPost.scss';
-import { useEffect, useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/outline';
-import ImageSlider from '../ImageSlider/ImageSlider';
-import { useUser } from '../../context/UserProvider';
-import { defaultSizes } from '../../lib/constants';
-import { sharePost, uploadPhoto } from '../../lib/apiRequests';
+import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { toast } from 'react-hot-toast';
+import { useUser } from '../../context/UserProvider';
+import { sharePost, uploadPhoto } from '../../lib/apiRequests';
+import { defaultSizes } from '../../lib/constants';
+import '../../scss/Modals/createPost.scss';
+import Carousel from '../Carousel/Carousel';
+import AppError from '../StatusIndicator/AppError';
+import AppLoading from '../StatusIndicator/AppLoading';
+import DragAndDrop from './DragAndDrop';
+import Modal from './modal';
 
 function CreatePostModal({ isOpen, close }) {
   const { user } = useUser();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [caption, setCaption] = useState('');
-  const [isDragActive, setIsDragActive] = useState(false);
   const [index, setIndex] = useState(0);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (selectedFiles.length === 0) setIndex(0);
   }, [selectedFiles]);
 
-  const queryClient = useQueryClient();
-  const postMutation = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
+  const createPost = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   });
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setIsDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setIsDragActive(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      setSelectedFiles((prev) => [...prev, ...e.dataTransfer.files]);
-      setIndex(1);
-    }
-  };
 
   const handleFileUpload = (e) => {
     e.preventDefault();
     if (e.target.files.length > 0) {
-      setSelectedFiles((prev) => [...prev, ...e.target.files]);
+      setSelectedFiles((prev) => [...prev, ...e.target.files].slice(0, 5));
       setIndex(1);
     }
   };
@@ -56,6 +39,8 @@ function CreatePostModal({ isOpen, close }) {
   const handleClose = () => {
     setSelectedFiles([]);
     setIndex(0);
+    setLoading(false);
+    setError(null);
     close();
   };
 
@@ -69,108 +54,113 @@ function CreatePostModal({ isOpen, close }) {
 
     try {
       const promises = selectedFiles.map((f) => uploadPhoto(f));
-
+      setLoading(true);
       Promise.all(promises).then((res) => {
         const images = res.map((data) => data.data);
-        postMutation.mutate({ images, caption });
+        createPost.mutate({ images, caption });
+        setLoading(false);
       });
       handleClose();
     } catch (err) {
+      setLoading(false);
+      setError(err);
       console.log(`Share Post Error: ${err}`);
-      toast.error('Error Sharing Post. Please Try Again Shortly');
     }
   };
 
   return (
     isOpen && (
       <Modal close={handleClose}>
-        <div className='flex__center create__post__header'>
-          {index > 0 &&
-            (index === 1 ? (
-              <button className='secondary__btn' onClick={handleCancel}>
-                Cancel
-              </button>
-            ) : (
-              <button className='secondary__btn' onClick={() => setIndex(1)}>
-                Previous
-              </button>
-            ))}
-          <h4>Create a New Post</h4>
-          {index > 0 &&
-            (index === 1 ? (
-              <button
-                className='primary__btn'
-                disabled={
-                  selectedFiles.some((f) => f.size > defaultSizes.maxPhotoSize) ? 'disabled' : ''
-                }
-                onClick={() => setIndex(2)}>
-                Next
-              </button>
-            ) : (
-              <button
-                className='primary__btn'
-                disabled={selectedFiles.length > 0 && caption !== '' ? '' : 'disabled'}
-                onClick={handleSharePost}>
-                Share
-              </button>
-            ))}
-        </div>
-        <div className='flex__center create__post__content'>
-          {index === 0 && (
-            <div
-              className={
-                isDragActive
-                  ? 'flex__center create__post__content__drag drag__active'
-                  : 'flex__center create__post__content__drag'
-              }
-              onDragEnter={handleDragOver}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragOver}
-              onDrop={handleDrop}>
-              <PhotoIcon />
-              <span>
-                Upload or Drag and Drop <br /> Photos and Videos Here
-              </span>
-              <label role='button'>
-                Browse
-                <input
-                  type='file'
-                  multiple
-                  accept='image/*, video/*'
-                  onChange={handleFileUpload}
-                  onClick={(e) => (e.target.value = null)}
-                />
-              </label>
-            </div>
-          )}
-          {index === 1 && (
-            <ImageSlider photos={selectedFiles} setPhotos={setSelectedFiles} validation={true} />
-          )}
-          {index === 2 && (
-            <div className='create__post__caption'>
-              {user && (
-                <div className='create__post__caption__header'>
-                  <img src={user.pfp} alt='User Profile Photo' />
-                  <span>{user.username}</span>
+        {isLoading && <AppLoading />}
+        {error && (
+          <AppError
+            text='Something went wrong.'
+            buttonText='TRY AGAIN'
+            onClick={() => window.location.reload()}
+          />
+        )}
+
+        {!isLoading && !error && (
+          <>
+            <header className='flex__center create__post__header'>
+              {index === 1 && (
+                <button className='secondary__btn' onClick={handleCancel}>
+                  Cancel
+                </button>
+              )}
+              {index === 2 && (
+                <button className='secondary__btn' onClick={() => setIndex(1)}>
+                  Previous
+                </button>
+              )}
+              <h4>Create a New Post</h4>
+              {index === 1 && (
+                <button
+                  className='primary__btn'
+                  disabled={
+                    selectedFiles.some((f) => f.size > defaultSizes.maxPhotoSize) ? 'disabled' : ''
+                  }
+                  onClick={() => setIndex(2)}>
+                  Next
+                </button>
+              )}
+              {index === 2 && (
+                <button
+                  className='primary__btn'
+                  disabled={selectedFiles.length > 0 && caption !== '' ? '' : 'disabled'}
+                  onClick={handleSharePost}>
+                  Share
+                </button>
+              )}
+            </header>
+
+            <main className='flex__center create__post__content'>
+              {index === 0 && (
+                <DragAndDrop setSelectedFiles={setSelectedFiles} setIndex={setIndex}>
+                  <PhotoIcon />
+                  <span>
+                    Upload or Drag and Drop <br /> Up To Five Photos
+                  </span>
+                  <label role='button'>
+                    Browse
+                    <input
+                      type='file'
+                      multiple
+                      accept='image/*, video/*'
+                      onChange={handleFileUpload}
+                      onClick={(e) => (e.target.value = null)}
+                    />
+                  </label>
+                </DragAndDrop>
+              )}
+
+              {index === 1 && (
+                <Carousel photos={selectedFiles} setPhotos={setSelectedFiles} validation={true} />
+              )}
+
+              {index === 2 && (
+                <div className='create__post__caption'>
+                  <div className='create__post__caption__header'>
+                    <img src={user.pfp} alt='User Profile Photo' loading='lazy' />
+                    <span>{user.username}</span>
+                  </div>
+                  <Carousel
+                    photos={selectedFiles}
+                    setPhotos={setSelectedFiles}
+                    validation={false}
+                  />
+                  <textarea
+                    placeholder='Include a caption...'
+                    maxLength='2200'
+                    cols='80'
+                    value={caption}
+                    onChange={(e) => setCaption(e.target.value)}
+                  />
                 </div>
               )}
-              <div className='create__post__caption__photo'>
-                <ImageSlider
-                  photos={selectedFiles}
-                  setPhotos={setSelectedFiles}
-                  validation={false}
-                />
-              </div>
-              <textarea
-                placeholder='Write a caption...'
-                maxLength='2200'
-                cols='80'
-                value={caption}
-                onChange={(e) => setCaption(e.target.value)}
-              />
-            </div>
-          )}
-        </div>
+            </main>
+          </>
+        )}
       </Modal>
     )
   );

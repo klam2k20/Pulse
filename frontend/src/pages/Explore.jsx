@@ -1,7 +1,10 @@
-import "../scss/Pages/explore.scss";
+import NoPosts from '../components/Profile/NoPosts';
+import GridLoading from '../components/StatusIndicator/GridLoading';
+import ProfileHeaderLoading from '../components/StatusIndicator/ProfileHeaderLoading';
+import '../scss/Pages/explore.scss';
 
 function Explore() {
-  return <div className='app__explore__wrapper'>Explore Page</div>;
+  return <NoPosts />;
 }
 
 export default Explore;

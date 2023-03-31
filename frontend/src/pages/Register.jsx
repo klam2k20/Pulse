@@ -5,6 +5,7 @@ import { Input } from '../components/Input';
 import Logo from '../components/Logo';
 import { useUser } from '../context/UserProvider';
 import { registerUser } from '../lib/apiRequests';
+import { defaultText } from '../lib/constants';
 import '../scss/Pages/auth.scss';
 
 function Register() {
@@ -14,7 +15,7 @@ function Register() {
     email: '',
     password: '',
   });
-  const { user, setUser } = useUser();
+  const { user, setUser, setError } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,6 +52,7 @@ function Register() {
         register.password
       );
       setUser(data);
+      setError(null);
       navigate('/');
       toast.success(`Welcome ${data.username}`);
     } catch (err) {
@@ -66,12 +68,7 @@ function Register() {
     <div className='app__auth'>
       <div className='app__register__left'>
         <div>
-          <p>
-            With Pulse, you can share your thoughts, ideas, and experiences with your friends and
-            family, as well as meet new people who share your interests. Whether you're looking for
-            inspiration, entertainment, or just a place to express yourself, Pulse is the perfect
-            platform for you.
-          </p>
+          <p>{defaultText.registerBannerText}</p>
         </div>
       </div>
       <div className='app__auth__form'>
@@ -80,8 +77,8 @@ function Register() {
           <h3>PULSE</h3>
         </div>
         <form onSubmit={submitForm}>
-          <h1>Welcome to Pulse</h1>
-          <span>The social media app that connects you to the world around you!</span>
+          <h1>{defaultText.registerTitle}</h1>
+          <span>{defaultText.registerSubTitle}</span>
           <div className='app__register__inputs'>
             <div>
               <Input

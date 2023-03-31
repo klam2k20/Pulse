@@ -1,12 +1,15 @@
-const Like = require("../models/Like");
+const Like = require('../models/Like');
 
 const getPostLikes = async (req, res) => {
   const postId = req.query.postId;
 
-  if (!postId) return res.status(400).json({ message: "Missing required post id" });
+  if (!postId) return res.status(400).json({ message: 'Missing required post id' });
 
   try {
-    const likes = await Like.find({ postId, parentId: undefined }, "userId").populate("userId");
+    const likes = await Like.find({ postId, parentId: undefined }, 'userId').populate(
+      'userId',
+      '_id username'
+    );
     return res.json(likes);
   } catch (err) {
     console.log(`Get Post Likes Error: ${err}`);
@@ -20,7 +23,7 @@ const addPostLike = async (req, res) => {
   if (!postId || !userId)
     return res
       .status(400)
-      .json({ message: "Missing one or more required fields: post and/or user id" });
+      .json({ message: 'Missing one or more required fields: post and/or user id' });
   try {
     const like = await Like.create({
       postId,
@@ -39,7 +42,7 @@ const removePostLike = async (req, res) => {
   if (!postId || !userId)
     return res
       .status(400)
-      .json({ message: "Missing one or more required fields: post and/or user id" });
+      .json({ message: 'Missing one or more required fields: post and/or user id' });
   try {
     await Like.deleteOne({
       postId,
