@@ -76,6 +76,7 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setMod
                   handleReply={(e) => handleReply(e, r.user[0].username, r.parentId)}
                   handleAddLike={handleAddLike}
                   handleRemoveLike={handleRemoveLike}
+                  setModal={setModal}
                 />
               ))}
             </ul>
