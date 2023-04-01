@@ -53,7 +53,7 @@ const sharePosts = async (req, res) => {
 
   if (!images || !caption)
     return res.status(400).json({
-      message: 'Missing one or more Required Fields: Images and/or Caption',
+      message: 'Missing One or More Required Fields: Images and/or Caption',
     });
 
   try {

@@ -1,11 +1,11 @@
-const { getPostLikes, addPostLike, removePostLike } = require("../controllers/like.js");
-const { authenicateToken } = require("../middleware/middleware.js");
-const router = require("express").Router();
+const { getPostLikes, addLike, removeLike } = require('../controllers/like.js');
+const { authenicateToken } = require('../middleware/middleware.js');
+const router = require('express').Router();
 
 router
-  .route("/")
+  .route('/')
   .get(authenicateToken, getPostLikes)
-  .post(authenicateToken, addPostLike)
-  .delete(authenicateToken, removePostLike);
+  .post(authenicateToken, addLike)
+  .delete(authenicateToken, removeLike);
 
 module.exports = router;

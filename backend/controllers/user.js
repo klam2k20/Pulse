@@ -36,7 +36,7 @@ const updateUserProfile = async (req, res) => {
 
   if (!name || !pronouns || !bio || !pfp)
     return res.status(400).json({
-      message: 'Missing one or more Required Fields: Name, Pronouns, Bio, and/or Profile Photo',
+      message: 'Missing One or More Required Fields: Name, Pronouns, Bio, and/or Profile Photo',
     });
 
   try {
