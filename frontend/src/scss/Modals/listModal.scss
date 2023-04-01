@@ -1,5 +1,12 @@
 @use '../index.scss' as *;
 
+.app__list__modal {
+  .modal__content {
+    @include flex(center, flex-start);
+    min-height: 50%;
+  }
+}
+
 .app__list__header {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid $light-gray;
@@ -9,6 +16,7 @@
 .app__list {
   @include flex(flex-start, flex-start);
   flex-direction: column;
+  height: 100%;
   padding-top: 0.5rem;
 
   .app__list__item {

@@ -121,7 +121,6 @@ function UpdateProfileModal({ isOpen, close }) {
     setSelectedFile({ name: 'default' });
   };
 
-  //todo: loading state
   return (
     <>
       {isOpen && profile && (

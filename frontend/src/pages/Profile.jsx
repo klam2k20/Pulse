@@ -9,9 +9,16 @@ import { getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
 //TODO: SHOW FOLLOWERS AND FOLLOWINGS AND ADD FOLLOW FUNCTIONALITY
+//TODO: UPDATE AND DELETE POST
+//TODO: UPDATE AND DELETE COMMENTS
 
 function Profile() {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isUpdateProfileModalOpen, setIsUpdateProfileModalOpen] = useState(false);
+  const [followerModal, setFollowerModal] = useState({
+    isOpen: false,
+    title: '',
+    content: [],
+  });
   const [profileError, setProfileError] = useState(null);
   const [postError, setPostError] = useState(null);
   const { username } = useParams();
@@ -56,10 +63,13 @@ function Profile() {
       <ProfileHeader
         profile={profile}
         isLoading={isProfileLoading}
-        openModal={() => setModalOpen(true)}
+        openModal={() => setIsUpdateProfileModalOpen(true)}
       />
       <Grid posts={posts} isLoading={isPostsLoading} />
-      <UpdateProfileModal isOpen={isModalOpen} close={() => setModalOpen(false)} />
+      <UpdateProfileModal
+        isOpen={isUpdateProfileModalOpen}
+        close={() => setIsUpdateProfileModalOpen(false)}
+      />
     </section>
   );
 }

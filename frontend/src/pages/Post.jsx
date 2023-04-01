@@ -13,7 +13,6 @@ import { getComments, getPost, getPostLikes } from '../lib/apiRequests';
 import { formatPostTimestamp } from '../lib/format';
 import '../scss/Pages/post.scss';
 
-//TODO: POST LIKES AND COMMENT LIKES
 //TODO: WS VS SHORT POLLING VS LONG POLLING VS OTHER
 
 function Post() {

@@ -30,10 +30,10 @@ function ProfileHeader({ profile, isLoading, openModal }) {
             <span>
               <b>{profile.posts}</b> posts
             </span>
-            <span>
+            <span className='pointer'>
               <b>{profile.followers}</b> followers
             </span>
-            <span>
+            <span className='pointer'>
               <b>{profile.following}</b> following
             </span>
           </div>

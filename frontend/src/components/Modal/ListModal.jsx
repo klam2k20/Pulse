@@ -3,7 +3,7 @@ import '../../scss/Modals/listModal.scss';
 
 function ListModal({ list, title, isOpen, close, isLoading }) {
   return (
-    <>
+    <div className='app__list__modal'>
       {isOpen && (
         <Modal close={close}>
           {isLoading && <span>Loading....</span>}
@@ -14,7 +14,7 @@ function ListModal({ list, title, isOpen, close, isLoading }) {
               </header>
               <ul className='app__list'>
                 {list.map((l) => (
-                  <li className='app__list__item'>
+                  <li key={l.id} className='app__list__item'>
                     <img className='avatar' src={l.pfp} alt={l.name} loading='lazy' />
                     <div>
                       <b>{l.username}</b>
@@ -27,7 +27,7 @@ function ListModal({ list, title, isOpen, close, isLoading }) {
           )}
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 
