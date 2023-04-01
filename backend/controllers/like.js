@@ -1,5 +1,7 @@
 const Like = require('../models/Like');
 
+//TODO: UPDATE ANY APIS THAT TAKE IN THE USERNAME FOR THE LOGGED IN USER
+// CAN INSTEAD JUST USE REQ.USER._ID
 const getPostLikes = async (req, res) => {
   const postId = req.query.postId;
 
@@ -51,7 +53,7 @@ const removePostLike = async (req, res) => {
     });
     return res.sendStatus(200);
   } catch (err) {
-    console.log(`Add Post Like Error: ${err}`);
+    console.log(`Remove Post Like Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
 };
