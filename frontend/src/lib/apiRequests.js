@@ -16,11 +16,11 @@ const getUser = (username) => {
 };
 
 const getPosts = (username) => {
-  return axios.get(`/api/post/?username=${username}`);
+  return axios.get(`/api/post?username=${username}`);
 };
 
 const getFollowers = (username) => {
-  return axios.get(`/api/follower/${username}`);
+  return axios.get(`/api/follower?username=${username}`);
 };
 
 const uploadPhoto = (photo) => {
@@ -49,20 +49,20 @@ const getPostLikes = (postId) => {
   return axios.get(`api/like?postId=${postId}`);
 };
 
-const addPostLike = (postId, userId) => {
-  return axios.post('api/like', { postId, userId });
+const addPostLike = (postId) => {
+  return axios.post('api/like', { postId });
 };
 
-const removePostLike = (postId, userId) => {
-  return axios.delete(`api/like?postId=${postId}&userId=${userId}`);
+const removePostLike = (postId) => {
+  return axios.delete(`api/like?postId=${postId}`);
 };
 
-const addCommentLike = (postId, userId, parentId) => {
-  return axios.post('api/like', { postId, userId, parentId });
+const addCommentLike = (postId, parentId) => {
+  return axios.post('api/like', { postId, parentId });
 };
 
-const removeCommentLike = (postId, userId, commentId) => {
-  return axios.delete(`api/like?postId=${postId}&userId=${userId}&parentId=${commentId}`);
+const removeCommentLike = (postId, commentId) => {
+  return axios.delete(`api/like?postId=${postId}&parentId=${commentId}`);
 };
 
 const getPost = (postId) => {

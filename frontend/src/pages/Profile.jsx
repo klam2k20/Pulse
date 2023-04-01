@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import ListModal from '../components/Modal/ListModal';
 import UpdateProfileModal from '../components/Modal/UpdateProfileModal';
 import Grid from '../components/Profile/Grid';
 import ProfileHeader from '../components/Profile/ProfileHeader';
@@ -8,16 +9,18 @@ import AppError from '../components/StatusIndicator/AppError';
 import { getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
-//TODO: SHOW FOLLOWERS AND FOLLOWINGS AND ADD FOLLOW FUNCTIONALITY
+//TODO:  ADD FOLLOW FUNCTIONALITY
 //TODO: UPDATE AND DELETE POST
 //TODO: UPDATE AND DELETE COMMENTS
 
 function Profile() {
-  const [isUpdateProfileModalOpen, setIsUpdateProfileModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [followerModal, setFollowerModal] = useState({
     isOpen: false,
     title: '',
     content: [],
+    isLoading: true,
+    isError: false,
   });
   const [profileError, setProfileError] = useState(null);
   const [postError, setPostError] = useState(null);
@@ -44,6 +47,16 @@ function Profile() {
     onError: (err) => setPostError(err),
   });
 
+  const closeModal = () => {
+    setFollowerModal({
+      isOpen: false,
+      title: '',
+      content: [],
+      isLoading: true,
+      isError: false,
+    });
+  };
+
   if (isProfileError || isPostsError) {
     if (profileError.response.status === 404 || postError.response.status === 404) {
       return <AppError text='You seem lost.' buttonText='GO HOME' onClick={() => navigate('/')} />;
@@ -63,12 +76,18 @@ function Profile() {
       <ProfileHeader
         profile={profile}
         isLoading={isProfileLoading}
-        openModal={() => setIsUpdateProfileModalOpen(true)}
+        openProfileModal={() => setIsProfileModalOpen(true)}
+        setFollowerModal={setFollowerModal}
       />
       <Grid posts={posts} isLoading={isPostsLoading} />
-      <UpdateProfileModal
-        isOpen={isUpdateProfileModalOpen}
-        close={() => setIsUpdateProfileModalOpen(false)}
+      <UpdateProfileModal isOpen={isProfileModalOpen} close={() => setIsProfileModalOpen(false)} />
+      <ListModal
+        list={followerModal.content}
+        title={followerModal.title}
+        isOpen={followerModal.isOpen}
+        close={closeModal}
+        isLoading={followerModal.isLoading}
+        isError={followerModal.isError}
       />
     </section>
   );

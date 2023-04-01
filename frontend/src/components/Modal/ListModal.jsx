@@ -1,13 +1,14 @@
 import Modal from './Modal';
 import '../../scss/Modals/listModal.scss';
 
-function ListModal({ list, title, isOpen, close, isLoading }) {
+function ListModal({ list, title, isOpen, close, isLoading, isError }) {
   return (
     <div className='app__list__modal'>
       {isOpen && (
         <Modal close={close}>
           {isLoading && <span>Loading....</span>}
-          {!isLoading && (
+          {isError && <span>Error...</span>}
+          {!isLoading && !isError && (
             <>
               <header className='app__list__header'>
                 <h4>{title}</h4>

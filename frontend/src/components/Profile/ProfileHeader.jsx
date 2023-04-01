@@ -1,10 +1,55 @@
 import { memo } from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
+import { getFollowers } from '../../lib/apiRequests';
 import '../../scss/Profile/profileHeader.scss';
 import ProfileHeaderLoading from '../StatusIndicator/ProfileHeaderLoading';
 
-function ProfileHeader({ profile, isLoading, openModal }) {
+function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal }) {
   const { user } = useUser();
+  const { username } = useParams();
+
+  const { data: followers } = useQuery({
+    queryKey: ['followers', username],
+    queryFn: () => getFollowers(username).then((res) => res.data),
+    onSuccess: () => setFollowerModal((prev) => ({ ...prev, isLoading: false })),
+    onError: () => setFollowerModal((prev) => ({ ...prev, isLoading: false, isError: true })),
+  });
+
+  const showFollowers = (e) => {
+    e.preventDefault();
+    const content = followers.followers.map((f) => ({
+      id: f._id,
+      name: f.follower.name,
+      username: f.follower.username,
+      pfp: f.follower.pfp,
+    }));
+    setFollowerModal({
+      isOpen: true,
+      title: 'Followers',
+      content,
+      isLoading: false,
+      isError: false,
+    });
+  };
+
+  const showFollowing = (e) => {
+    e.preventDefault();
+    const content = followers.following.map((f) => ({
+      id: f._id,
+      name: f.followed.name,
+      username: f.followed.username,
+      pfp: f.followed.pfp,
+    }));
+    setFollowerModal({
+      isOpen: true,
+      title: 'Following',
+      content,
+      isLoading: false,
+      isError: false,
+    });
+  };
 
   if (isLoading) return <ProfileHeaderLoading />;
 
@@ -30,16 +75,16 @@ function ProfileHeader({ profile, isLoading, openModal }) {
             <span>
               <b>{profile.posts}</b> posts
             </span>
-            <span className='pointer'>
+            <span role='button' className='pointer' onClick={showFollowers}>
               <b>{profile.followers}</b> followers
             </span>
-            <span className='pointer'>
+            <span role='button' className='pointer' onClick={showFollowing}>
               <b>{profile.following}</b> following
             </span>
           </div>
 
           {profile.username === user.username ? (
-            <button className='app__profile__btn' onClick={openModal}>
+            <button className='app__profile__btn' onClick={openProfileModal}>
               Edit Profile
             </button>
           ) : (
@@ -50,7 +95,7 @@ function ProfileHeader({ profile, isLoading, openModal }) {
 
       <div className='app__profile__button__mobile'>
         {profile.username === user.username ? (
-          <button className='app__profile__btn' onClick={openModal}>
+          <button className='app__profile__btn' onClick={openProfileModal}>
             Edit Profile
           </button>
         ) : (

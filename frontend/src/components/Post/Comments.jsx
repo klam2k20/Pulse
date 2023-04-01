@@ -22,13 +22,13 @@ function Comments({ comments, isLoading, postId, setComment, setReplyId, setModa
   }, []);
 
   const likeComment = useMutation(
-    (l) => addCommentLike(l.postId, l.userId, l.parentId).then((res) => res.data),
+    (l) => addCommentLike(l.postId, l.parentId).then((res) => res.data),
     {
       onSuccess: () => queryClient.invalidateQueries(['comments']),
     }
   );
 
-  const unlikeComment = useMutation((l) => removeCommentLike(l.postId, l.userId, l.parentId), {
+  const unlikeComment = useMutation((l) => removeCommentLike(l.postId, l.parentId), {
     onSuccess: () => queryClient.invalidateQueries(['comments']),
   });
 
@@ -41,12 +41,12 @@ function Comments({ comments, isLoading, postId, setComment, setReplyId, setModa
 
   const handleLikeComment = (e, commentId) => {
     e.preventDefault();
-    likeComment.mutate({ postId, userId: user._id, parentId: commentId });
+    likeComment.mutate({ postId, parentId: commentId });
   };
 
   const handleUnlikeComment = (e, commentId) => {
     e.preventDefault();
-    unlikeComment.mutate({ postId, userId: user._id, parentId: commentId });
+    unlikeComment.mutate({ postId, parentId: commentId });
   };
 
   if (isLoading) return <CommentsLoading />;

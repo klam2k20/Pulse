@@ -45,7 +45,7 @@ function Post() {
     isError: isLikesError,
   } = useQuery(['likes', postId], () => getPostLikes(postId).then((res) => res.data));
 
-  const closeModal = (e) => {
+  const closeModal = () => {
     setModal({
       isOpen: false,
       title: '',

@@ -10,11 +10,11 @@ function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading
   const { user } = useUser();
   const queryClient = useQueryClient();
 
-  const likePost = useMutation((l) => addPostLike(l.postId, l.userId).then((res) => res.data), {
+  const likePost = useMutation((l) => addPostLike(l.postId).then((res) => res.data), {
     onSuccess: () => queryClient.invalidateQueries(['likes']),
   });
 
-  const unlikePost = useMutation((l) => removePostLike(l.postId, l.userId), {
+  const unlikePost = useMutation((l) => removePostLike(l.postId), {
     onSuccess: () => queryClient.invalidateQueries(['likes']),
   });
 
@@ -27,12 +27,12 @@ function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading
 
   const handleLikePost = (e) => {
     e.preventDefault();
-    likePost.mutate({ postId, userId: user._id });
+    likePost.mutate({ postId });
   };
 
   const handleUnlikePost = (e) => {
     e.preventDefault();
-    unlikePost.mutate({ postId, userId: user._id });
+    unlikePost.mutate({ postId });
   };
 
   const showPostLikes = (e) => {
