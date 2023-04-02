@@ -34,9 +34,10 @@ const getPost = async (req, res) => {
   let id = req.params.id;
 
   try {
-    const post = await Post.findById(id, '-updatedAt -__v -userId').sort({
-      createdAt: -1,
-    });
+    const post = await Post.findOne({ _id: id }, '-updatedAt -__v').populate(
+      'userId',
+      'name username pfp'
+    );
     if (!post) return res.status(404).json({ message: `Post ${id} Does Not Exist` });
 
     const likes = await Like.count({ id: post._id.toString(), parentId: undefined });

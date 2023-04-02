@@ -38,39 +38,41 @@ function Caption({ avatar, username, caption, isLoading }) {
           <b>{username}</b> {caption}
         </span>
       </div>
-      <div className='app__post__actions__wrapper'>
-        <EllipsisHorizontalIcon onClick={() => setOpenActions((prev) => !prev)} />
-        {openActions && (
-          <div className='app__post__actions'>
-            <span
-              role='button'
-              className='app__post__action'
-              onClick={() => deletePost({ postId })}>
-              <span>
-                <TrashIcon />
-                Delete
+      {username === user.username && (
+        <div className='app__post__actions__wrapper'>
+          <EllipsisHorizontalIcon onClick={() => setOpenActions((prev) => !prev)} />
+          {openActions && (
+            <div className='app__post__actions'>
+              <span
+                role='button'
+                className='app__post__action'
+                onClick={() => deletePost({ postId })}>
+                <span>
+                  <TrashIcon />
+                  Delete
+                </span>
+                {isDeletePostLoading && <LoadingIcon />}
+                {isDeletePostError && (
+                  <>
+                    <ExclamationCircleIcon
+                      data-tooltip-id='action-error-tooltip'
+                      data-tooltip-html='Oops! An Error Occurred While <br/> Deleting the Post. Try Again Later.'
+                    />
+                    <Tooltip id='action-error-tooltip' place='bottom' />
+                  </>
+                )}
               </span>
-              {isDeletePostLoading && <LoadingIcon />}
-              {isDeletePostError && (
-                <>
-                  <ExclamationCircleIcon
-                    data-tooltip-id='action-error-tooltip'
-                    data-tooltip-html='Oops! An Error Occurred While <br/> Deleting the Post. Try Again Later.'
-                  />
-                  <Tooltip id='action-error-tooltip' place='bottom' />
-                </>
-              )}
-            </span>
-            {/* <span role='button' className='app__post__action'>
+              {/* <span role='button' className='app__post__action'>
               <span>
                 <PencilSquareIcon />
                 Edit
               </span>
               <LoadingIcon />
             </span> */}
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

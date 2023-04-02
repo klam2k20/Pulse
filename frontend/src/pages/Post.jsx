@@ -70,8 +70,8 @@ function Post() {
 
       <div className='app__post__info'>
         <Caption
-          avatar={user.pfp}
-          username={user.username}
+          avatar={post?.userId.pfp}
+          username={post?.userId.username}
           caption={post?.caption}
           isLoading={isPostLoading}
         />
