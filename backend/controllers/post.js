@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Post = require('../models/Post');
 const User = require('../models/User');
 const Like = require('../models/Like');
@@ -77,14 +78,23 @@ const deletePost = async (req, res) => {
   const userId = req.user._id;
 
   if (!id) return res.status(400).json({ message: 'Missing a Required Field: Post Id' });
+
+  const session = await mongoose.startSession();
   try {
     const post = await Post.findById(id);
     if (!post) return res.status(404).json({ message: `Post ${id} Does Not Exist` });
     if (post.userId.toString() !== userId.toString())
       return res.status(403).json({ message: "Only the Post's Author Can Delete This Post" });
-    await Post.deleteOne({ _id: id });
+
+    // Transaction to Delete Post and all Related Comments and Likes
+    session.startTransaction();
+    await Post.deleteOne({ _id: id }, { session });
+    await Like.deleteMany({ postId: id }, { session });
+    await Comment.deleteMany({ postId: id }, { session });
+    await session.commitTransaction();
     return res.sendStatus(200);
   } catch (err) {
+    await session.abortTransaction();
     console.log(`Delete Post Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
   }
