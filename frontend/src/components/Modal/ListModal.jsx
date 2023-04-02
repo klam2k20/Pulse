@@ -1,8 +1,17 @@
 import Modal from './Modal';
 import '../../scss/Modals/listModal.scss';
 import AppError from '../StatusIndicator/AppError';
+import { useNavigate } from 'react-router-dom';
 
 function ListModal({ list, title, isOpen, close, isError }) {
+  const navigate = useNavigate();
+
+  const handleLink = (e, username) => {
+    e.preventDefault();
+    navigate(`/profile/${username}`);
+    close();
+  };
+
   return (
     <div className='app__list__modal'>
       {isOpen && (
@@ -20,7 +29,10 @@ function ListModal({ list, title, isOpen, close, isError }) {
             )}
             {!isError &&
               list.map((l) => (
-                <li key={l.id} className='app__list__item'>
+                <li
+                  key={l.id}
+                  className='app__list__item'
+                  onClick={(e) => handleLink(e, l.username)}>
                   <img className='avatar' src={l.pfp} alt={l.name} loading='lazy' />
                   <div>
                     <b>{l.username}</b>
