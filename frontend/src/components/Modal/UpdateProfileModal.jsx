@@ -19,7 +19,6 @@ function UpdateProfileModal({ isOpen, close }) {
     bio: user.bio ? user.bio : '',
   });
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -93,7 +92,6 @@ function UpdateProfileModal({ isOpen, close }) {
       close();
     } catch (err) {
       setLoading(false);
-      setError(err);
       console.log(`Update User Profile Error: ${err}`);
       toast.error('Error Updating Profile. Please Try Again Shortly.');
     }
@@ -102,7 +100,6 @@ function UpdateProfileModal({ isOpen, close }) {
   const handleClose = () => {
     close();
     setSelectedFile(null);
-    setError(null);
     setProfile({
       name: user.name,
       username: user.username,
@@ -126,15 +123,7 @@ function UpdateProfileModal({ isOpen, close }) {
       {isOpen && profile && (
         <Modal close={handleClose}>
           {isLoading && <AppLoading />}
-          {error && (
-            <AppError
-              text='Something went wrong.'
-              buttonText='TRY AGAIN'
-              onClick={() => window.location.reload()}
-            />
-          )}
-
-          {!isLoading && !error && (
+          {!isLoading && (
             <>
               <header className='update__profile__header'>
                 <button className='secondary__btn' onClick={handleCancel}>

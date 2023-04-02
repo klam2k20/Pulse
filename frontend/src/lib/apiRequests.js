@@ -77,6 +77,10 @@ const removeFollowing = (username) => {
   return axios.delete(`api/follower?username=${username}`);
 };
 
+const removePost = (postId) => {
+  return axios.delete(`api/post?id=${postId}`);
+};
+
 export {
   registerUser,
   loginUser,
@@ -96,4 +100,5 @@ export {
   getPost,
   addFollowing,
   removeFollowing,
+  removePost,
 };

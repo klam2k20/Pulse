@@ -1,8 +1,61 @@
 @use '../index.scss' as *;
 
-.app__post__caption {
-  @include flex(center, flex-start);
-  gap: 0.5rem;
+.app__post__caption__wrapper {
+  @include flex(center, space-between);
   width: 100%;
-  margin: 1rem 1rem 0.5rem;
+  padding: 1rem 1rem 0.5rem;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: black;
+
+    &:first-child:hover {
+      opacity: 50%;
+    }
+  }
+
+  .app__post__caption {
+    @include flex(center, flex-start);
+    gap: 0.5rem;
+    width: 100%;
+  }
+}
+
+.app__post__actions__wrapper {
+  position: relative;
+
+  .app__post__actions {
+    @include flex(flex-start, flex-start);
+    flex-direction: column;
+    gap: 0.25rem;
+    position: absolute;
+    inset: 1.5rem 0rem auto auto;
+    width: 10rem;
+    padding: 0.5rem 0;
+    border: 1px solid $light-gray;
+    background: white;
+
+    .app__post__action {
+      @include flex(center, space-between);
+      width: 100%;
+      padding: 0 1rem;
+      cursor: pointer;
+
+      span {
+        @include flex(center, flex-start);
+        gap: 0.25rem;
+      }
+      &:first-child {
+        color: red;
+        svg {
+          color: red;
+        }
+      }
+
+      &:hover {
+        background: $light-btn-bg;
+      }
+    }
+  }
 }

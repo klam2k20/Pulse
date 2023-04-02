@@ -8,6 +8,7 @@
   @media screen and (max-width: 1024px) {
     @include flex(center, flex-start);
     flex-direction: column;
+    height: fit-content;
   }
 }
 

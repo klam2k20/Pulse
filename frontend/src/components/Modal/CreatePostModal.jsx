@@ -1,12 +1,12 @@
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
 import { useUser } from '../../context/UserProvider';
 import { sharePost, uploadPhoto } from '../../lib/apiRequests';
 import { defaultSizes } from '../../lib/constants';
 import '../../scss/Modals/createPost.scss';
 import Carousel from '../Carousel/Carousel';
-import AppError from '../StatusIndicator/AppError';
 import AppLoading from '../StatusIndicator/AppLoading';
 import DragAndDrop from './DragAndDrop';
 import Modal from './modal';
@@ -17,7 +17,6 @@ function CreatePostModal({ isOpen, close }) {
   const [caption, setCaption] = useState('');
   const [index, setIndex] = useState(0);
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -40,7 +39,6 @@ function CreatePostModal({ isOpen, close }) {
     setSelectedFiles([]);
     setIndex(0);
     setLoading(false);
-    setError(null);
     close();
   };
 
@@ -63,8 +61,8 @@ function CreatePostModal({ isOpen, close }) {
       handleClose();
     } catch (err) {
       setLoading(false);
-      setError(err);
       console.log(`Share Post Error: ${err}`);
+      toast.error('Error Sharing Post. Please Try Again Shortly.');
     }
   };
 
@@ -72,15 +70,7 @@ function CreatePostModal({ isOpen, close }) {
     isOpen && (
       <Modal close={handleClose}>
         {isLoading && <AppLoading />}
-        {error && (
-          <AppError
-            text='Something went wrong.'
-            buttonText='TRY AGAIN'
-            onClick={() => window.location.reload()}
-          />
-        )}
-
-        {!isLoading && !error && (
+        {!isLoading && (
           <>
             <header className='flex__center create__post__header'>
               {index === 1 && (

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Carousel from '../components/Carousel/Carousel';
 import ListModal from '../components/Modal/ListModal';
 import Actions from '../components/Post/Actions';
@@ -24,7 +24,7 @@ function Post() {
     content: [],
   });
   const { user } = useUser();
-  const postId = useLocation().pathname.split('/')[3];
+  const { postId } = useParams();
   const navigate = useNavigate();
 
   const {

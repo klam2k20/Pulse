@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
-import { addFollowing, getFollowers, removeFollowing } from '../../lib/apiRequests';
+import { addFollowing, removeFollowing } from '../../lib/apiRequests';
 import '../../scss/Profile/profileHeader.scss';
 import ProfileHeaderLoading from '../StatusIndicator/ProfileHeaderLoading';
 
@@ -12,17 +12,11 @@ function ProfileHeader({ profile, isLoading, openProfileModal, followers, setFol
   const queryClient = useQueryClient();
 
   const followUser = useMutation((u) => addFollowing(u.username), {
-    onSuccess: () => {
-      console.log('follow success');
-      queryClient.invalidateQueries(['followers']);
-    },
+    onSuccess: () => queryClient.invalidateQueries(['followers']),
   });
 
   const unfollowUser = useMutation((u) => removeFollowing(u.username), {
-    onSuccess: () => {
-      console.log('unfollow success');
-      queryClient.invalidateQueries(['followers']);
-    },
+    onSuccess: () => queryClient.invalidateQueries(['followers']),
   });
 
   const handleFollowUser = (e) => {
