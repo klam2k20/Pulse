@@ -9,8 +9,10 @@ import AppError from '../components/StatusIndicator/AppError';
 import { getFollowers, getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
-//TODO: UPDATE AND DELETE POST
-//TODO: UPDATE AND DELETE COMMENTS
+//TODO: MOVE ACTIONS INTO OWN COMMENT
+//TODO: DELETE COMMENT
+//TODO: UPDATE POST
+//TODO: UPDATE COMMENT
 
 function Profile() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);

@@ -39,6 +39,7 @@ function CreatePostModal({ isOpen, close }) {
     setSelectedFiles([]);
     setIndex(0);
     setLoading(false);
+    setCaption('');
     close();
   };
 
