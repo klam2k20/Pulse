@@ -1,15 +1,16 @@
 import { set } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useUser } from '../../context/UserProvider';
+import { useParams } from 'react-router-dom';
 import { addCommentLike, removeCommentLike } from '../../lib/apiRequests';
 import '../../scss/Post/comments.scss';
 import CommentsLoading from '../StatusIndicator/CommentsLoading';
 import Comment from './Comment';
 
-function Comments({ comments, isLoading, postId, setComment, setReplyId, setModal }) {
+function Comments({ comments, isLoading, setComment, setReplyId, setModal }) {
   const [isLaptop, setIsLaptop] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
+  const { postId } = useParams();
   const queryClient = useQueryClient();
 
   useEffect(() => {

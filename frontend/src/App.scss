@@ -134,3 +134,24 @@ img {
   height: 2rem;
   border-radius: 50%;
 }
+
+.app__actions__wrapper {
+  position: relative;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.app__actions {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  gap: 0.25rem;
+  position: absolute;
+  inset: 1.5rem 0rem auto auto;
+  width: 10rem;
+  padding: 0.5rem 0;
+  border: 1px solid $light-gray;
+  background: white;
+}

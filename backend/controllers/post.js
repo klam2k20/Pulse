@@ -18,8 +18,8 @@ const getPosts = async (req, res) => {
 
     const postsWithLikesAndComments = await Promise.all(
       posts.map(async (p) => {
-        const likes = await Like.count({ id: p._id.toString(), parentId: undefined });
-        const comments = await Comment.count({ id: p._id.toString(), parentId: undefined });
+        const likes = await Like.count({ postId: p._id.toString(), parentId: undefined });
+        const comments = await Comment.count({ postId: p._id.toString(), parentId: undefined });
         return { ...p._doc, likes, comments };
       })
     );
@@ -40,8 +40,8 @@ const getPost = async (req, res) => {
     );
     if (!post) return res.status(404).json({ message: `Post ${id} Does Not Exist` });
 
-    const likes = await Like.count({ id: post._id.toString(), parentId: undefined });
-    const comments = await Comment.count({ id: post._id.toString(), parentId: undefined });
+    const likes = await Like.count({ postId: post._id.toString(), parentId: undefined });
+    const comments = await Comment.count({ postId: post._id.toString(), parentId: undefined });
 
     return res.json({ ...post._doc, likes, comments });
   } catch (err) {

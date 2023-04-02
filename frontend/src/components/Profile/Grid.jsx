@@ -8,6 +8,7 @@ import ProfilePost from './ProfilePost';
 
 function Grid({ posts, isLoading }) {
   if (isLoading) return <GridLoading />;
+
   return posts.length ? (
     <div className='app__grid'>
       {posts.map((p) => (

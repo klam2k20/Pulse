@@ -81,6 +81,10 @@ const removePost = (postId) => {
   return axios.delete(`api/post?id=${postId}`);
 };
 
+const removeComment = (commentId) => {
+  return axios.delete(`api/comment?id=${commentId}`);
+};
+
 export {
   registerUser,
   loginUser,
@@ -101,4 +105,5 @@ export {
   addFollowing,
   removeFollowing,
   removePost,
+  removeComment,
 };

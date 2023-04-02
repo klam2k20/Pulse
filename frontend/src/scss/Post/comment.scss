@@ -4,12 +4,6 @@
   @include flex(flex-start, flex-start);
   gap: 0.5rem;
   width: 100%;
-
-  svg {
-    height: 12px;
-    width: 12px;
-    cursor: pointer;
-  }
 }
 
 .app__comment__content {
@@ -23,6 +17,18 @@
     color: $light-font;
     font-size: 0.75rem;
     line-height: 1rem;
+  }
+}
+
+.app__post__actions {
+  @include flex(center, space-around);
+  flex-direction: column;
+  height: 100%;
+
+  svg {
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
   }
 }
 

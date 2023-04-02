@@ -9,10 +9,9 @@ import AppError from '../components/StatusIndicator/AppError';
 import { getFollowers, getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
+//TODO: DELETE COMMENT AND RELATED REPLIES
 //TODO: MOVE ACTIONS INTO OWN COMMENT
-//TODO: DELETE COMMENT
 //TODO: UPDATE POST
-//TODO: UPDATE COMMENT
 
 function Profile() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -40,7 +39,7 @@ function Profile() {
   const { data: followers, isLoading: isFollowersLoading } = useQuery({
     queryKey: ['followers', username],
     queryFn: () => getFollowers(username).then((res) => res.data),
-    onError: () => setFollowerModal((prev) => ({ ...prev, isError: false })),
+    onSuccess: () => setFollowerModal((prev) => ({ ...prev, isError: false })),
     onError: () => setFollowerModal((prev) => ({ ...prev, isError: true })),
   });
 

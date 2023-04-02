@@ -1,13 +1,15 @@
 import { ChatBubbleOvalLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { useMutation, useQueryClient } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import { addPostLike, removePostLike } from '../../lib/apiRequests';
 import '../../scss/Post/actions.scss';
 import ActionsLoading from '../StatusIndicator/ActionsLoading';
 
-function Actions({ likes, numComments, setComment, setReplyId, postId, isLoading, setModal }) {
+function Actions({ likes, numComments, setComment, setReplyId, isLoading, setModal }) {
   const { user } = useUser();
+  const { postId } = useParams();
   const queryClient = useQueryClient();
 
   const likePost = useMutation((l) => addPostLike(l.postId).then((res) => res.data), {

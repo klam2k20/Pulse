@@ -23,7 +23,6 @@ function Post() {
     title: '',
     content: [],
   });
-  const { user } = useUser();
   const { postId } = useParams();
   const navigate = useNavigate();
 
@@ -77,7 +76,6 @@ function Post() {
         />
         <Comments
           comments={comments}
-          postId={postId}
           setComment={setComment}
           setReplyId={setReplyId}
           isLoading={isCommentsLoading}
@@ -88,7 +86,6 @@ function Post() {
           numComments={comments?.length}
           setComment={setComment}
           setReplyId={setReplyId}
-          postId={postId}
           isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
           setModal={setModal}
         />
@@ -104,7 +101,6 @@ function Post() {
           setComment={setComment}
           replyId={replyId}
           setReplyId={setReplyId}
-          postId={postId}
           isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
         />
       </div>
