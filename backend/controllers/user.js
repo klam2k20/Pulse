@@ -9,7 +9,7 @@ const getUserProfile = async (req, res) => {
 
   try {
     const user = await User.findOne({ username }, 'name username pfp pronouns bio');
-    if (!user) return res.status(404).json({ message: 'User Not Found' });
+    if (!user) return res.status(404).json({ message: `${username} Does Not Exist` });
     const posts = await Post.count({ userId: user._id });
     const followers = await Follower.count({ followed: user._id });
     const following = await Follower.count({ follower: user._id });
@@ -41,7 +41,7 @@ const updateUserProfile = async (req, res) => {
 
   try {
     const user = await User.findOneAndUpdate({ username }, { $set: req.body }, { new: true });
-    if (!user) return res.status(400).json({ message: 'User Not Found' });
+    if (!user) return res.status(400).json({ message: `${username} Does Not Exist` });
     res.json(user);
   } catch (err) {
     console.log(`Update User Profile Error: ${err}`);

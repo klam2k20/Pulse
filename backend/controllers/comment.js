@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 const getComments = async (req, res) => {
   const postId = req.query.postId;
@@ -7,6 +8,8 @@ const getComments = async (req, res) => {
   if (!postId) res.status(400).json({ message: 'Missing a Required Field: Username' });
 
   try {
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ message: `Post ${postId} Does Not Exist` });
     let commentsWithLikes = await Comment.aggregate([
       { $match: { postId } },
       {
@@ -77,6 +80,8 @@ const postComment = async (req, res) => {
       .json({ message: 'Missing One or More Required Fields: Post id and/or Comment' });
 
   try {
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ message: `Post ${postId} Does Not Exist` });
     const newComment = await Comment.create({
       userId,
       postId,

@@ -8,7 +8,7 @@ const getFollowers = async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: 'Username Not Found' });
+    if (!user) return res.status(404).json({ message: `${username} Does Not Exist` });
     const followers = await Follower.find({ followed: user._id }, 'follower').populate(
       'follower',
       'name username pfp'
@@ -31,11 +31,11 @@ const addFollowed = async (req, res) => {
   if (!username) return res.status(400).json({ message: 'Missing a Required Field: Username' });
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: 'Username Not Found' });
+    if (!user) return res.status(404).json({ message: `${username} Does Not Exist` });
     if (user._id.toString() === id.toString())
       return res.status(409).json({ message: 'User Cannot Follow Him/Herself' });
     const follower = await Follower.findOne({ followed: user._id, follower: id });
-    if (follower) return res.status(409).json({ message: 'Account is Already Followed' });
+    if (follower) return res.status(409).json({ message: `${username} is Already Followed` });
     await Follower.create({
       followed: user._id,
       follower: id,
@@ -54,9 +54,9 @@ const removeFollowed = async (req, res) => {
   if (!username) return res.status(400).json({ message: 'Missing a Required Field: Username' });
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: 'Username Not Found' });
+    if (!user) return res.status(404).json({ message: `${username} Does Not Exist` });
     const follower = await Follower.findOne({ followed: user._id, follower: id });
-    if (!follower) return res.status(409).json({ message: 'Account is Not Followed' });
+    if (!follower) return res.status(409).json({ message: `${username} is Not Followed` });
     await Follower.deleteOne({
       followed: user._id,
       follower: id,

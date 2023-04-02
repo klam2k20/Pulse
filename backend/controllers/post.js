@@ -10,7 +10,7 @@ const getPosts = async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: 'Username Not Found' });
+    if (!user) return res.status(404).json({ message: `${username} Does Not Exist` });
     const posts = await Post.find({ userId: user._id }, '-updatedAt -__v -userId').sort({
       createdAt: -1,
     });
@@ -36,6 +36,7 @@ const getPost = async (req, res) => {
     const post = await Post.findById(id, '-updatedAt -__v -userId').sort({
       createdAt: -1,
     });
+    if (!post) return res.status(404).json({ message: `Post ${id} Does Not Exist` });
 
     const likes = await Like.count({ postId: post._id.toString(), parentId: undefined });
     const comments = await Comment.count({ postId: post._id.toString(), parentId: undefined });
@@ -58,7 +59,7 @@ const sharePosts = async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ message: 'User Not Found' });
+    if (!user) return res.status(404).json({ message: `${username} Does Not Exist` });
     const post = await Post.create({
       userId: user._id,
       images,
