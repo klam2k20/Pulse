@@ -6,7 +6,7 @@ import UpdateProfileModal from '../components/Modal/UpdateProfileModal';
 import Grid from '../components/Profile/Grid';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import AppError from '../components/StatusIndicator/AppError';
-import { getPosts, getUser } from '../lib/apiRequests';
+import { getFollowers, getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
 //TODO:  ADD FOLLOW FUNCTIONALITY
@@ -19,7 +19,6 @@ function Profile() {
     isOpen: false,
     title: '',
     content: [],
-    isLoading: true,
     isError: false,
   });
   const [profileError, setProfileError] = useState(null);
@@ -37,6 +36,13 @@ function Profile() {
     onError: (err) => setProfileError(err),
   });
 
+  const { data: followers, isLoading: isFollowersLoading } = useQuery({
+    queryKey: ['followers', username],
+    queryFn: () => getFollowers(username).then((res) => res.data),
+    onError: () => setFollowerModal((prev) => ({ ...prev, isError: false })),
+    onError: () => setFollowerModal((prev) => ({ ...prev, isError: true })),
+  });
+
   const {
     data: posts,
     isLoading: isPostsLoading,
@@ -52,7 +58,6 @@ function Profile() {
       isOpen: false,
       title: '',
       content: [],
-      isLoading: true,
       isError: false,
     });
   };
@@ -75,8 +80,9 @@ function Profile() {
     <section className='app__profile'>
       <ProfileHeader
         profile={profile}
-        isLoading={isProfileLoading}
+        isLoading={isProfileLoading || isFollowersLoading}
         openProfileModal={() => setIsProfileModalOpen(true)}
+        followers={followers}
         setFollowerModal={setFollowerModal}
       />
       <Grid posts={posts} isLoading={isPostsLoading} />
@@ -86,7 +92,6 @@ function Profile() {
         title={followerModal.title}
         isOpen={followerModal.isOpen}
         close={closeModal}
-        isLoading={followerModal.isLoading}
         isError={followerModal.isError}
       />
     </section>

@@ -1,9 +1,8 @@
 import Modal from './Modal';
 import '../../scss/Modals/listModal.scss';
-import ListItemLoading from '../StatusIndicator/ListItemLoading';
 import AppError from '../StatusIndicator/AppError';
 
-function ListModal({ list, title, isOpen, close, isLoading, isError }) {
+function ListModal({ list, title, isOpen, close, isError }) {
   return (
     <div className='app__list__modal'>
       {isOpen && (
@@ -12,7 +11,6 @@ function ListModal({ list, title, isOpen, close, isLoading, isError }) {
             <h4>{title}</h4>
           </header>
           <ul className='app__list'>
-            {isLoading && <ListItemLoading />}
             {isError && (
               <AppError
                 text={`Couldn't Load ${title}.`}
@@ -20,8 +18,7 @@ function ListModal({ list, title, isOpen, close, isLoading, isError }) {
                 onClick={() => window.location.reload()}
               />
             )}
-            {!isLoading &&
-              !isError &&
+            {!isError &&
               list.map((l) => (
                 <li key={l.id} className='app__list__item'>
                   <img className='avatar' src={l.pfp} alt={l.name} loading='lazy' />

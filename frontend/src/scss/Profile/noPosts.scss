@@ -18,4 +18,8 @@
       padding: 0.5rem;
     }
   }
+
+  @media screen and (max-width: 735px) {
+    border-top: 0;
+  }
 }

@@ -10,7 +10,6 @@ import Comment from './Comment';
 function Comments({ comments, isLoading, postId, setComment, setReplyId, setModal }) {
   const [isLaptop, setIsLaptop] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
-  const { user } = useUser();
   const queryClient = useQueryClient();
 
   useEffect(() => {

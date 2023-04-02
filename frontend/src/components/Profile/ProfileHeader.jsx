@@ -1,21 +1,39 @@
 import { memo } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
-import { getFollowers } from '../../lib/apiRequests';
+import { addFollowing, getFollowers, removeFollowing } from '../../lib/apiRequests';
 import '../../scss/Profile/profileHeader.scss';
 import ProfileHeaderLoading from '../StatusIndicator/ProfileHeaderLoading';
 
-function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal }) {
+function ProfileHeader({ profile, isLoading, openProfileModal, followers, setFollowerModal }) {
   const { user } = useUser();
   const { username } = useParams();
+  const queryClient = useQueryClient();
 
-  const { data: followers } = useQuery({
-    queryKey: ['followers', username],
-    queryFn: () => getFollowers(username).then((res) => res.data),
-    onSuccess: () => setFollowerModal((prev) => ({ ...prev, isLoading: false })),
-    onError: () => setFollowerModal((prev) => ({ ...prev, isLoading: false, isError: true })),
+  const followUser = useMutation((u) => addFollowing(u.username), {
+    onSuccess: () => {
+      console.log('follow success');
+      queryClient.invalidateQueries(['followers']);
+    },
   });
+
+  const unfollowUser = useMutation((u) => removeFollowing(u.username), {
+    onSuccess: () => {
+      console.log('unfollow success');
+      queryClient.invalidateQueries(['followers']);
+    },
+  });
+
+  const handleFollowUser = (e) => {
+    e.preventDefault();
+    followUser.mutate({ username });
+  };
+
+  const handleUnfollowUser = (e) => {
+    e.preventDefault();
+    unfollowUser.mutate({ username });
+  };
 
   const showFollowers = (e) => {
     e.preventDefault();
@@ -29,7 +47,6 @@ function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal 
       isOpen: true,
       title: 'Followers',
       content,
-      isLoading: false,
       isError: false,
     });
   };
@@ -46,9 +63,12 @@ function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal 
       isOpen: true,
       title: 'Following',
       content,
-      isLoading: false,
       isError: false,
     });
+  };
+
+  const isFollowing = () => {
+    return followers.followers.some((f) => f.follower.username === user.username);
   };
 
   if (isLoading) return <ProfileHeaderLoading />;
@@ -76,10 +96,10 @@ function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal 
               <b>{profile.posts}</b> posts
             </span>
             <span role='button' className='pointer' onClick={showFollowers}>
-              <b>{profile.followers}</b> followers
+              <b>{followers.followers.length}</b> followers
             </span>
             <span role='button' className='pointer' onClick={showFollowing}>
-              <b>{profile.following}</b> following
+              <b>{followers.following.length}</b> following
             </span>
           </div>
 
@@ -88,7 +108,11 @@ function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal 
               Edit Profile
             </button>
           ) : (
-            <button className='app__profile__btn'>Follow</button>
+            <button
+              className='app__profile__btn'
+              onClick={isFollowing() ? handleUnfollowUser : handleFollowUser}>
+              {isFollowing() ? 'Unfollow' : 'Follow'}
+            </button>
           )}
         </div>
       </header>
@@ -99,7 +123,11 @@ function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal 
             Edit Profile
           </button>
         ) : (
-          <button className='app__profile__btn'>Follow</button>
+          <button
+            className='app__profile__btn'
+            onClick={isFollowing() ? handleUnfollowUser : handleFollowUser}>
+            {isFollowing() ? 'Unfollow' : 'Follow'}
+          </button>
         )}
       </div>
 
@@ -108,12 +136,12 @@ function ProfileHeader({ profile, isLoading, openProfileModal, setFollowerModal 
           <b>{profile.posts}</b> <br />
           posts
         </span>
-        <span>
-          <b>{profile.followers}</b> <br />
+        <span role='button' className='pointer' onClick={showFollowers}>
+          <b>{followers.followers.length}</b> <br />
           followers
         </span>
-        <span>
-          <b>{profile.following}</b> <br />
+        <span role='button' className='pointer' onClick={showFollowing}>
+          <b>{followers.following.length}</b> <br />
           following
         </span>
       </div>

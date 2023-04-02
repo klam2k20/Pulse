@@ -69,6 +69,14 @@ const getPost = (postId) => {
   return axios.get(`api/post/${postId}`);
 };
 
+const addFollowing = (username) => {
+  return axios.post('api/follower', { username });
+};
+
+const removeFollowing = (username) => {
+  return axios.delete(`api/follower?username=${username}`);
+};
+
 export {
   registerUser,
   loginUser,
@@ -86,4 +94,6 @@ export {
   addCommentLike,
   removeCommentLike,
   getPost,
+  addFollowing,
+  removeFollowing,
 };

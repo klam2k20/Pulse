@@ -3,7 +3,7 @@ import '../../scss/StatusIndicator/profileHeaderLoading.scss';
 
 function ProfileHeaderLoading() {
   return (
-    <div className='app__profile'>
+    <>
       <header className='app__profile__header'>
         <div className='app__profile__img'>
           <span className='app__loading__circle' />
@@ -21,7 +21,7 @@ function ProfileHeaderLoading() {
         <span>followers</span>
         <span>following</span>
       </div>
-    </div>
+    </>
   );
 }
 
