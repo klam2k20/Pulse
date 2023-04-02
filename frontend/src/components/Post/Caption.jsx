@@ -1,18 +1,14 @@
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useUser } from '../../context/UserProvider';
+import { removePost } from '../../lib/apiRequests';
 import '../../scss/Post/caption.scss';
 import CaptionLoading from '../StatusIndicator/CaptionLoading';
-import { EllipsisHorizontalIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
-import { Tooltip } from 'react-tooltip';
-import { useMutation, useQueryClient } from 'react-query';
-import { removePost } from '../../lib/apiRequests';
-import { useNavigate, useParams } from 'react-router-dom';
-import LoadingIcon from '../StatusIndicator/LoadingIcon';
-import { useUser } from '../../context/UserProvider';
 import Action from './Action';
+import Actions from './Actions';
 
 function Caption({ avatar, username, caption, isLoading }) {
-  const [openActions, setOpenActions] = useState(false);
   const { user } = useUser();
   const { postId } = useParams();
   const queryClient = useQueryClient();
@@ -40,27 +36,22 @@ function Caption({ avatar, username, caption, isLoading }) {
         </span>
       </div>
       {username === user.username && (
-        <div className='app__actions__wrapper'>
-          <EllipsisHorizontalIcon onClick={() => setOpenActions((prev) => !prev)} />
-          {openActions && (
-            <div className='app__actions'>
-              <Action
-                icon={<TrashIcon />}
-                text='Delete'
-                onClick={() => deletePost({ postId })}
-                isLoading={isDeletePostLoading}
-                isError={isDeletePostError}
-              />
-              <Action
-                icon={<PencilSquareIcon />}
-                text='Edit'
-                // onClick={() => deletePost(postId)}
-                // isLoading={isDeletePostLoading}
-                // isError={isDeletePostError}
-              />
-            </div>
-          )}
-        </div>
+        <Actions>
+          <Action
+            icon={<TrashIcon />}
+            text='Delete'
+            onClick={() => deletePost({ postId })}
+            isLoading={isDeletePostLoading}
+            isError={isDeletePostError}
+          />
+          <Action
+            icon={<PencilSquareIcon />}
+            text='Edit'
+            // onClick={() => deletePost(postId)}
+            // isLoading={isDeletePostLoading}
+            // isError={isDeletePostError}
+          />
+        </Actions>
       )}
     </div>
   );

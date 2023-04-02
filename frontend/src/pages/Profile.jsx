@@ -9,7 +9,6 @@ import AppError from '../components/StatusIndicator/AppError';
 import { getFollowers, getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
-//TODO: DELETE COMMENT AND RELATED REPLIES
 //TODO: MOVE ACTIONS INTO OWN COMMENT
 //TODO: UPDATE POST
 

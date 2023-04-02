@@ -1,24 +1,27 @@
 @use '../index.scss' as *;
 
-.app__post__stats {
-  @include flex(center, flex-start);
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0 1rem;
+.app__actions__wrapper {
+  position: relative;
   cursor: pointer;
 
   svg {
-    height: 24px;
     width: 24px;
-
-    &:hover {
-      opacity: 0.5;
-    }
+    height: 24px;
   }
 
-  button {
-    color: black;
-    font-size: 1rem;
-    font-weight: semi-bold;
+  &:hover > svg {
+    opacity: 50%;
   }
+}
+
+.app__actions {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  gap: 0.25rem;
+  position: absolute;
+  inset: 1.5rem 0rem auto auto;
+  width: 10rem;
+  padding: 0.5rem 0;
+  border: 1px solid $light-gray;
+  background: white;
 }

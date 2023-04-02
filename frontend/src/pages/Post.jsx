@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import Carousel from '../components/Carousel/Carousel';
 import ListModal from '../components/Modal/ListModal';
-import Actions from '../components/Post/Actions';
+import PostActions from '../components/Post/PostActions';
 import Caption from '../components/Post/Caption';
 import CommentForm from '../components/Post/CommentForm';
 import Comments from '../components/Post/Comments';
@@ -81,7 +81,7 @@ function Post() {
           isLoading={isCommentsLoading}
           setModal={setModal}
         />
-        <Actions
+        <PostActions
           likes={likes}
           numComments={comments?.length}
           setComment={setComment}

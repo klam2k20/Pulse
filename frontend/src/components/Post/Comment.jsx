@@ -1,4 +1,4 @@
-import { EllipsisHorizontalIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -8,9 +8,9 @@ import { removeComment } from '../../lib/apiRequests';
 import { formatCommentTimestamp } from '../../lib/format';
 import '../../scss/Post/comment.scss';
 import Action from './Action';
+import Actions from './Actions';
 
 function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setModal }) {
-  const [openActions, setOpenActions] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   const { user } = useUser();
   const { username: postAuthor } = useParams();
@@ -70,20 +70,15 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setMod
             <HeartIcon onClick={(e) => handleAddLike(e, comment._id)} />
           )}
           {(postAuthor === user.username || comment.user[0].username === user.username) && (
-            <div className='app__actions__wrapper'>
-              <EllipsisHorizontalIcon onClick={() => setOpenActions((prev) => !prev)} />
-              {openActions && (
-                <div className='app__actions'>
-                  <Action
-                    icon={<TrashIcon />}
-                    text='Delete'
-                    onClick={() => deleteComment({ commentId: comment._id })}
-                    isLoading={isDeleteCommentLoading}
-                    isError={isDeleteCommentError}
-                  />
-                </div>
-              )}
-            </div>
+            <Actions>
+              <Action
+                icon={<TrashIcon />}
+                text='Delete'
+                onClick={() => deleteComment({ commentId: comment._id })}
+                isLoading={isDeleteCommentLoading}
+                isError={isDeleteCommentError}
+              />
+            </Actions>
           )}
         </div>
       </li>

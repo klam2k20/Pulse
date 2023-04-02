@@ -5,16 +5,6 @@
   width: 100%;
   padding: 1rem 1rem 0.5rem;
 
-  svg {
-    width: 24px;
-    height: 24px;
-    color: black;
-
-    &:first-child:hover {
-      opacity: 50%;
-    }
-  }
-
   .app__post__caption {
     @include flex(center, flex-start);
     gap: 0.5rem;

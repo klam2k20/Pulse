@@ -1,5 +1,5 @@
 import { ChatBubbleOvalLeftIcon, HeartIcon } from '@heroicons/react/24/outline';
-import '../../scss/Post/actions.scss';
+import '../../scss/Post/postActions.scss';
 import '../../scss/StatusIndicator/actionsLoading.scss';
 
 function ActionsLoading() {
