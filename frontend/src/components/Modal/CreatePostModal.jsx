@@ -12,25 +12,28 @@ import Modal from './modal';
 import PostEditor from './PostEditor';
 
 function CreatePostModal({ isOpen, close }) {
-  const { user } = useUser();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [caption, setCaption] = useState('');
   const [index, setIndex] = useState(0);
-  const [isLoading, setLoading] = useState(false);
   const queryClient = useQueryClient();
 
   useEffect(() => {
     if (selectedFiles.length === 0) setIndex(0);
   }, [selectedFiles]);
 
-  const createPost = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
-    onSuccess: () => queryClient.invalidateQueries(['posts']),
-  });
+  const { isLoading, mutate: createPost } = useMutation(
+    (p) => sharePost(p.images, p.caption).then((res) => res.data),
+    {
+      onSuccess: () => {
+        handleClose();
+        queryClient.invalidateQueries(['posts']);
+      },
+    }
+  );
 
   const handleClose = () => {
     setSelectedFiles([]);
     setIndex(0);
-    setLoading(false);
     setCaption('');
     close();
   };
@@ -45,15 +48,12 @@ function CreatePostModal({ isOpen, close }) {
 
     try {
       const promises = selectedFiles.map((f) => uploadPhoto(f));
-      setLoading(true);
       Promise.all(promises).then((res) => {
         const images = res.map((data) => data.data);
         createPost.mutate({ images, caption });
-        setLoading(false);
       });
-      handleClose();
     } catch (err) {
-      setLoading(false);
+      handleClose();
       console.log(`Share Post Error: ${err}`);
       toast.error('Error Sharing Post. Please Try Again Shortly.');
     }

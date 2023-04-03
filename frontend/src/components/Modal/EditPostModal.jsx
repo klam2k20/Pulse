@@ -1,21 +1,31 @@
 import '../../scss/Modals/updateProfile.scss';
 import '../../scss/Modals/createPost.scss';
 import Modal from './modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostEditor from './PostEditor';
 import { isGCSUri } from '../../lib/util';
 import { useMutation, useQueryClient } from 'react-query';
-import { updatePost } from '../../lib/apiRequests';
+import { updatePost, uploadPhoto } from '../../lib/apiRequests';
+import { toast } from 'react-hot-toast';
+import AppLoading from '../StatusIndicator/AppLoading';
 
 function EditPostModal({ isOpen, close, post }) {
-  const [selectedFiles, setSelectedFiles] = useState(post.images);
-  const [caption, setCaption] = useState(post.caption);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [caption, setCaption] = useState('');
   const queryClient = useQueryClient();
 
-  const editPost = useMutation(
+  useEffect(() => {
+    setSelectedFiles(post.images);
+    setCaption(post.caption);
+  }, [post]);
+
+  const { isLoading, mutate: editPost } = useMutation(
     (p) => updatePost(post._id, p.images, p.caption).then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries(['post', post._id]),
+      onSuccess: () => {
+        handleClose();
+        queryClient.invalidateQueries(['post', post._id]);
+      },
     }
   );
 
@@ -42,10 +52,10 @@ function EditPostModal({ isOpen, close, post }) {
       const promises = newImages.map((i) => uploadPhoto(i));
       Promise.all(promises).then((res) => {
         images = [...images, ...res.map((data) => data.data)];
+        editPost({ images, caption });
       });
-      editPost.mutate({ images, caption });
-      handleClose();
     } catch (err) {
+      handleClose();
       console.log(`Update Post Error: ${err}`);
       toast.error('Error Updating Post. Please Try Again Shortly.');
     }
@@ -69,13 +79,16 @@ function EditPostModal({ isOpen, close, post }) {
           </header>
 
           <main className='flex__center create__post__content'>
-            <PostEditor
-              selectedFiles={selectedFiles}
-              setSelectedFiles={setSelectedFiles}
-              validation={true}
-              caption={caption}
-              setCaption={setCaption}
-            />
+            {isLoading && <AppLoading />}
+            {!isLoading && (
+              <PostEditor
+                selectedFiles={selectedFiles}
+                setSelectedFiles={setSelectedFiles}
+                validation={true}
+                caption={caption}
+                setCaption={setCaption}
+              />
+            )}
           </main>
         </Modal>
       )}{' '}
