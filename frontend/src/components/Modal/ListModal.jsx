@@ -1,7 +1,7 @@
-import Modal from './Modal';
+import { useNavigate } from 'react-router-dom';
 import '../../scss/Modals/listModal.scss';
 import AppError from '../StatusIndicator/AppError';
-import { useNavigate } from 'react-router-dom';
+import Modal from './Modal';
 
 function ListModal({ list, title, isOpen, close, isError }) {
   const navigate = useNavigate();

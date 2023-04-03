@@ -1,15 +1,14 @@
-import '../../scss/Modals/updateProfile.scss';
-import '../../scss/Modals/createPost.scss';
-import Modal from './modal';
 import { useEffect, useState } from 'react';
-import PostEditor from './PostEditor';
-import { isGCSUri } from '../../lib/util';
+import { toast } from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
 import { updatePost, uploadPhoto } from '../../lib/apiRequests';
-import { toast } from 'react-hot-toast';
+import { isGCSUri } from '../../lib/util';
+import '../../scss/Modals/modal.scss';
 import AppLoading from '../StatusIndicator/AppLoading';
+import Modal from './modal';
+import PostEditor from './PostEditor';
 
-function EditPostModal({ isOpen, close, post }) {
+function UpdatePostModal({ isOpen, close, post }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [caption, setCaption] = useState('');
   const queryClient = useQueryClient();
@@ -65,7 +64,7 @@ function EditPostModal({ isOpen, close, post }) {
     <>
       {isOpen && (
         <Modal close={handleClose}>
-          <header className='update__profile__header'>
+          <header className='modal__header'>
             <button className='secondary__btn' onClick={handleClose}>
               Cancel
             </button>
@@ -78,7 +77,7 @@ function EditPostModal({ isOpen, close, post }) {
             </button>
           </header>
 
-          <main className='flex__center create__post__content'>
+          <main className='flex__center'>
             {isLoading && <AppLoading />}
             {!isLoading && (
               <PostEditor
@@ -96,4 +95,4 @@ function EditPostModal({ isOpen, close, post }) {
   );
 }
 
-export default EditPostModal;
+export default UpdatePostModal;

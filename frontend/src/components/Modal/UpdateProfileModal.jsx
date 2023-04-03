@@ -5,11 +5,13 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useUser } from '../../context/UserProvider';
 import { updateUser, uploadPhoto } from '../../lib/apiRequests';
 import { defaultSizes, defaultUrls } from '../../lib/constants';
-import '../../scss/Modals/updateProfile.scss';
+import '../../scss/Modals/modal.scss';
+import '../../scss/Modals/updateProfileModal.scss';
+import AppLoading from '../StatusIndicator/AppLoading';
 import Modal from './modal';
 
 function UpdateProfileModal({ isOpen, close }) {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const [selectedFile, setSelectedFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(user.pfp);
   const [profile, setProfile] = useState({
@@ -18,7 +20,6 @@ function UpdateProfileModal({ isOpen, close }) {
     pronouns: user.pronouns ? user.pronouns : 'default',
     bio: user.bio ? user.bio : '',
   });
-  const [isLoading, setLoading] = useState(false);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -35,10 +36,13 @@ function UpdateProfileModal({ isOpen, close }) {
     return () => URL.revokeObjectURL(photoURL);
   }, [selectedFile]);
 
-  const updateProfile = useMutation(
+  const { isLoading, mutate: updateProfile } = useMutation(
     (u) => updateUser(u.username, u.name, u.pronouns, u.bio, u.pfp).then((res) => res.data),
     {
-      onSuccess: () => queryClient.invalidateQueries(['profile']),
+      onSuccess: () => {
+        handleClose();
+        queryClient.invalidateQueries(['profile']);
+      },
     }
   );
 
@@ -60,38 +64,22 @@ function UpdateProfileModal({ isOpen, close }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    setLoading(true);
     try {
-      let pfp =
-        photoPreview === '../../../public/default.png' ? defaultUrls.defaultPhoto : photoPreview;
-      if (selectedFile) {
+      let pfp = photoPreview;
+      if (photoPreview === '../../../public/default.png') pfp = defaultUrls.defaultPhoto;
+      else if (selectedFile) {
         const { data } = await uploadPhoto(selectedFile);
         pfp = data;
       }
-      updateProfile.mutate(
-        {
-          username: user.username,
-          name: profile.name,
-          pronouns: profile.pronouns,
-          bio: profile.bio,
-          pfp,
-        },
-        {
-          onSuccess: (data) => {
-            setUser((prev) => ({
-              ...prev,
-              name: data.name,
-              pronouns: data.pronouns,
-              bio: data.bio,
-              pfp: data.pfp,
-            }));
-            setLoading(false);
-          },
-        }
-      );
-      close();
+      updateProfile({
+        username: user.username,
+        name: profile.name,
+        pronouns: profile.pronouns,
+        bio: profile.bio,
+        pfp,
+      });
     } catch (err) {
-      setLoading(false);
+      handleClose();
       console.log(`Update User Profile Error: ${err}`);
       toast.error('Error Updating Profile. Please Try Again Shortly.');
     }
@@ -108,11 +96,6 @@ function UpdateProfileModal({ isOpen, close }) {
     });
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
-    handleClose();
-  };
-
   const handleRemovePhoto = (e) => {
     e.preventDefault();
     setSelectedFile({ name: 'default' });
@@ -120,6 +103,7 @@ function UpdateProfileModal({ isOpen, close }) {
 
   const isProfileUpdated = () => {
     return !(
+      photoPreview === user.pfp &&
       profile.name === user.name &&
       (profile.pronouns === user.pronouns || (!user.pronouns && profile.pronouns === 'default')) &&
       (profile.bio === user.bio || (!user.bio && profile.bio === ''))
@@ -133,8 +117,8 @@ function UpdateProfileModal({ isOpen, close }) {
           {isLoading && <AppLoading />}
           {!isLoading && (
             <>
-              <header className='update__profile__header'>
-                <button className='secondary__btn' onClick={handleCancel}>
+              <header className='modal__header'>
+                <button className='secondary__btn' onClick={handleClose}>
                   Cancel
                 </button>
                 <h4>Edit Profile</h4>

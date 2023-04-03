@@ -15,6 +15,17 @@
   }
 }
 
+.modal__header {
+  @include flex(center, space-between);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $light-gray;
+
+  h4 {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .modal__content__wrapper {
   @include flex(center, center);
   flex-direction: column;

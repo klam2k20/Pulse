@@ -1,7 +1,7 @@
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import { Tooltip } from 'react-tooltip';
-import LoadingIcon from '../StatusIndicator/LoadingIcon';
 import '../../scss/Post/action.scss';
+import LoadingIcon from '../StatusIndicator/LoadingIcon';
 
 function Action({ icon, text, onClick, isLoading, isError }) {
   return (

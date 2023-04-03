@@ -1,9 +1,10 @@
 import { useUser } from '../../context/UserProvider';
-import Carousel from '../Carousel/Carousel';
 import '../../scss/Modals/postEditor.scss';
+import Carousel from '../Carousel/Carousel';
 
 function PostEditor({ selectedFiles, setSelectedFiles, validation, caption, setCaption }) {
   const { user } = useUser();
+
   return (
     <div className='app__post__editor'>
       <div className='app__post__editor__header'>

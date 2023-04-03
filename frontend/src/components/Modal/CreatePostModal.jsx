@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
-import { useUser } from '../../context/UserProvider';
 import { sharePost, uploadPhoto } from '../../lib/apiRequests';
 import { defaultSizes } from '../../lib/constants';
-import '../../scss/Modals/createPost.scss';
+import '../../scss/Modals/modal.scss';
+import '../../scss/Modals/createPostModal.scss';
 import Carousel from '../Carousel/Carousel';
 import AppLoading from '../StatusIndicator/AppLoading';
-import UploadPhotos from './UploadPhotos';
 import Modal from './modal';
 import PostEditor from './PostEditor';
+import UploadPhotos from './UploadPhotos';
 
 function CreatePostModal({ isOpen, close }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -50,7 +50,7 @@ function CreatePostModal({ isOpen, close }) {
       const promises = selectedFiles.map((f) => uploadPhoto(f));
       Promise.all(promises).then((res) => {
         const images = res.map((data) => data.data);
-        createPost.mutate({ images, caption });
+        createPost({ images, caption });
       });
     } catch (err) {
       handleClose();
@@ -65,7 +65,7 @@ function CreatePostModal({ isOpen, close }) {
         {isLoading && <AppLoading />}
         {!isLoading && (
           <>
-            <header className='flex__center create__post__header'>
+            <header className='modal__header'>
               {index === 1 && (
                 <button className='secondary__btn' onClick={handleCancel}>
                   Cancel

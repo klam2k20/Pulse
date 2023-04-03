@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import Carousel from '../components/Carousel/Carousel';
-import EditPostModal from '../components/Modal/EditPostModal';
+import UpdatePostModal from '../components/Modal/UpdatePostModal';
 import ListModal from '../components/Modal/ListModal';
 import Caption from '../components/Post/Caption';
 import CommentForm from '../components/Post/CommentForm';
@@ -115,7 +115,11 @@ function Post() {
         />
       )}
       {!isPostLoading && (
-        <EditPostModal isOpen={isEditModalOpen} close={() => setEditModalOpen(false)} post={post} />
+        <UpdatePostModal
+          isOpen={isEditModalOpen}
+          close={() => setEditModalOpen(false)}
+          post={post}
+        />
       )}
     </div>
   );
