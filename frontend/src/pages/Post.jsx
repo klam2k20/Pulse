@@ -13,8 +13,6 @@ import { getComments, getPost, getPostLikes } from '../lib/apiRequests';
 import { formatPostTimestamp } from '../lib/util';
 import '../scss/Pages/post.scss';
 
-//TODO: WS VS SHORT POLLING VS LONG POLLING VS OTHER
-
 function Post() {
   const [comment, setComment] = useState('');
   const [replyId, setReplyId] = useState('');

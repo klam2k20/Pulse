@@ -1,17 +1,17 @@
-import { Route, Routes, Outlet } from 'react-router-dom';
-import './App.scss';
-import './scss/Pages/layout.scss';
-import Navbar from './components/Navbar/Navbar';
-import { Home, Login, Profile, Register, Explore } from './pages';
-import { Toaster } from 'react-hot-toast';
-import NavFooter from './components/Navbar/NavFooter';
 import { useEffect, useState } from 'react';
-import CreatePostModal from './components/Modal/CreatePostModal';
-import Post from './pages/Post';
-import { useUser } from './context/UserProvider';
-import AppLoading from './components/StatusIndicator/AppLoading';
-import AppError from './components/StatusIndicator/AppError';
+import { Toaster } from 'react-hot-toast';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import 'react-tooltip/dist/react-tooltip.css';
+import './App.scss';
+import CreatePostModal from './components/Modal/CreatePostModal';
+import Navbar from './components/Navbar/Navbar';
+import NavFooter from './components/Navbar/NavFooter';
+import AppError from './components/StatusIndicator/AppError';
+import AppLoading from './components/StatusIndicator/AppLoading';
+import { useUser } from './context/UserProvider';
+import { Home, Login, Profile, Register } from './pages';
+import Post from './pages/Post';
+import './scss/Pages/layout.scss';
 
 function App() {
   return (
