@@ -8,6 +8,7 @@
   width: 335px;
   padding: 1rem;
   border-right: 1px solid $light-gray;
+  transition: all ease-out;
 
   @media screen and (max-width: 1919px) {
     width: 245px;
@@ -68,5 +69,29 @@
 
   @media screen and (max-width: 768px) {
     width: fit-content;
+  }
+}
+
+.app__navbar__shrink {
+  @include flex(center, center);
+  width: 72px;
+
+  .app__navbar__logo {
+    padding: 1.5rem 0rem;
+    h1 {
+      display: none;
+    }
+    .ekg {
+      width: 36px;
+    }
+  }
+
+  li,
+  .app__navbar__actions {
+    width: fit-content;
+  }
+
+  .app__navbar__item__label {
+    display: none;
   }
 }
