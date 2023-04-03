@@ -50,7 +50,7 @@ const getPost = async (req, res) => {
   }
 };
 
-const sharePosts = async (req, res) => {
+const addPost = async (req, res) => {
   const { images, caption } = req.body;
   const username = req.user.username;
 
@@ -120,4 +120,4 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = { getPosts, getPost, sharePosts, deletePost, updatePost };
+module.exports = { getPosts, getPost, addPost, deletePost, updatePost };

@@ -2,7 +2,7 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const Follower = require('../models/Follower');
 
-const getUserProfile = async (req, res) => {
+const getProfile = async (req, res) => {
   let username = req.params.username;
 
   if (!username) username = req.user.username;
@@ -30,7 +30,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-const updateUserProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   const username = req.params.username;
   const { name, pronouns, bio, pfp } = req.body;
 
@@ -49,4 +49,4 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { getUserProfile, updateUserProfile };
+module.exports = { getProfile, updateProfile };

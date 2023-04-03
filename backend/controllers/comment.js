@@ -3,6 +3,7 @@ const Comment = require('../models/Comment');
 const User = require('../models/User');
 const Post = require('../models/Post');
 const Like = require('../models/Like');
+const Notification = require('../models/Notification');
 
 const getComments = async (req, res) => {
   const postId = req.query.postId;
@@ -72,7 +73,7 @@ const getComments = async (req, res) => {
   }
 };
 
-const postComment = async (req, res) => {
+const addComment = async (req, res) => {
   const userId = req.user._id;
   const { postId, comment, parentId } = req.body;
 
@@ -90,6 +91,13 @@ const postComment = async (req, res) => {
       parentId,
       comment,
     });
+    if (post.userId.toString() !== userId.toString())
+      await Notification.create({
+        notify: post.userId,
+        user: userId,
+        type: 'comment',
+        post: postId,
+      });
     res.json(newComment);
   } catch (err) {
     console.log(`Post Comment Error: ${err}`);
@@ -132,4 +140,4 @@ const deleteComment = async (req, res) => {
   }
 };
 
-module.exports = { getComments, postComment, deleteComment };
+module.exports = { getComments, addComment, deleteComment };

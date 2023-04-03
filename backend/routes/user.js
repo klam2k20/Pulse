@@ -1,12 +1,9 @@
-const { getUserProfile, updateUserProfile } = require("../controllers/user");
-const { authenicateToken } = require("../middleware/middleware");
+const { getProfile, updateProfile } = require('../controllers/user');
+const { authenicateToken } = require('../middleware/middleware');
 
-const router = require("express").Router();
+const router = require('express').Router();
 
-router.route("/").get(authenicateToken, getUserProfile);
-router
-  .route("/:username")
-  .get(authenicateToken, getUserProfile)
-  .put(authenicateToken, updateUserProfile);
+router.route('/').get(authenicateToken, getProfile);
+router.route('/:username').get(authenicateToken, getProfile).put(authenicateToken, updateProfile);
 
 module.exports = router;

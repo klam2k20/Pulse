@@ -1,5 +1,6 @@
 const Follower = require('../models/Follower');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 
 const getFollowers = async (req, res) => {
   let username = req.query.username;
@@ -40,6 +41,12 @@ const addFollowed = async (req, res) => {
       followed: user._id,
       follower: id,
     });
+    if (user._id.toString() !== id.toString())
+      await Notification.create({
+        notify: user._id,
+        user: id,
+        type: 'follow',
+      });
     return res.sendStatus(200);
   } catch (err) {
     console.log(`Add Follower Error: ${err}`);
@@ -47,7 +54,7 @@ const addFollowed = async (req, res) => {
   }
 };
 
-const removeFollowed = async (req, res) => {
+const deleteFollowed = async (req, res) => {
   const username = req.query.username;
   const id = req.user._id;
 
@@ -68,4 +75,4 @@ const removeFollowed = async (req, res) => {
   }
 };
 
-module.exports = { getFollowers, addFollowed, removeFollowed };
+module.exports = { getFollowers, addFollowed, deleteFollowed };
