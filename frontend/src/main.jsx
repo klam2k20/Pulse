@@ -8,6 +8,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      staleTime: 30000,
+      cacheTime: 30000,
       refetchInterval: 30000,
       refetchIntervalInBackground: true,
       refetchOnWindowFocus: false,
