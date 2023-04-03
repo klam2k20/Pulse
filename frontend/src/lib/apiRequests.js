@@ -85,6 +85,10 @@ const removeComment = (commentId) => {
   return axios.delete(`api/comment?id=${commentId}`);
 };
 
+const updatePost = (postId, images, caption) => {
+  return axios.put(`api/post/${postId}`, { images, caption });
+};
+
 export {
   registerUser,
   loginUser,
@@ -106,4 +110,5 @@ export {
   removeFollowing,
   removePost,
   removeComment,
+  updatePost,
 };

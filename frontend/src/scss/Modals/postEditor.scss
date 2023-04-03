@@ -1,0 +1,24 @@
+@use '../index.scss' as *;
+
+.app__post__editor {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+
+  &__header {
+    @include flex(center, flex-start);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+
+  .image__wrapper {
+    height: fit-content;
+  }
+
+  textarea {
+    min-height: 4rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

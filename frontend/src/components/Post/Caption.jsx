@@ -1,14 +1,12 @@
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import { removePost } from '../../lib/apiRequests';
 import '../../scss/Post/caption.scss';
 import CaptionLoading from '../StatusIndicator/CaptionLoading';
-import Action from './Action';
 import Actions from './Actions';
 
-function Caption({ avatar, username, caption, isLoading }) {
+function Caption({ avatar, username, caption, isLoading, openEditModal }) {
   const { user } = useUser();
   const { postId } = useParams();
   const queryClient = useQueryClient();
@@ -36,22 +34,12 @@ function Caption({ avatar, username, caption, isLoading }) {
         </span>
       </div>
       {username === user.username && (
-        <Actions>
-          <Action
-            icon={<TrashIcon />}
-            text='Delete'
-            onClick={() => deletePost({ postId })}
-            isLoading={isDeletePostLoading}
-            isError={isDeletePostError}
-          />
-          <Action
-            icon={<PencilSquareIcon />}
-            text='Edit'
-            // onClick={() => deletePost(postId)}
-            // isLoading={isDeletePostLoading}
-            // isError={isDeletePostError}
-          />
-        </Actions>
+        <Actions
+          deleteOnClick={() => deletePost({ postId })}
+          isDeleteLoading={isDeletePostLoading}
+          isDeleteError={isDeletePostError}
+          openEditModal={openEditModal}
+        />
       )}
     </div>
   );

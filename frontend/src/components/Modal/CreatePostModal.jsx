@@ -1,4 +1,3 @@
-import { PhotoIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useMutation, useQueryClient } from 'react-query';
@@ -8,8 +7,9 @@ import { defaultSizes } from '../../lib/constants';
 import '../../scss/Modals/createPost.scss';
 import Carousel from '../Carousel/Carousel';
 import AppLoading from '../StatusIndicator/AppLoading';
-import DragAndDrop from './DragAndDrop';
+import UploadPhotos from './UploadPhotos';
 import Modal from './modal';
+import PostEditor from './PostEditor';
 
 function CreatePostModal({ isOpen, close }) {
   const { user } = useUser();
@@ -26,14 +26,6 @@ function CreatePostModal({ isOpen, close }) {
   const createPost = useMutation((p) => sharePost(p.images, p.caption).then((res) => res.data), {
     onSuccess: () => queryClient.invalidateQueries(['posts']),
   });
-
-  const handleFileUpload = (e) => {
-    e.preventDefault();
-    if (e.target.files.length > 0) {
-      setSelectedFiles((prev) => [...prev, ...e.target.files].slice(0, 5));
-      setIndex(1);
-    }
-  };
 
   const handleClose = () => {
     setSelectedFiles([]);
@@ -107,22 +99,7 @@ function CreatePostModal({ isOpen, close }) {
 
             <main className='flex__center create__post__content'>
               {index === 0 && (
-                <DragAndDrop setSelectedFiles={setSelectedFiles} setIndex={setIndex}>
-                  <PhotoIcon />
-                  <span>
-                    Upload or Drag and Drop <br /> Up To Five Photos
-                  </span>
-                  <label role='button'>
-                    Browse
-                    <input
-                      type='file'
-                      multiple
-                      accept='image/*, video/*'
-                      onChange={handleFileUpload}
-                      onClick={(e) => (e.target.value = null)}
-                    />
-                  </label>
-                </DragAndDrop>
+                <UploadPhotos setSelectedFiles={setSelectedFiles} setIndex={setIndex} />
               )}
 
               {index === 1 && (
@@ -130,24 +107,13 @@ function CreatePostModal({ isOpen, close }) {
               )}
 
               {index === 2 && (
-                <div className='create__post__caption'>
-                  <div className='create__post__caption__header'>
-                    <img src={user.pfp} alt='User Profile Photo' loading='lazy' />
-                    <span>{user.username}</span>
-                  </div>
-                  <Carousel
-                    photos={selectedFiles}
-                    setPhotos={setSelectedFiles}
-                    validation={false}
-                  />
-                  <textarea
-                    placeholder='Include a caption...'
-                    maxLength='2200'
-                    cols='80'
-                    value={caption}
-                    onChange={(e) => setCaption(e.target.value)}
-                  />
-                </div>
+                <PostEditor
+                  selectedFiles={selectedFiles}
+                  setSelectedFiles={setSelectedFiles}
+                  validation={false}
+                  caption={caption}
+                  setCaption={setCaption}
+                />
               )}
             </main>
           </>

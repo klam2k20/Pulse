@@ -20,14 +20,14 @@
   }
 }
 
-.app__post__actions {
+.app__comment__actions {
   @include flex(center, space-around);
   flex-direction: column;
   height: 100%;
 
   svg {
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     cursor: pointer;
   }
 }

@@ -34,4 +34,7 @@ const formatPostTimestamp = (timestamp) => {
   return formatTimestamp;
 };
 
-export { formatCommentTimestamp, formatPostTimestamp };
+const isGCSUri = (file) =>
+  typeof file === 'string' && file.includes('https://storage.googleapis.com');
+
+export { formatCommentTimestamp, formatPostTimestamp, isGCSUri };

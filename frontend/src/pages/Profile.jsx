@@ -9,9 +9,6 @@ import AppError from '../components/StatusIndicator/AppError';
 import { getFollowers, getPosts, getUser } from '../lib/apiRequests';
 import '../scss/Pages/profile.scss';
 
-//TODO: MOVE ACTIONS INTO OWN COMMENT
-//TODO: UPDATE POST
-
 function Profile() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [followerModal, setFollowerModal] = useState({

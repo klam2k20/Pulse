@@ -2,6 +2,7 @@ import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { memo, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { defaultSizes } from '../../lib/constants';
+import { isGCSUri } from '../../lib/util';
 import '../../scss/Carousel/carousel.scss';
 import CarouselLoading from '../StatusIndicator/CarouselLoading';
 
@@ -21,17 +22,15 @@ function Carousel({ photos, setPhotos, validation, isLoading }) {
     if (index == photos.length - 1) setIndex((prev) => prev - 1);
   };
 
-  const isGCSUri = () =>
-    typeof photos[index] === 'string' && photos[index].includes('https://storage.googleapis.com');
-
   if (isLoading) return <CarouselLoading />;
+
   return (
     <>
       {photos.length && (
         <div className='flex__center image__wrapper'>
           <div className='flex__center main__image'>
             <img
-              src={isGCSUri() ? photos[index] : URL.createObjectURL(photos[index])}
+              src={isGCSUri(photos[index]) ? photos[index] : URL.createObjectURL(photos[index])}
               alt={photos[index].name}
               loading='lazy'
             />
@@ -46,7 +45,7 @@ function Carousel({ photos, setPhotos, validation, isLoading }) {
                   <img
                     key={photos[i].name || photos[i]}
                     className={i === index ? 'image__carousel__active' : 'image__carousel'}
-                    src={isGCSUri() ? photos[i] : URL.createObjectURL(photos[i])}
+                    src={isGCSUri(photos[i]) ? photos[i] : URL.createObjectURL(photos[i])}
                     onClick={() => setIndex(i)}
                     loading='lazy'
                   />

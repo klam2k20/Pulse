@@ -101,4 +101,23 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { getPosts, getPost, sharePosts, deletePost };
+const updatePost = async (req, res) => {
+  const id = req.params.id;
+  const { images, caption } = req.body;
+  if (!images || !caption)
+    return res
+      .status(400)
+      .json({ message: 'Missing One or More Required Fields: Images and/or Caption' });
+
+  try {
+    const post = await Post.findById(id);
+    if (!post) return res.status(404).json({ message: `Post ${id} Does Not Exist` });
+    await Post.replaceOne({ _id: id }, { images, caption, userId: post.userId });
+    return res.sendStatus(204);
+  } catch (err) {
+    console.log(`Update Post Error: ${err}`);
+    return res.status(500).json({ message: `Database Error: ${err}` });
+  }
+};
+
+module.exports = { getPosts, getPost, sharePosts, deletePost, updatePost };

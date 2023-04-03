@@ -5,8 +5,8 @@
   cursor: pointer;
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
   }
 
   &:hover > svg {
@@ -23,5 +23,6 @@
   width: 10rem;
   padding: 0.5rem 0;
   border: 1px solid $light-gray;
+  z-index: 2;
   background: white;
 }

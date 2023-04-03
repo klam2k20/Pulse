@@ -1,13 +1,12 @@
 import { HeartIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as FilledHeartIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import { removeComment } from '../../lib/apiRequests';
-import { formatCommentTimestamp } from '../../lib/format';
+import { formatCommentTimestamp } from '../../lib/util';
 import '../../scss/Post/comment.scss';
-import Action from './Action';
 import Actions from './Actions';
 
 function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setModal }) {
@@ -63,22 +62,18 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setMod
           </div>
         </div>
 
-        <div className='app__post__actions'>
+        <div className='app__comment__actions'>
           {comment.likes.some((l) => l.userId._id === user._id) ? (
             <FilledHeartIcon onClick={(e) => handleRemoveLike(e, comment._id)} />
           ) : (
             <HeartIcon onClick={(e) => handleAddLike(e, comment._id)} />
           )}
           {(postAuthor === user.username || comment.user[0].username === user.username) && (
-            <Actions>
-              <Action
-                icon={<TrashIcon />}
-                text='Delete'
-                onClick={() => deleteComment({ commentId: comment._id })}
-                isLoading={isDeleteCommentLoading}
-                isError={isDeleteCommentError}
-              />
-            </Actions>
+            <Actions
+              deleteOnClick={() => deleteComment({ commentId: comment._id })}
+              isDeleteLoading={isDeleteCommentLoading}
+              isDeleteError={isDeleteCommentError}
+            />
           )}
         </div>
       </li>

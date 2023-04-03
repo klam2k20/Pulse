@@ -118,6 +118,14 @@ function UpdateProfileModal({ isOpen, close }) {
     setSelectedFile({ name: 'default' });
   };
 
+  const isProfileUpdated = () => {
+    return !(
+      profile.name === user.name &&
+      (profile.pronouns === user.pronouns || (!user.pronouns && profile.pronouns === 'default')) &&
+      (profile.bio === user.bio || (!user.bio && profile.bio === ''))
+    );
+  };
+
   return (
     <>
       {isOpen && profile && (
@@ -130,7 +138,10 @@ function UpdateProfileModal({ isOpen, close }) {
                   Cancel
                 </button>
                 <h4>Edit Profile</h4>
-                <button className='primary__btn' onClick={handleUpdate}>
+                <button
+                  className='primary__btn'
+                  onClick={handleUpdate}
+                  disabled={isProfileUpdated() ? '' : 'disabled'}>
                   Update
                 </button>
               </header>
