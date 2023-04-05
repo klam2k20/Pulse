@@ -21,6 +21,11 @@ const getNotifications = async (req, res) => {
           $and: [{ notify: id }, { createdAt: { $gte: threshold } }],
         },
       },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
       /** add relative date */
       {
         $set: {
@@ -108,7 +113,7 @@ const getNotifications = async (req, res) => {
       path: 'notifications.comment',
       select: '-_id comment',
     });
-    await Post.populate(notifications, { path: 'notifications.post', select: '-_id images' });
+    await Post.populate(notifications, { path: 'notifications.post', select: 'images caption' });
     return res.json(notifications);
   } catch (err) {
     console.log(`Get Notifications Error: ${err}`);
