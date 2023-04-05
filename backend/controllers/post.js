@@ -3,6 +3,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const Like = require('../models/Like');
 const Comment = require('../models/Comment');
+const Notification = require('../models/Notification');
 
 const getPosts = async (req, res) => {
   let username = req.query.username;
@@ -92,6 +93,7 @@ const deletePost = async (req, res) => {
     await Post.deleteOne({ _id: id }, { session });
     await Like.deleteMany({ postId: id }, { session });
     await Comment.deleteMany({ postId: id }, { session });
+    await Notification.deleteMany({ post: id }, { session });
     await session.commitTransaction();
     return res.sendStatus(200);
   } catch (err) {

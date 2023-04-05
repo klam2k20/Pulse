@@ -68,6 +68,11 @@ const deleteFollowed = async (req, res) => {
       followed: user._id,
       follower: id,
     });
+    await Notification.deleteOne({
+      notify: user._id,
+      user: id,
+      type: 'follow',
+    });
     return res.sendStatus(200);
   } catch (err) {
     console.log(`Remove Follower Error: ${err}`);

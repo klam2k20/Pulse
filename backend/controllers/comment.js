@@ -97,6 +97,7 @@ const addComment = async (req, res) => {
         user: userId,
         type: 'comment',
         post: postId,
+        comment: newComment._id,
       });
     res.json(newComment);
   } catch (err) {
@@ -124,13 +125,15 @@ const deleteComment = async (req, res) => {
         .json({ message: "Only the Post's or Comment's Author Can Delete This Comment" });
 
     // Transaction to Delete Comment and all Related Replies and Likes
-    await session.startTransaction();
-    await Comment.deleteOne({ _id: id });
-    await Like.deleteMany({ parentId: id });
+    session.startTransaction();
+    await Comment.deleteOne({ _id: id }, { session });
+    await Like.deleteMany({ parentId: id }, { session });
     const replies = await Comment.find({ parentId: id });
     const replyIds = replies.map((r) => r._id);
-    replyIds.forEach(async (id) => await Like.deleteOne({ parentId: id }));
-    await Comment.deleteMany({ parentId: id });
+    replyIds.forEach(async (id) => await Like.deleteOne({ parentId: id }, { session }));
+    await Comment.deleteMany({ parentId: id }, { session });
+    await Notification.deleteMany({ comment: id }, { session });
+    replyIds.forEach(async (id) => await Notification.deleteMany({ comment: id }, { session }));
     await session.commitTransaction();
     return res.sendStatus(200);
   } catch (err) {

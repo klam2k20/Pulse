@@ -79,6 +79,13 @@ const removeLike = async (req, res) => {
       userId,
       parentId,
     });
+    await Notification.deleteOne({
+      notify: post.userId,
+      user: userId,
+      type: 'like',
+      post: postId,
+      comment: parentId,
+    });
     return res.sendStatus(200);
   } catch (err) {
     console.log(`Remove Post Like Error: ${err}`);
