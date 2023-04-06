@@ -7,7 +7,7 @@ import '../../scss/Modals/modal.scss';
 import '../../scss/Modals/createPostModal.scss';
 import Carousel from '../Carousel/Carousel';
 import AppLoading from '../StatusIndicator/AppLoading';
-import Modal from './modal';
+import Modal from './Modal';
 import PostEditor from './PostEditor';
 import UploadPhotos from './UploadPhotos';
 

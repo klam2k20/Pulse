@@ -8,7 +8,7 @@ import { defaultSizes, defaultUrls } from '../../lib/constants';
 import '../../scss/Modals/modal.scss';
 import '../../scss/Modals/updateProfileModal.scss';
 import AppLoading from '../StatusIndicator/AppLoading';
-import Modal from './modal';
+import Modal from './Modal';
 
 function UpdateProfileModal({ isOpen, close }) {
   const { user } = useUser();

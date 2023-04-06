@@ -17,7 +17,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import '../../scss/Navbar/navbar.scss';
 import Logo from '../Logo';
-import Sidebar from '../Modal/Sidebar';
+import NotificationSidebar from '../Sidebar/NotificationSidebar';
 import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 
 function Navbar({ openPostModal }) {
@@ -25,7 +25,6 @@ function Navbar({ openPostModal }) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const { user } = useUser();
   const location = useLocation();
-  const navbar = document.querySelector('.app__navbar');
 
   useEffect(() => {
     if (
@@ -45,20 +44,25 @@ function Navbar({ openPostModal }) {
     e.preventDefault();
     const name = e.target.name;
     setSelected(name);
+    const navbar = document.querySelector('.app__navbar');
     if (name === 'create') {
       openPostModal();
-    } else {
+    } else if (name === 'search' || name == 'notifications') {
       if (toggleSidebar) {
         navbar.classList.remove('app__navbar__shrink');
       } else {
         navbar.classList.add('app__navbar__shrink');
       }
       setToggleSidebar((prev) => !prev);
+    } else {
+      setToggleSidebar(false);
+      navbar.classList.remove('app__navbar__shrink');
     }
   };
 
   const closeSidebar = () => {
     setToggleSidebar(false);
+    const navbar = document.querySelector('.app__navbar');
     navbar.classList.remove('app__navbar__shrink');
   };
 
@@ -122,7 +126,7 @@ function Navbar({ openPostModal }) {
           />
         </div>
       </nav>
-      <Sidebar isOpen={toggleSidebar} close={closeSidebar} />
+      <NotificationSidebar isOpen={toggleSidebar} close={closeSidebar} />
     </>
   );
 }

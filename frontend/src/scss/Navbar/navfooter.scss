@@ -2,6 +2,7 @@
 
 .app__navfooter {
   display: none;
+  z-index: 3;
 
   @media screen and (max-width: 480px) {
     @include flex(center, space-between);

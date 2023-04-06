@@ -89,6 +89,14 @@ const updatePost = (postId, images, caption) => {
   return axios.put(`api/post/${postId}`, { images, caption });
 };
 
+const getNotifications = () => {
+  return axios.get('/api/notification');
+};
+
+const updateNotifications = () => {
+  return axios.put('/api/notification');
+};
+
 export {
   registerUser,
   loginUser,
@@ -111,4 +119,6 @@ export {
   removePost,
   removeComment,
   updatePost,
+  getNotifications,
+  updateNotifications,
 };

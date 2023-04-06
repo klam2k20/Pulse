@@ -5,20 +5,13 @@ import { addCommentLike, removeCommentLike } from '../../lib/apiRequests';
 import '../../scss/Post/comments.scss';
 import CommentsLoading from '../StatusIndicator/CommentsLoading';
 import Comment from './Comment';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 function Comments({ comments, isLoading, setComment, setReplyId, setModal }) {
-  const [isLaptop, setIsLaptop] = useState(false);
   const [showAllComments, setShowAllComments] = useState(false);
   const { postId } = useParams();
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 1024px)');
-    setIsLaptop(mediaQuery.matches);
-    const listener = (e) => setIsLaptop(e.matches);
-    mediaQuery.addEventListener('change', listener);
-    return () => mediaQuery.removeEventListener('change', listener);
-  }, []);
+  const isLaptop = useMediaQuery('(max-width: 1024px)');
 
   const likeComment = useMutation(
     (l) => addCommentLike(l.postId, l.parentId).then((res) => res.data),

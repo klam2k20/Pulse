@@ -1,0 +1,33 @@
+@use '../index.scss' as *;
+
+#app__sidebar__wrapper {
+  position: fixed;
+  inset: 0 0 0 72px;
+  height: 100%;
+  z-index: 2;
+
+  #app__sidebar {
+    width: 397px;
+    height: 100%;
+    padding: 1rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 8px 8px 24px;
+    overflow: auto;
+
+    @media screen and (max-width: 480px) {
+      width: 100%;
+      height: 85%;
+      border-top-left-radius: 0.5rem;
+      border-bottom-right-radius: 0rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    @include flex(flex-end, center);
+    inset: 0 0 0 0px;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}

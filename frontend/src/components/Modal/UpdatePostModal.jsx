@@ -5,7 +5,7 @@ import { updatePost, uploadPhoto } from '../../lib/apiRequests';
 import { isGCSUri } from '../../lib/util';
 import '../../scss/Modals/modal.scss';
 import AppLoading from '../StatusIndicator/AppLoading';
-import Modal from './modal';
+import Modal from './Modal';
 import PostEditor from './PostEditor';
 
 function UpdatePostModal({ isOpen, close, post }) {

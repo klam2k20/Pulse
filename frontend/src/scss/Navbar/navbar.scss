@@ -25,6 +25,7 @@
 .app__navbar__logo {
   @include flex(center, flex-start);
   gap: 0.5rem;
+  height: 120px;
   padding: 1.5rem 0.75rem;
   color: black;
   text-decoration: none;

@@ -12,23 +12,3 @@
   border-bottom: 1px solid $light-gray;
   text-align: center;
 }
-
-.app__list {
-  @include flex(flex-start, flex-start);
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding-top: 0.5rem;
-
-  .app__list__item {
-    @include flex(center, flex-start);
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.5rem;
-    cursor: pointer;
-
-    p {
-      font-size: 0.75rem;
-    }
-  }
-}
