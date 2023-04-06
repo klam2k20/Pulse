@@ -125,7 +125,7 @@ const updateNotifications = async (req, res) => {
   const id = req.user._id;
 
   try {
-    await Notification.updateMany({ notify: id }, { seen: true });
+    await Notification.updateMany({ notify: id, seen: false }, { seen: true });
     return res.sendStatus(204);
   } catch (err) {
     console.log(`Update Notification Error: ${err}`);
