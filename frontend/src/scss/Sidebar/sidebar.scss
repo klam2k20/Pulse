@@ -27,6 +27,7 @@
   @media screen and (max-width: 480px) {
     @include flex(flex-end, center);
     inset: 0 0 0 0px;
+    padding-bottom: 4rem;
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
   }
