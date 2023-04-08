@@ -111,6 +111,10 @@ img {
   font-weight: 600;
 }
 
+.app__loading__circle {
+  @include loadingCircle(2rem, 2rem);
+}
+
 .app__loading__line {
   @include loadingAnimation;
   display: inline-block;

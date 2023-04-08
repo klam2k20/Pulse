@@ -1,24 +1,25 @@
-import { useQuery } from 'react-query';
-import Sidebar from './Sidebar';
-import { getNotifications } from '../../lib/apiRequests';
 import NotificationSection from './NotificationSection';
+import NotificationSidebarLoading from '../StatusIndicator/NotificationSidebarLoading';
+import Sidebar from './Sidebar';
 
-function NotificationSidebar({ isOpen, close }) {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['notifications'],
-    queryFn: () => getNotifications().then((res) => res.data),
-    refetchInterval: 60000,
-  });
-
-  if (isLoading) return <span>Loading...</span>;
-  if (isError) return <span>Error...</span>;
+function NotificationSidebar({ notifications, isLoading, isError, isOpen, close }) {
+  if (isLoading) <span>Loading...</span>;
+  if (isError) <span>Error...</span>;
   return (
     isOpen && (
       <Sidebar close={close}>
         <h2>Notifications</h2>
-        {data.map((n) => (
-          <NotificationSection key={n._id} notifications={n} />
-        ))}
+        {isLoading && <NotificationSidebarLoading />}
+        {isError && (
+          <AppError
+            text='Something went wrong.'
+            buttonText='TRY AGAIN'
+            onClick={() => window.location.reload()}
+          />
+        )}
+        {!isLoading &&
+          !isError &&
+          notifications.map((n) => <NotificationSection key={n._id} notifications={n} />)}
       </Sidebar>
     )
   );

@@ -19,12 +19,15 @@ import '../../scss/Navbar/navbar.scss';
 import Logo from '../Logo';
 import NotificationSidebar from '../Sidebar/NotificationSidebar';
 import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { getNotifications, updateNotifications } from '../../lib/apiRequests';
 
 function Navbar({ openPostModal }) {
   const [selected, setSelected] = useState('home');
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const { user } = useUser();
   const location = useLocation();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (
@@ -39,6 +42,30 @@ function Navbar({ openPostModal }) {
       setSelected('search');
     } else setSelected('home');
   }, [user]);
+
+  useEffect(() => {
+    if (
+      toggleSidebar &&
+      !isLoading &&
+      !isError &&
+      data.length > 0 &&
+      !data[0].notifications[0].seen
+    ) {
+      seenNotifications.mutate();
+    }
+  }, [toggleSidebar]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () => getNotifications().then((res) => res.data),
+    refetchInterval: 60000,
+  });
+
+  const seenNotifications = useMutation(() => updateNotifications(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notifications']);
+    },
+  });
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -95,7 +122,13 @@ function Navbar({ openPostModal }) {
           <NavbarButtonItem
             name={'notifications'}
             handleClick={handleClick}
-            icon={<HeartIcon />}
+            icon={
+              !isLoading && !isError && data.length > 0 && !data[0].notifications[0].seen ? (
+                <FilledHeartIcon style={{ fill: '#d52a74' }} />
+              ) : (
+                <HeartIcon />
+              )
+            }
             selectedIcon={<FilledHeartIcon />}
             selected={selected}
           />
@@ -126,7 +159,13 @@ function Navbar({ openPostModal }) {
           />
         </div>
       </nav>
-      <NotificationSidebar isOpen={toggleSidebar} close={closeSidebar} />
+      <NotificationSidebar
+        notifications={data}
+        isLoading={isLoading}
+        isError={isError}
+        isOpen={toggleSidebar}
+        close={closeSidebar}
+      />
     </>
   );
 }

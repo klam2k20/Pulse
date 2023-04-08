@@ -1,0 +1,7 @@
+@use '../index.scss' as *;
+
+.app__notification__loading {
+  @include flex(center, flex-start);
+  gap: 0.5rem;
+  width: 100%;
+}

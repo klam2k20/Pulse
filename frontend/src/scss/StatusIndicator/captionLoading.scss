@@ -1,7 +1,0 @@
-@use '../index.scss' as *;
-
-.app__post__caption {
-  .app__loading__circle {
-    @include loadingCircle(2rem, 2rem);
-  }
-}

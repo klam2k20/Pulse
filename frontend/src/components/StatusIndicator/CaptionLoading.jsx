@@ -1,5 +1,4 @@
 import '../../scss/Post/caption.scss';
-import '../../scss/StatusIndicator/captionLoading.scss';
 
 function CaptionLoading() {
   return (
