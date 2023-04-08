@@ -46,7 +46,9 @@ function Comments({ comments, isLoading, setComment, setReplyId, setModal }) {
   if (isLaptop) {
     return (
       <ul className='app__post__comments'>
-        <span className='font__color__light' onClick={() => setShowAllComments((prev) => !prev)}>
+        <span
+          className='font__color__light pointer'
+          onClick={() => setShowAllComments((prev) => !prev)}>
           {!showAllComments ? `View All ${comments.length} Comments` : 'Hide Comments'}
         </span>
         {!showAllComments ? (
