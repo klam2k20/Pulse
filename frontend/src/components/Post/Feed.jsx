@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
 import { getComments, getPostLikes } from '../../lib/apiRequests';
 import '../../scss/Post/feed.scss';
 import Carousel from '../Carousel/Carousel';
+import ListModal from '../Modal/ListModal';
 import PostActions from '../Post/PostActions';
 import Caption from './Caption';
 import CommentForm from './CommentForm';
 import Comments from './Comments';
-import ListModal from '../Modal/ListModal';
 
 function Feed({ post, index }) {
   const [comment, setComment] = useState('');
@@ -56,9 +55,9 @@ function Feed({ post, index }) {
           caption={post.caption}
           date={post.createdAt}
         />
-        <Link to={`/${post.userId.username}/post/${post._id}`} className='app__feed__photos'>
+        <div className='app__feed__photos'>
           <Carousel photos={post.images} />
-        </Link>
+        </div>
         <PostActions
           likes={likes}
           numComments={comments?.length}
