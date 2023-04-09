@@ -1,0 +1,24 @@
+@use '../index.scss' as *;
+
+.app__search__wrapper {
+  padding: 1rem 0;
+  border-bottom: 1px solid $light-gray;
+
+  .app__search {
+    @include flex(center, space-between);
+    gap: 0.25rem;
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background-color: $light-gray;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    input {
+      background-color: transparent;
+    }
+  }
+}

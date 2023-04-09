@@ -1,26 +1,26 @@
-import '../../scss/StatusIndicator/notificationSidebarLoading.scss';
+import '../../scss/StatusIndicator/listLoading.scss';
 import '../../scss/Sidebar/notificationSection.scss';
 
-function NotificationSidebarLoading() {
+function ListLoading() {
   return (
     <div className='app__notification__section'>
-      <div className='app__notification__loading'>
+      <div className='app__list__loading'>
         <span className='app__loading__circle' />
         <span className='app__loading__line' />
       </div>
-      <div className='app__notification__loading'>
+      <div className='app__list__loading'>
         <span className='app__loading__circle' />
         <span className='app__loading__line' />
       </div>
-      <div className='app__notification__loading'>
+      <div className='app__list__loading'>
         <span className='app__loading__circle' />
         <span className='app__loading__line' />
       </div>
-      <div className='app__notification__loading'>
+      <div className='app__list__loading'>
         <span className='app__loading__circle' />
         <span className='app__loading__line' />
       </div>
-      <div className='app__notification__loading'>
+      <div className='app__list__loading'>
         <span className='app__loading__circle' />
         <span className='app__loading__line' />
       </div>
@@ -28,4 +28,4 @@ function NotificationSidebarLoading() {
   );
 }
 
-export default NotificationSidebarLoading;
+export default ListLoading;

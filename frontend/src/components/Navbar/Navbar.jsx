@@ -21,10 +21,12 @@ import NotificationSidebar from '../Sidebar/NotificationSidebar';
 import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getNotifications, updateNotifications } from '../../lib/apiRequests';
+import SearchSidebar from '../Sidebar/SearchSidebar';
 
 function Navbar({ openPostModal }) {
   const [selected, setSelected] = useState('home');
-  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [toggleNotifications, setToggleNotifications] = useState(false);
+  const [toggleSearch, setToggleSearch] = useState(false);
   const { user } = useUser();
   const location = useLocation();
   const queryClient = useQueryClient();
@@ -45,7 +47,7 @@ function Navbar({ openPostModal }) {
 
   useEffect(() => {
     if (
-      toggleSidebar &&
+      toggleNotifications &&
       !isLoading &&
       !isError &&
       data.length > 0 &&
@@ -53,7 +55,7 @@ function Navbar({ openPostModal }) {
     ) {
       seenNotifications.mutate();
     }
-  }, [toggleSidebar]);
+  }, [toggleNotifications]);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['notifications'],
@@ -74,21 +76,28 @@ function Navbar({ openPostModal }) {
     const navbar = document.querySelector('.app__navbar');
     if (name === 'create') {
       openPostModal();
-    } else if (name === 'search' || name == 'notifications') {
-      if (toggleSidebar) {
-        navbar.classList.remove('app__navbar__shrink');
-      } else {
-        navbar.classList.add('app__navbar__shrink');
-      }
-      setToggleSidebar((prev) => !prev);
+    } else if (name == 'notifications') {
+      setToggleSearch(false);
+      toggleNotifications
+        ? navbar.classList.remove('app__navbar__shrink')
+        : navbar.classList.add('app__navbar__shrink');
+      setToggleNotifications((prev) => !prev);
+    } else if (name == 'search') {
+      setToggleNotifications(false);
+      toggleSearch
+        ? navbar.classList.remove('app__navbar__shrink')
+        : navbar.classList.add('app__navbar__shrink');
+      setToggleSearch((prev) => !prev);
     } else {
-      setToggleSidebar(false);
       navbar.classList.remove('app__navbar__shrink');
+      setToggleNotifications(false);
+      setToggleSearch(false);
     }
   };
 
   const closeSidebar = () => {
-    setToggleSidebar(false);
+    setToggleNotifications(false);
+    setToggleSearch(false);
     const navbar = document.querySelector('.app__navbar');
     navbar.classList.remove('app__navbar__shrink');
   };
@@ -163,9 +172,10 @@ function Navbar({ openPostModal }) {
         notifications={data}
         isLoading={isLoading}
         isError={isError}
-        isOpen={toggleSidebar}
+        isOpen={toggleNotifications}
         close={closeSidebar}
       />
+      <SearchSidebar isOpen={toggleSearch} close={closeSidebar} />
     </>
   );
 }

@@ -2,6 +2,30 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const Follower = require('../models/Follower');
 
+const getUsers = async (req, res) => {
+  const username = req.user.username;
+  const filter = '^' + req.query.username;
+
+  try {
+    const users = await User.find(
+      {
+        $and: [
+          {
+            username: { $regex: filter, $options: '-i' },
+          },
+          { username: { $ne: username } },
+        ],
+      },
+
+      'username name pfp'
+    );
+    return res.json(users);
+  } catch (err) {
+    console.log(`Get Users Error: ${err}`);
+    return res.status(500).json({ message: `Database Error: ${err}` });
+  }
+};
+
 const getProfile = async (req, res) => {
   let username = req.params.username;
 
@@ -49,4 +73,4 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, updateProfile };
+module.exports = { getUsers, getProfile, updateProfile };

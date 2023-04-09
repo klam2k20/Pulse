@@ -2,16 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import '../../scss/Modals/listModal.scss';
 import AppError from '../StatusIndicator/AppError';
 import Modal from './Modal';
+import User from '../User';
 
+//TODO: LOADING?
+// CENTER ERROR
 function ListModal({ list, title, isOpen, close, isError }) {
-  const navigate = useNavigate();
-
-  const handleLink = (e, username) => {
-    e.preventDefault();
-    navigate(`/profile/${username}`);
-    close();
-  };
-
   return (
     <div className='app__list__modal'>
       {isOpen && (
@@ -27,19 +22,7 @@ function ListModal({ list, title, isOpen, close, isError }) {
                 onClick={() => window.location.reload()}
               />
             )}
-            {!isError &&
-              list.map((l) => (
-                <li
-                  key={l.id}
-                  className='app__list__item'
-                  onClick={(e) => handleLink(e, l.username)}>
-                  <img className='avatar' src={l.pfp} alt={l.name} loading='lazy' />
-                  <div>
-                    <b>{l.username}</b>
-                    <p className='font__color__light'>{l.name}</p>
-                  </div>
-                </li>
-              ))}
+            {!isError && list.map((u) => <User key={u.id} user={u} handleClose={() => close()} />)}
           </ul>
         </Modal>
       )}

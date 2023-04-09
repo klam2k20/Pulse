@@ -12,7 +12,7 @@ const loginUser = (login, password) => {
 };
 
 const getUser = (username) => {
-  return axios.get(`/api/user/${username}`);
+  return axios.get(`/api/user/profile/${username}`);
 };
 
 const getPosts = (username) => {
@@ -30,7 +30,7 @@ const uploadPhoto = (photo) => {
 };
 
 const updateUser = (username, name, pronouns, bio, pfp) => {
-  return axios.put(`/api/user/${username}`, { name, pronouns, bio, pfp });
+  return axios.put(`/api/user/profile/${username}`, { name, pronouns, bio, pfp });
 };
 
 const sharePost = (images, caption) => {
@@ -97,6 +97,10 @@ const updateNotifications = () => {
   return axios.put('/api/notification');
 };
 
+const getUsers = (username) => {
+  return axios.get(`/api/user?username=${username}`);
+};
+
 export {
   registerUser,
   loginUser,
@@ -121,4 +125,5 @@ export {
   updatePost,
   getNotifications,
   updateNotifications,
+  getUsers,
 };

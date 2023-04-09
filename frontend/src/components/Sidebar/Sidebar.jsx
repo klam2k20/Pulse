@@ -26,7 +26,12 @@ function Sidebar({ children, close }) {
    */
   return (
     <motion.div key={isMobile} id='app__sidebar__wrapper' onClick={close}>
-      <motion.div id='app__sidebar' initial='closed' animate='open' variants={variants}>
+      <motion.div
+        id='app__sidebar'
+        initial='closed'
+        animate='open'
+        variants={variants}
+        onClick={(e) => e.stopPropagation()}>
         {children}
       </motion.div>
     </motion.div>

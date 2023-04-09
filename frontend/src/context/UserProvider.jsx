@@ -14,7 +14,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     if (!user) {
       axios
-        .get('/api/user')
+        .get('/api/user/profile')
         .then((res) => {
           setLoading(false);
           setUser(res.data);
