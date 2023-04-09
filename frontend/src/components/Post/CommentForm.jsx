@@ -5,8 +5,7 @@ import { postComment } from '../../lib/apiRequests';
 import '../../scss/Post/commentForm.scss';
 import CommentFormLoading from '../StatusIndicator/CommentFormLoading';
 
-function CommentForm({ comment, setComment, replyId, setReplyId, isLoading }) {
-  const { postId } = useParams();
+function CommentForm({ comment, setComment, replyId, setReplyId, isLoading, postId }) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -64,7 +63,7 @@ function CommentForm({ comment, setComment, replyId, setReplyId, isLoading }) {
       className='app__comment__form'
       onSubmit={replyId ? handleSubmitReply : handleSubmitComment}>
       <textarea
-        id='comment__form'
+        name='comment__form'
         placeholder='Say something...'
         value={comment}
         onChange={(e) => setComment(e.target.value)}

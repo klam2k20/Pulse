@@ -43,7 +43,17 @@
 }
 
 .app__post__date {
-  padding: 0 1rem;
   font-size: 0.75rem;
   line-height: 1rem;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 0.25rem;
+    height: 0.25rem;
+    border-radius: 50%;
+    background-color: gray;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
 }

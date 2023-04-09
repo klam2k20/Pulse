@@ -71,6 +71,7 @@ function Post() {
           avatar={post?.userId?.pfp}
           username={post?.userId?.username}
           caption={post?.caption}
+          date={post?.createdAt}
           isLoading={isPostLoading}
           openEditModal={() => setEditModalOpen(true)}
         />
@@ -80,6 +81,7 @@ function Post() {
           setReplyId={setReplyId}
           isLoading={isCommentsLoading}
           setModal={setLikeModal}
+          postId={postId}
         />
         <PostActions
           likes={likes}
@@ -88,20 +90,15 @@ function Post() {
           setReplyId={setReplyId}
           isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
           setModal={setLikeModal}
+          postId={postId}
         />
-        {isPostLoading ? (
-          <span className='app__loading__date' />
-        ) : (
-          <div className='font__color__light app__post__date'>
-            {formatPostTimestamp(new Date(post.createdAt))}
-          </div>
-        )}
         <CommentForm
           comment={comment}
           setComment={setComment}
           replyId={replyId}
           setReplyId={setReplyId}
           isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
+          postId={postId}
         />
       </div>
       {!isLikesLoading && !isCommentsLoading && (

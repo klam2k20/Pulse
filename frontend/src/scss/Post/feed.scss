@@ -1,0 +1,31 @@
+@use '../index.scss' as *;
+
+.app__feed {
+  @include flex(center, flex-start);
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  border-bottom: 1px solid $light-gray;
+
+  .app__post__caption__wrapper {
+    padding: 0;
+  }
+
+  .app__feed__photos {
+    border-radius: 0.5rem;
+    background: black;
+    width: 100%;
+
+    .image__carousel__wrapper {
+      width: fit-content;
+      padding: 0.5rem;
+    }
+  }
+
+  .app__post__stats,
+  .app__post__comments,
+  .app__comment__form {
+    border: 0;
+    padding: 0;
+  }
+}

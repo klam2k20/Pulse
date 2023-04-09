@@ -108,7 +108,7 @@ function FollowNotification({ user, relativeDate, handleClose }) {
   };
 
   return (
-    <div className='app__notification__wrapper pointer' handleClick={handleClick}>
+    <div className='app__notification__wrapper pointer' onClick={handleClick}>
       <div className='flex__center app__notification'>
         <img className='avatar' src={user.pfp} alt={user.username} loading='lazy' />
         <span className='app__notification__text'>

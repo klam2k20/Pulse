@@ -7,9 +7,17 @@ import { addPostLike, removePostLike } from '../../lib/apiRequests';
 import '../../scss/Post/postActions.scss';
 import ActionsLoading from '../StatusIndicator/ActionsLoading';
 
-function Actions({ likes, numComments, setComment, setReplyId, isLoading, setModal }) {
+function Actions({
+  likes,
+  numComments,
+  setComment,
+  setReplyId,
+  isLoading,
+  setModal,
+  postId,
+  index,
+}) {
   const { user } = useUser();
-  const { postId } = useParams();
   const queryClient = useQueryClient();
 
   const likePost = useMutation((l) => addPostLike(l.postId).then((res) => res.data), {
@@ -24,7 +32,9 @@ function Actions({ likes, numComments, setComment, setReplyId, isLoading, setMod
     e.preventDefault();
     setComment('');
     setReplyId('');
-    document.getElementById('comment__form').focus();
+    index
+      ? document.getElementsByName('comment__form')[index].focus()
+      : document.getElementsByName('comment__form')[0].focus();
   };
 
   const handleLikePost = (e) => {

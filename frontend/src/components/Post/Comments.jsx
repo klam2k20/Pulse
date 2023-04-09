@@ -7,9 +7,8 @@ import CommentsLoading from '../StatusIndicator/CommentsLoading';
 import Comment from './Comment';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
-function Comments({ comments, isLoading, setComment, setReplyId, setModal }) {
+function Comments({ comments, isLoading, setComment, setReplyId, setModal, hideComments, postId }) {
   const [showAllComments, setShowAllComments] = useState(false);
-  const { postId } = useParams();
   const queryClient = useQueryClient();
   const isLaptop = useMediaQuery('(max-width: 1024px)');
 
@@ -28,7 +27,7 @@ function Comments({ comments, isLoading, setComment, setReplyId, setModal }) {
     e.preventDefault();
     setReplyId(parentId);
     setComment(`@${replyTo} `);
-    document.getElementById('comment__form').focus();
+    document.getElementsByName('comment__form')[0].focus();
   };
 
   const handleLikeComment = (e, commentId) => {
@@ -43,7 +42,7 @@ function Comments({ comments, isLoading, setComment, setReplyId, setModal }) {
 
   if (isLoading) return <CommentsLoading />;
   if (isLaptop && comments.length === 0) return;
-  if (isLaptop) {
+  if ((isLaptop || hideComments) && comments.length > 0) {
     return (
       <ul className='app__post__comments'>
         <span

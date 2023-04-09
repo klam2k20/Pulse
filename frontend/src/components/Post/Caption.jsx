@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import { removePost } from '../../lib/apiRequests';
 import '../../scss/Post/caption.scss';
 import CaptionLoading from '../StatusIndicator/CaptionLoading';
 import Actions from './Actions';
+import { formatPostTimestamp } from '../../lib/util';
 
-function Caption({ avatar, username, caption, isLoading, openEditModal }) {
+function Caption({ avatar, username, caption, date, isLoading, openEditModal }) {
   const { user } = useUser();
   const { postId } = useParams();
   const queryClient = useQueryClient();
@@ -30,10 +31,16 @@ function Caption({ avatar, username, caption, isLoading, openEditModal }) {
       <div className='app__post__caption'>
         <img className='avatar' src={avatar} alt={username} loading='lazy' />
         <span>
-          <b>{username}</b> {caption}
+          <Link to={`/profile/${username}`}>
+            <b>{username}</b>
+          </Link>{' '}
+          {caption}
+        </span>
+        <span className='font__color__light app__post__date'>
+          {formatPostTimestamp(new Date(date))}
         </span>
       </div>
-      {username === user.username && (
+      {username === user.username && openEditModal && (
         <Actions
           deleteOnClick={() => deletePost({ postId })}
           isDeleteLoading={isDeletePostLoading}

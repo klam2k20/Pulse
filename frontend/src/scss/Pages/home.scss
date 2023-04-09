@@ -1,1 +1,19 @@
-@use "../index.scss" as *;
+@use '../index.scss' as *;
+
+.app__home {
+  @include flex(center, flex-start);
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+  height: 100%;
+  padding: 0 1rem;
+
+  @media screen and (max-width: 768px) {
+    width: 75%;
+  }
+
+  @media screen and (max-width: 480px) {
+    gap: 1rem;
+    width: 100%;
+  }
+}

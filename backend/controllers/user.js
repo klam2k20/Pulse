@@ -26,6 +26,27 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getFeed = async (req, res) => {
+  const page = req.query.page ?? 1;
+  const limit = req.query.limit ?? 20;
+  const user = req.user._id;
+
+  try {
+    const following = await Follower.find({ follower: user }).distinct('followed');
+    const posts = await Post.find({
+      $or: [{ userId: user }, { userId: { $in: following } }],
+    })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate('userId', 'username name pfp');
+    res.json(posts);
+  } catch (err) {
+    console.log(`Get Feed Error: ${err}`);
+    return res.status(500).json({ message: `Database Error: ${err}` });
+  }
+};
+
 const getProfile = async (req, res) => {
   let username = req.params.username;
 
@@ -73,4 +94,4 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, getProfile, updateProfile };
+module.exports = { getUsers, getFeed, getProfile, updateProfile };
