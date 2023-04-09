@@ -1,13 +1,20 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import '../../scss/Sidebar/notification.scss';
 
-function Notification({ notification }) {
+function Notification({ notification, handleClose }) {
   const { user, post, comment } = notification;
 
   switch (notification.type) {
     case 'like':
-      return <LikeNotification user={user} post={post} relativeDate={notification.relativeDate} />;
+      return (
+        <LikeNotification
+          user={user}
+          post={post}
+          relativeDate={notification.relativeDate}
+          handleClose={handleClose}
+        />
+      );
     case 'comment':
       return (
         <CommentNotification
@@ -15,19 +22,34 @@ function Notification({ notification }) {
           post={post}
           comment={comment}
           relativeDate={notification.relativeDate}
+          handleClose={handleClose}
         />
       );
     default:
-      return <FollowNotification user={user} relativeDate={notification.relativeDate} />;
+      return (
+        <FollowNotification
+          user={user}
+          relativeDate={notification.relativeDate}
+          handleClose={handleClose}
+        />
+      );
   }
 }
 
-function LikeNotification({ user, post, relativeDate }) {
+function LikeNotification({ user, post, relativeDate, handleClose }) {
   const {
     user: { username },
   } = useUser();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`${username}/post/${post._id}`);
+    handleClose();
+  };
+
   return (
-    <Link to={`${username}/post/${post._id}`} className='app__notification__wrapper'>
+    <div className='app__notification__wrapper pointer' onClick={handleClick}>
       <div className='flex__center app__notification'>
         <img className='avatar' src={user.pfp} alt={user.username} loading='lazy' />
         <span className='app__notification__text'>
@@ -41,17 +63,24 @@ function LikeNotification({ user, post, relativeDate }) {
         alt={post.caption}
         loading='lazy'
       />
-    </Link>
+    </div>
   );
 }
 
-function CommentNotification({ user, post, comment, relativeDate }) {
+function CommentNotification({ user, post, comment, relativeDate, handleClose }) {
   const {
     user: { username },
   } = useUser();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`${username}/post/${post._id}`);
+    handleClose();
+  };
 
   return (
-    <Link to={`${username}/post/${post._id}`} className='app__notification__wrapper'>
+    <div className='app__notification__wrapper pointer' onClick={handleClick}>
       <div className='flex__center app__notification'>
         <img className='avatar' src={user.pfp} alt={user.username} loading='lazy' />
         <span className='app__notification__text'>
@@ -65,13 +94,21 @@ function CommentNotification({ user, post, comment, relativeDate }) {
         alt={post.caption}
         loading='lazy'
       />
-    </Link>
+    </div>
   );
 }
 
-function FollowNotification({ user, relativeDate }) {
+function FollowNotification({ user, relativeDate, handleClose }) {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/profile/${user.username}`);
+    handleClose();
+  };
+
   return (
-    <Link to={`/profile/${user.username}`} className='app__notification__wrapper'>
+    <div className='app__notification__wrapper pointer' handleClick={handleClick}>
       <div className='flex__center app__notification'>
         <img className='avatar' src={user.pfp} alt={user.username} loading='lazy' />
         <span className='app__notification__text'>
@@ -79,7 +116,7 @@ function FollowNotification({ user, relativeDate }) {
           <p className='app__notification__date'>{relativeDate === '0d' ? '' : relativeDate}</p>
         </span>
       </div>
-    </Link>
+    </div>
   );
 }
 

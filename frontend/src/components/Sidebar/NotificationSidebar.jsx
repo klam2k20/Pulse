@@ -17,7 +17,9 @@ function NotificationSidebar({ notifications, isLoading, isError, isOpen, close 
         )}
         {!isLoading &&
           !isError &&
-          notifications.map((n) => <NotificationSection key={n._id} notifications={n} />)}
+          notifications.map((n) => (
+            <NotificationSection key={n._id} notifications={n} handleClose={close} />
+          ))}
       </Sidebar>
     )
   );
