@@ -17,12 +17,17 @@ import { useUser } from '../../context/UserProvider';
 import '../../scss/Navbar/navfooter.scss';
 import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 import NotificationSidebar from '../Sidebar/NotificationSidebar';
+import SearchSidebar from '../Sidebar/SearchSidebar';
+import { updateNotifications } from '../../lib/apiRequests';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 function NavFooter({ openPostModal }) {
   const [selected, setSelected] = useState('home');
-  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [toggleNotifications, setToggleNotifications] = useState(false);
+  const [toggleSearch, setToggleSearch] = useState(false);
   const { user } = useUser();
   const location = useLocation();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (
@@ -38,22 +43,61 @@ function NavFooter({ openPostModal }) {
     } else setSelected('home');
   }, [user]);
 
+  useEffect(() => {
+    if (
+      toggleNotifications &&
+      !isLoading &&
+      !isError &&
+      data.length > 0 &&
+      !data[0].notifications[0].seen
+    ) {
+      seenNotifications.mutate();
+    }
+  }, [toggleNotifications]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () => getNotifications().then((res) => res.data),
+    refetchInterval: 60000,
+  });
+
+  const seenNotifications = useMutation(() => updateNotifications(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notifications']);
+    },
+  });
+
   const handleClick = (e) => {
     e.preventDefault();
     const name = e.target.name;
     setSelected(name);
+    const navbar = document.querySelector('.app__navbar');
     if (name === 'create') {
       openPostModal();
-      setToggleSidebar(false);
-    } else if (name === 'search' || name == 'notifications') {
-      setToggleSidebar((prev) => !prev);
+    } else if (name == 'notifications') {
+      setToggleSearch(false);
+      toggleNotifications
+        ? navbar.classList.remove('app__navbar__shrink')
+        : navbar.classList.add('app__navbar__shrink');
+      setToggleNotifications((prev) => !prev);
+    } else if (name == 'search') {
+      setToggleNotifications(false);
+      toggleSearch
+        ? navbar.classList.remove('app__navbar__shrink')
+        : navbar.classList.add('app__navbar__shrink');
+      setToggleSearch((prev) => !prev);
     } else {
-      setToggleSidebar(false);
+      navbar.classList.remove('app__navbar__shrink');
+      setToggleNotifications(false);
+      setToggleSearch(false);
     }
   };
 
   const closeSidebar = () => {
-    setToggleSidebar(false);
+    setToggleNotifications(false);
+    setToggleSearch(false);
+    const navbar = document.querySelector('.app__navbar');
+    navbar.classList.remove('app__navbar__shrink');
   };
 
   return (
@@ -84,11 +128,16 @@ function NavFooter({ openPostModal }) {
         <NavbarButtonItem
           name={'notifications'}
           handleClick={handleClick}
-          icon={<HeartIcon />}
+          icon={
+            !isLoading && !isError && data.length > 0 && !data[0].notifications[0].seen ? (
+              <FilledHeartIcon style={{ fill: '#d52a74' }} />
+            ) : (
+              <HeartIcon />
+            )
+          }
           selectedIcon={<FilledHeartIcon />}
           selected={selected}
         />
-
         <NavbarLinkItem
           name={'profile'}
           handleClick={handleClick}
@@ -98,7 +147,14 @@ function NavFooter({ openPostModal }) {
           page={`/profile/${user.username}`}
         />
       </nav>
-      <NotificationSidebar isOpen={toggleSidebar} close={closeSidebar} />
+      <NotificationSidebar
+        notifications={data}
+        isLoading={isLoading}
+        isError={isError}
+        isOpen={toggleNotifications}
+        close={closeSidebar}
+      />
+      <SearchSidebar isOpen={toggleSearch} close={closeSidebar} />
     </>
   );
 }
