@@ -82,7 +82,11 @@ function Profile() {
         setFollowerModal={setFollowerModal}
       />
       <Grid posts={posts} isLoading={isPostsLoading} />
-      <UpdateProfileModal isOpen={isProfileModalOpen} close={() => setIsProfileModalOpen(false)} />
+      <UpdateProfileModal
+        data={profile}
+        isOpen={isProfileModalOpen}
+        close={() => setIsProfileModalOpen(false)}
+      />
       <ListModal
         list={followerModal.content}
         title={followerModal.title}

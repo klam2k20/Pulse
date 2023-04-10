@@ -31,9 +31,7 @@ const registerUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       username: user.username,
-      posts: 0,
-      followers: 0,
-      following: 0,
+      pfp: user.pfp,
     });
   } catch (err) {
     console.log(`Register User Error: ${err}`);
@@ -55,9 +53,6 @@ const loginUser = async (req, res) => {
         ? await User.findOne({ email: login })
         : await User.findOne({ username: login });
     if (user && (await user.validatePassword(password))) {
-      const posts = await Post.count({ userId: user._id });
-      const followers = await Follower.count({ followed: user._id });
-      const following = await Follower.count({ follower: user._id });
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: SECONDS_IN_DAY,
       });
@@ -66,9 +61,6 @@ const loginUser = async (req, res) => {
         name: user.name,
         username: user.username,
         pfp: user.pfp,
-        posts,
-        followers,
-        following,
       });
     }
     return res.status(401).json({ message: `Invalid ${type} or Password` });

@@ -18,7 +18,7 @@ const getUsers = async (req, res) => {
       },
 
       'username name pfp'
-    );
+    ).limit(20);
     return res.json(users);
   } catch (err) {
     console.log(`Get Users Error: ${err}`);
@@ -79,7 +79,7 @@ const updateProfile = async (req, res) => {
   const username = req.params.username;
   const { name, pronouns, bio, pfp } = req.body;
 
-  if (!name || !pronouns || !bio || !pfp)
+  if (!name || !pronouns || bio === undefined || !pfp)
     return res.status(400).json({
       message: 'Missing One or More Required Fields: Name, Pronouns, Bio, and/or Profile Photo',
     });

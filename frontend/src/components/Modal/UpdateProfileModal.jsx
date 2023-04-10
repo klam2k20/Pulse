@@ -11,7 +11,7 @@ import AppLoading from '../StatusIndicator/AppLoading';
 import Modal from './Modal';
 
 function UpdateProfileModal({ isOpen, close }) {
-  const { user } = useUser();
+  const { user, setRefetch } = useUser();
   const [selectedFile, setSelectedFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(user.pfp);
   const [profile, setProfile] = useState({
@@ -41,6 +41,7 @@ function UpdateProfileModal({ isOpen, close }) {
     {
       onSuccess: () => {
         handleClose();
+        setRefetch(true);
         queryClient.invalidateQueries(['profile']);
       },
     }

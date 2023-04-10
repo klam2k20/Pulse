@@ -6,6 +6,7 @@ import AppError from '../components/StatusIndicator/AppError';
 import AppLoading from '../components/StatusIndicator/AppLoading';
 import { getFeed } from '../lib/apiRequests';
 import '../scss/Pages/home.scss';
+import NoFeed from '../components/Post/NoFeed';
 
 function Home() {
   const [likeModal, setLikeModal] = useState({
@@ -66,19 +67,22 @@ function Home() {
 
   return (
     <div className='app__home__wrapper'>
-      <ul className='app__home'>
-        {data.pages.map((page) =>
-          page.map((post, i) => (
-            <Feed
-              key={post._id}
-              post={post}
-              index={i}
-              setLikeModal={setLikeModal}
-              isLoading={isFetchingNextPage}
-            />
-          ))
-        )}
-      </ul>
+      {data.pages[0].length === 0 && <NoFeed />}
+      {data.pages[0].length > 0 && (
+        <ul className='app__home'>
+          {data.pages.map((page) =>
+            page.map((post, i) => (
+              <Feed
+                key={post._id}
+                post={post}
+                index={i}
+                setLikeModal={setLikeModal}
+                isLoading={isFetchingNextPage}
+              />
+            ))
+          )}
+        </ul>
+      )}
       <div className='loader' ref={observerElem}>
         {isFetchingNextPage && hasNextPage && <AppLoading />}
       </div>

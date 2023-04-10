@@ -26,7 +26,7 @@ function CreatePostModal({ isOpen, close }) {
     {
       onSuccess: () => {
         handleClose();
-        queryClient.invalidateQueries(['posts']);
+        queryClient.invalidateQueries(['posts', 'feed']);
       },
     }
   );
