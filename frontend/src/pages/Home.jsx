@@ -3,13 +3,9 @@ import { useInfiniteQuery } from 'react-query';
 import ListModal from '../components/Modal/ListModal';
 import Feed from '../components/Post/Feed';
 import AppError from '../components/StatusIndicator/AppError';
+import AppLoading from '../components/StatusIndicator/AppLoading';
 import { getFeed } from '../lib/apiRequests';
 import '../scss/Pages/home.scss';
-import AppLoading from '../components/StatusIndicator/AppLoading';
-
-//LOGOUT
-//DARKMODE
-//ADD HEADING BAR FOR MOBILE
 
 function Home() {
   const [likeModal, setLikeModal] = useState({
@@ -84,7 +80,7 @@ function Home() {
         )}
       </ul>
       <div className='loader' ref={observerElem}>
-        {isFetchingNextPage && hasNextPage ? <AppLoading /> : <></>}
+        {isFetchingNextPage && hasNextPage && <AppLoading />}
       </div>
       <ListModal
         list={likeModal.content}

@@ -1,5 +1,5 @@
 import {
-  Bars3Icon,
+  ArrowLeftOnRectangleIcon,
   HeartIcon,
   HomeIcon,
   MagnifyingGlassIcon,
@@ -13,15 +13,15 @@ import {
   UserCircleIcon as FilledUserCicleIcon,
 } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
+import { getNotifications, logoutUser, updateNotifications } from '../../lib/apiRequests';
 import '../../scss/Navbar/navbar.scss';
 import Logo from '../Logo';
 import NotificationSidebar from '../Sidebar/NotificationSidebar';
-import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getNotifications, updateNotifications } from '../../lib/apiRequests';
 import SearchSidebar from '../Sidebar/SearchSidebar';
+import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 
 function Navbar({ openPostModal }) {
   const [selected, setSelected] = useState('home');
@@ -74,24 +74,31 @@ function Navbar({ openPostModal }) {
     const name = e.target.name;
     setSelected(name);
     const navbar = document.querySelector('.app__navbar');
-    if (name === 'create') {
-      openPostModal();
-    } else if (name == 'notifications') {
-      setToggleSearch(false);
-      toggleNotifications
-        ? navbar.classList.remove('app__navbar__shrink')
-        : navbar.classList.add('app__navbar__shrink');
-      setToggleNotifications((prev) => !prev);
-    } else if (name == 'search') {
-      setToggleNotifications(false);
-      toggleSearch
-        ? navbar.classList.remove('app__navbar__shrink')
-        : navbar.classList.add('app__navbar__shrink');
-      setToggleSearch((prev) => !prev);
-    } else {
-      navbar.classList.remove('app__navbar__shrink');
-      setToggleNotifications(false);
-      setToggleSearch(false);
+    switch (name) {
+      case 'create':
+        openPostModal();
+        break;
+      case 'search':
+        setToggleNotifications(false);
+        toggleSearch
+          ? navbar.classList.remove('app__navbar__shrink')
+          : navbar.classList.add('app__navbar__shrink');
+        setToggleSearch((prev) => !prev);
+        break;
+      case 'notifications':
+        setToggleSearch(false);
+        toggleNotifications
+          ? navbar.classList.remove('app__navbar__shrink')
+          : navbar.classList.add('app__navbar__shrink');
+        setToggleNotifications((prev) => !prev);
+        break;
+      case 'logout':
+        logoutUser().then(() => window.location.reload());
+        break;
+      default:
+        navbar.classList.remove('app__navbar__shrink');
+        setToggleNotifications(false);
+        setToggleSearch(false);
     }
   };
 
@@ -160,10 +167,10 @@ function Navbar({ openPostModal }) {
 
         <div className='app__navbar__footer'>
           <NavbarButtonItem
-            name={'more'}
+            name={'logout'}
             handleClick={handleClick}
-            icon={<Bars3Icon />}
-            selectedIcon={<Bars3Icon style={{ strokeWidth: '2.5' }} />}
+            icon={<ArrowLeftOnRectangleIcon />}
+            selectedIcon={<ArrowLeftOnRectangleIcon style={{ strokeWidth: '2.5' }} />}
             selected={selected}
           />
         </div>

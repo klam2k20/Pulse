@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
-import { updateNotifications } from '../../lib/apiRequests';
+import { getNotifications, updateNotifications } from '../../lib/apiRequests';
 import '../../scss/Navbar/navfooter.scss';
 import NotificationSidebar from '../Sidebar/NotificationSidebar';
 import SearchSidebar from '../Sidebar/SearchSidebar';
@@ -72,24 +72,28 @@ function NavFooter({ openPostModal }) {
     const name = e.target.name;
     setSelected(name);
     const navbar = document.querySelector('.app__navbar');
-    if (name === 'create') {
-      openPostModal();
-    } else if (name == 'notifications') {
-      setToggleSearch(false);
-      toggleNotifications
-        ? navbar.classList.remove('app__navbar__shrink')
-        : navbar.classList.add('app__navbar__shrink');
-      setToggleNotifications((prev) => !prev);
-    } else if (name == 'search') {
-      setToggleNotifications(false);
-      toggleSearch
-        ? navbar.classList.remove('app__navbar__shrink')
-        : navbar.classList.add('app__navbar__shrink');
-      setToggleSearch((prev) => !prev);
-    } else {
-      navbar.classList.remove('app__navbar__shrink');
-      setToggleNotifications(false);
-      setToggleSearch(false);
+    switch (name) {
+      case 'create':
+        openPostModal();
+        break;
+      case 'search':
+        setToggleNotifications(false);
+        toggleSearch
+          ? navbar.classList.remove('app__navbar__shrink')
+          : navbar.classList.add('app__navbar__shrink');
+        setToggleSearch((prev) => !prev);
+        break;
+      case 'notifications':
+        setToggleSearch(false);
+        toggleNotifications
+          ? navbar.classList.remove('app__navbar__shrink')
+          : navbar.classList.add('app__navbar__shrink');
+        setToggleNotifications((prev) => !prev);
+        break;
+      default:
+        navbar.classList.remove('app__navbar__shrink');
+        setToggleNotifications(false);
+        setToggleSearch(false);
     }
   };
 

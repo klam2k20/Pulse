@@ -106,9 +106,14 @@ const getFeed = async (page) => {
   return data;
 };
 
+const logoutUser = () => {
+  return axios.post('api/auth/logout');
+};
+
 export {
   registerUser,
   loginUser,
+  logoutUser,
   getUser,
   getPosts,
   getFollowers,

@@ -12,6 +12,7 @@ import { useUser } from './context/UserProvider';
 import { Home, Login, Profile, Register } from './pages';
 import Post from './pages/Post';
 import './scss/Pages/layout.scss';
+import NavHeader from './components/Navbar/NavHeader';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function Layout() {
       )}
       {!isLoading && !loading && !error && (
         <div className='layout'>
+          <NavHeader />
           <Navbar openPostModal={() => setCreatePostOpen(true)} />
           <article className='app__layout__main__wrapper'>
             <Outlet />
