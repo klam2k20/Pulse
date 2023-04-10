@@ -4,7 +4,7 @@
 
 ## Overview
 
-Pulse is a full-stack social media application built with the MERN stack. The application
+Pulse is a social media application built with the MERN stack. The application
 supports users registering and updating their profiles, creating, editing and deleting posts,
 commenting and liking posts, and following other users.
 
