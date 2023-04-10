@@ -1,12 +1,14 @@
+@use './variables.scss' as *;
+
 @keyframes loading {
   0% {
-    background-color-coloror: #80808080;
+    background-color-coloror: $loading-bg;
   }
   50% {
-    background-color: #808080cc;
+    background-color: $loading-light-bg;
   }
   100% {
-    background-color: #80808080;
+    background-color: $loading-bg;
   }
 }
 
@@ -25,5 +27,5 @@
   width: $width;
   height: $height;
   border-radius: 50%;
-  background-color: #80808080;
+  background-color: $loading-bg;
 }

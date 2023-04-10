@@ -3,7 +3,6 @@
 .app__list__modal {
   .modal__content__wrapper {
     @include flex(center, flex-start);
-    min-height: 50%;
   }
 }
 
