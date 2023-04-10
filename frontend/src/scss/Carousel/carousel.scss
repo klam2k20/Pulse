@@ -15,13 +15,13 @@
 
 .main__image {
   width: 100%;
+  border: 1px solid $light-gray;
   overflow: hidden;
 
   img {
     width: 100%;
     max-width: 100%;
     max-height: 100%;
-    border-radius: 0.5rem;
     aspect-ratio: 1/1;
     object-fit: cover;
   }

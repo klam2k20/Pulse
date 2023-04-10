@@ -6,20 +6,20 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import {
+  PlusCircleIcon as FilledCircleIcon,
   HeartIcon as FilledHeartIcon,
   HomeIcon as FilledHomeIcon,
-  PlusCircleIcon as FilledCircleIcon,
   UserCircleIcon as FilledUserCircleIcon,
 } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
+import { updateNotifications } from '../../lib/apiRequests';
 import '../../scss/Navbar/navfooter.scss';
-import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 import NotificationSidebar from '../Sidebar/NotificationSidebar';
 import SearchSidebar from '../Sidebar/SearchSidebar';
-import { updateNotifications } from '../../lib/apiRequests';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { NavbarButtonItem, NavbarLinkItem } from './NavbarItem';
 
 function NavFooter({ openPostModal }) {
   const [selected, setSelected] = useState('home');

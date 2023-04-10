@@ -32,8 +32,8 @@ function App() {
 
 function Layout() {
   const { isLoading, error } = useUser();
-  const [isModalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isCreatePostOpen, setCreatePostOpen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -53,12 +53,12 @@ function Layout() {
       )}
       {!isLoading && !loading && !error && (
         <div className='layout'>
-          <Navbar openPostModal={() => setModalOpen(true)} />
+          <Navbar openPostModal={() => setCreatePostOpen(true)} />
           <article className='app__layout__main__wrapper'>
             <Outlet />
           </article>
-          <NavFooter openPostModal={() => setModalOpen(true)} />
-          <CreatePostModal isOpen={isModalOpen} close={() => setModalOpen(false)} />
+          <NavFooter openPostModal={() => setCreatePostOpen(true)} />
+          <CreatePostModal isOpen={isCreatePostOpen} close={() => setCreatePostOpen(false)} />
         </div>
       )}
     </>

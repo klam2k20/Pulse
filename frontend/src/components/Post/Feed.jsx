@@ -3,39 +3,26 @@ import { useQuery } from 'react-query';
 import { getComments, getPostLikes } from '../../lib/apiRequests';
 import '../../scss/Post/feed.scss';
 import Carousel from '../Carousel/Carousel';
-import ListModal from '../Modal/ListModal';
 import PostActions from '../Post/PostActions';
 import Caption from './Caption';
 import CommentForm from './CommentForm';
 import Comments from './Comments';
 
-function Feed({ post, index }) {
+function Feed({ post, index, setLikeModal, isLoading }) {
   const [comment, setComment] = useState('');
   const [replyId, setReplyId] = useState('');
-  const [likeModal, setLikeModal] = useState({
-    isOpen: false,
-    title: '',
-    content: [],
-  });
 
   const {
     data: comments,
     isLoading: isCommentsLoading,
     isError: isCommentsError,
   } = useQuery(['comments', post._id], () => getComments(post._id).then((res) => res.data));
+
   const {
     data: likes,
     isLoading: isLikesLoading,
     isError: isLikesError,
   } = useQuery(['likes', post._id], () => getPostLikes(post._id).then((res) => res.data));
-
-  const closeLikeModal = () => {
-    setLikeModal({
-      isOpen: false,
-      title: '',
-      content: [],
-    });
-  };
 
   if (isCommentsError || isLikesError)
     return (
@@ -54,16 +41,20 @@ function Feed({ post, index }) {
           username={post.userId.username}
           caption={post.caption}
           date={post.createdAt}
+          isLoading={isLoading || isLikesLoading || isCommentsLoading}
         />
         <div className='app__feed__photos'>
-          <Carousel photos={post.images} />
+          <Carousel
+            photos={post.images}
+            isLoading={isLoading || isLikesLoading || isCommentsLoading}
+          />
         </div>
         <PostActions
           likes={likes}
           numComments={comments?.length}
           setComment={setComment}
           setReplyId={setReplyId}
-          isLoading={isLikesLoading || isCommentsLoading}
+          isLoading={isLoading || isLikesLoading || isCommentsLoading}
           setModal={setLikeModal}
           postId={post._id}
           index={index}
@@ -72,7 +63,7 @@ function Feed({ post, index }) {
           comments={comments}
           setComment={setComment}
           setReplyId={setReplyId}
-          isLoading={isCommentsLoading}
+          isLoading={isLoading || isLikesLoading || isCommentsLoading}
           setModal={setLikeModal}
           hideComments={true}
           postId={post._id}
@@ -82,18 +73,10 @@ function Feed({ post, index }) {
           setComment={setComment}
           replyId={replyId}
           setReplyId={setReplyId}
-          isLoading={isLikesLoading || isCommentsLoading}
+          isLoading={isLoading || isLikesLoading || isCommentsLoading}
           postId={post._id}
         />
       </div>
-      {!isLikesLoading && !isCommentsLoading && (
-        <ListModal
-          list={likeModal.content}
-          title={likeModal.title}
-          isOpen={likeModal.isOpen}
-          close={closeLikeModal}
-        />
-      )}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { AnimatePresence, motion } from 'framer-motion';
 import { memo, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { defaultSizes } from '../../lib/constants';
@@ -29,11 +30,17 @@ function Carousel({ photos, setPhotos, validation, isLoading }) {
       {photos.length && (
         <div className='flex__center image__wrapper'>
           <div className='flex__center main__image'>
-            <img
-              src={isGCSUri(photos[index]) ? photos[index] : URL.createObjectURL(photos[index])}
-              alt={photos[index].name}
-              loading='lazy'
-            />
+            <AnimatePresence>
+              <motion.img
+                key={index}
+                src={isGCSUri(photos[index]) ? photos[index] : URL.createObjectURL(photos[index])}
+                alt={photos[index].name}
+                loading='lazy'
+                initial={{ x: '-100%', opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1, type: 'spring' }}
+              />
+            </AnimatePresence>
           </div>
 
           <span className='flex__center image__carousel__wrapper'>

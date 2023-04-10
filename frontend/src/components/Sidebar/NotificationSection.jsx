@@ -1,5 +1,5 @@
-import Notification from './Notification';
 import '../../scss/Sidebar/notificationSection.scss';
+import Notification from './Notification';
 
 function NotificationSection({ notifications, handleClose }) {
   return (

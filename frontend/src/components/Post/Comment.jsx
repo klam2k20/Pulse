@@ -2,7 +2,7 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import { removeComment } from '../../lib/apiRequests';
 import { formatCommentTimestamp } from '../../lib/util';
@@ -45,7 +45,10 @@ function Comment({ comment, handleReply, handleAddLike, handleRemoveLike, setMod
       <li className='app__comment'>
         <img className='avatar' src={comment.user[0].pfp} loading='lazy' />
         <div className='app__comment__content'>
-          <b>{comment.user[0].username}</b> {comment.comment}
+          <Link to={`/profile/${comment.user[0].username}`}>
+            <b>{comment.user[0].username}</b>
+          </Link>{' '}
+          {comment.comment}
           <div className='app__comment__stats '>
             <div>{formatCommentTimestamp(new Date(comment.createdAt))}</div>
             {comment.likes.length > 0 && (

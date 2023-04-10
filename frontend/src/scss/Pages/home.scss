@@ -1,5 +1,11 @@
 @use '../index.scss' as *;
 
+.app__home__wrapper {
+  @include flex(center, flex-start);
+  flex-direction: column;
+  width: 100%;
+}
+
 .app__home {
   @include flex(center, flex-start);
   flex-direction: column;
@@ -8,12 +14,18 @@
   height: 100%;
   padding: 0 1rem;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     width: 75%;
   }
 
   @media screen and (max-width: 480px) {
     gap: 1rem;
     width: 100%;
+    padding: 0;
   }
+}
+
+.loader .app__loading__container {
+  width: 5rem;
+  height: 5rem;
 }

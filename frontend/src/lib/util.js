@@ -28,9 +28,9 @@ const formatPostTimestamp = (timestamp) => {
       ? hours > 24
         ? days > 7
           ? format(timestamp, 'MMMM d')
-          : `${days} ${days === 1 ? 'DAY' : 'DAYS'} AGO`
-        : `${hours} ${hours === 1 ? 'HOUR' : 'HOURS'} AGO`
-      : `${mins} ${mins === 1 ? 'MIN' : 'MINS'} AGO`;
+          : `${days}d`
+        : `${hours}h`
+      : `${mins}m`;
   return formatTimestamp;
 };
 

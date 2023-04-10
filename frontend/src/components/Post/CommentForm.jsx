@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
 import { postComment } from '../../lib/apiRequests';
 import '../../scss/Post/commentForm.scss';
 import CommentFormLoading from '../StatusIndicator/CommentFormLoading';

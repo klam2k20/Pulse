@@ -62,8 +62,13 @@ function Post() {
 
   return (
     <div className='app__post'>
-      <div className='app__post__photos' style={{ paddingTop: isPostLoading ? 0 : '5rem' }}>
-        <Carousel photos={post?.images} isLoading={isPostLoading} />
+      <div
+        className='app__post__photos'
+        style={{ paddingTop: isPostLoading || isLikesLoading || isCommentsLoading ? 0 : '5rem' }}>
+        <Carousel
+          photos={post?.images}
+          isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
+        />
       </div>
 
       <div className='app__post__info'>
@@ -72,14 +77,14 @@ function Post() {
           username={post?.userId?.username}
           caption={post?.caption}
           date={post?.createdAt}
-          isLoading={isPostLoading}
+          isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
           openEditModal={() => setEditModalOpen(true)}
         />
         <Comments
           comments={comments}
           setComment={setComment}
           setReplyId={setReplyId}
-          isLoading={isCommentsLoading}
+          isLoading={isPostLoading || isLikesLoading || isCommentsLoading}
           setModal={setLikeModal}
           postId={postId}
         />

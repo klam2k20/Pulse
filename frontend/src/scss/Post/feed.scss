@@ -3,7 +3,7 @@
 .app__feed {
   @include flex(center, flex-start);
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 100%;
   border-bottom: 1px solid $light-gray;
 
@@ -12,9 +12,14 @@
   }
 
   .app__feed__photos {
+    width: 100%;
     border-radius: 0.5rem;
     background: black;
-    width: 100%;
+
+    .main__image {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
 
     .image__carousel__wrapper {
       width: fit-content;

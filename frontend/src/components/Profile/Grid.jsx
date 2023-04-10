@@ -4,8 +4,6 @@ import GridLoading from '../StatusIndicator/GridLoading';
 import NoPosts from './NoPosts';
 import ProfilePost from './ProfilePost';
 
-//TODO INFINITE SCROLLING AND PAGINATION ON APIS
-
 function Grid({ posts, isLoading }) {
   if (isLoading) return <GridLoading />;
 

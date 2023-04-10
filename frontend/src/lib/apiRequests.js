@@ -101,8 +101,9 @@ const getUsers = (username) => {
   return axios.get(`/api/user?username=${username}`);
 };
 
-const getFeed = (page) => {
-  return axios.get(`api/user/feed?page=${page}`);
+const getFeed = async (page) => {
+  const { data } = await axios.get(`api/user/feed?page=${page}`);
+  return data;
 };
 
 export {

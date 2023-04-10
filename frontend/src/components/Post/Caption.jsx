@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
 import { removePost } from '../../lib/apiRequests';
+import { formatPostTimestamp } from '../../lib/util';
 import '../../scss/Post/caption.scss';
 import CaptionLoading from '../StatusIndicator/CaptionLoading';
 import Actions from './Actions';
-import { formatPostTimestamp } from '../../lib/util';
 
 function Caption({ avatar, username, caption, date, isLoading, openEditModal }) {
   const { user } = useUser();
@@ -35,9 +35,9 @@ function Caption({ avatar, username, caption, date, isLoading, openEditModal }) 
             <b>{username}</b>
           </Link>{' '}
           {caption}
-        </span>
-        <span className='font__color__light app__post__date'>
-          {formatPostTimestamp(new Date(date))}
+          <span className='font__color__light app__post__date'>
+            {formatPostTimestamp(new Date(date))}
+          </span>
         </span>
       </div>
       {username === user.username && openEditModal && (

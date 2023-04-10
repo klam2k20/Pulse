@@ -1,5 +1,5 @@
-import NotificationSection from './NotificationSection';
 import ListLoading from '../StatusIndicator/ListLoading';
+import NotificationSection from './NotificationSection';
 import Sidebar from './Sidebar';
 
 function NotificationSidebar({ notifications, isLoading, isError, isOpen, close }) {

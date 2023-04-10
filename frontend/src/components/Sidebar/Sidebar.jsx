@@ -2,10 +2,6 @@ import { motion } from 'framer-motion';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import '../../scss/Sidebar/sidebar.scss';
 
-/**
- * add relative date to notificatoins
- */
-
 function Sidebar({ children, close }) {
   const isMobile = useMediaQuery('(max-width: 480px)');
 

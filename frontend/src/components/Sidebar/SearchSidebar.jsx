@@ -1,27 +1,29 @@
-import AppError from '../StatusIndicator/AppError';
-import ListLoading from '../StatusIndicator/ListLoading';
-import Sidebar from './Sidebar';
-import '../../scss/Sidebar/search.scss';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getUsers } from '../../lib/apiRequests';
+import '../../scss/Sidebar/search.scss';
+import AppError from '../StatusIndicator/AppError';
+import ListLoading from '../StatusIndicator/ListLoading';
 import User from '../User';
+import Sidebar from './Sidebar';
 
 function SearchSidebar({ isOpen, close }) {
   const [query, setQuery] = useState('');
   const [users, setUsers] = useState([]);
 
-  const { isLoading, isError, refetch } = useQuery(['search'], () => getUsers(query), {
+  const { isLoading, isError, refetch } = useQuery({
+    queryKey: ['search', query],
+    queryFn: () => getUsers(query),
     refetchInterval: Infinity,
     refetchIntervalInBackground: false,
-    enabled: false,
+    keepPreviousData: true,
+    onSuccess: (res) => setUsers(res.data),
   });
 
   const handleSearch = (e) => {
     e.preventDefault();
-    refetch().then((res) => setUsers(res.data.data));
-    setQuery('');
+    refetch();
   };
 
   const handleClose = () => {

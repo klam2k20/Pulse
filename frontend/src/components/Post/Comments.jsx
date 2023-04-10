@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import { addCommentLike, removeCommentLike } from '../../lib/apiRequests';
 import '../../scss/Post/comments.scss';
 import CommentsLoading from '../StatusIndicator/CommentsLoading';
 import Comment from './Comment';
-import useMediaQuery from '../../hooks/useMediaQuery';
 
 function Comments({ comments, isLoading, setComment, setReplyId, setModal, hideComments, postId }) {
   const [showAllComments, setShowAllComments] = useState(false);
