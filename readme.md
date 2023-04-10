@@ -49,12 +49,12 @@ commenting and liking posts, and following other users.
 
 - Follow Users
 <p align="center">
-    <img src="frontend/public/follow.gif">
+    <img src="frontend/public/follow.gif" height="400">
 </p>
 
 - Notifications
 <p align="center">
-    <img src="frontend/public/notification.gif">
+    <img src="frontend/public/notification.gif" height="400">
 </p>
 
 ## Getting Started
