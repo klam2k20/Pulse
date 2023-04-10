@@ -4,7 +4,7 @@
 
 ## Overview
 
-Pulse is a robust social media application crafted using the advanced MERN stack. It offers a seamless user experience,
+Pulse is a social media application crafted using the MERN stack. It offers a seamless user experience,
 allowing users to effortlessly register and update their profiles, create, edit, and delete posts, share their thoughts
 by commenting on other posts, show appreciation by liking posts, and keep up with their favorite users by following them.
 
