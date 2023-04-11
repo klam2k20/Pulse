@@ -27,12 +27,14 @@ const registerUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: SECONDS_IN_DAY,
     });
-    return res.cookie('token', token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
-      _id: user._id,
-      name: user.name,
-      username: user.username,
-      pfp: user.pfp,
-    });
+    return res
+      .cookie('token', token, { maxAge: SECONDS_IN_DAY * 1000, secure: true, sameSite: 'none' })
+      .json({
+        _id: user._id,
+        name: user.name,
+        username: user.username,
+        pfp: user.pfp,
+      });
   } catch (err) {
     console.log(`Register User Error: ${err}`);
     return res.status(500).json({ message: `Database Error: ${err}` });
@@ -56,12 +58,14 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: SECONDS_IN_DAY,
       });
-      return res.cookie('token', token, { maxAge: SECONDS_IN_DAY * 1000 }).json({
-        _id: user._id,
-        name: user.name,
-        username: user.username,
-        pfp: user.pfp,
-      });
+      return res
+        .cookie('token', token, { maxAge: SECONDS_IN_DAY * 1000, secure: true, sameSite: 'none' })
+        .json({
+          _id: user._id,
+          name: user.name,
+          username: user.username,
+          pfp: user.pfp,
+        });
     }
     return res.status(401).json({ message: `Invalid ${type} or Password` });
   } catch (err) {
